@@ -2,7 +2,7 @@ import axios from "axios";
 import { isNil } from "lodash";
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import Navbar from "./components/navbar";
+import Navigation from "./components/navbar";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Signup from "./pages/signUp";
@@ -31,7 +31,7 @@ const App = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navigation />
       <Splash></Splash>
       {state.user ? (
         <Switch>
