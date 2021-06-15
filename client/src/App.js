@@ -9,6 +9,7 @@ import Signup from "./pages/signUp";
 import { LOADING, SET_USER, UNSET_USER } from "./store/actions";
 import { useStoreContext } from "./store/store";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Splash from "./pages/splash";
 
 const App = () => {
   const history = useHistory();
@@ -31,7 +32,7 @@ const App = () => {
   return (
     <div>
       <Navbar />
-
+      <Splash></Splash>
       {state.user ? (
         <Switch>
           <Route exact path='/' component={Home} />
