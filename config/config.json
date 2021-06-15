@@ -1,14 +1,14 @@
 {
   "development": {
     "username": "root",
-    "password": "Jasper#02",
+    "password": null,
     "database": "pf_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "Jasper#02",
+    "password": null,
     "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
