@@ -8,6 +8,8 @@ const SignUp = () => {
   const [signUpCreds, setSignUpCreds] = useState({
     email: '',
     password: '',
+    first_name: '',
+    last_name: ''
   });
 
   const handleChange = (event) => {
@@ -23,6 +25,8 @@ const SignUp = () => {
       .post('/api/users/signup', {
         email: signUpCreds.email,
         password: signUpCreds.password,
+        first_name: signUpCreds.first_name,
+        last_name: signUpCreds.last_name
       })
       .then((response) => {
         console.log('RESPONSE', response);
@@ -37,6 +41,30 @@ const SignUp = () => {
     <div className="text-center">
       <h4>Sign Up</h4>
       <form className="form-signin">
+      <label htmlFor="inputFirst" className="sr-only">
+          First Name
+        </label>
+        <input
+          type="string"
+          id="inputFirst"
+          className="form-control"
+          name="first_name"
+          placeholder="First Name"
+          value={signUpCreds.first_name}
+          onChange={handleChange}
+        />
+        <label htmlFor="inputLast" className="sr-only">
+          Email address
+        </label>
+        <input
+          type="string"
+          id="inputLast"
+          className="form-control"
+          name="last_name"
+          placeholder="Last Name"
+          value={signUpCreds.last_name}
+          onChange={handleChange}
+        />
         <label htmlFor="inputEmail" className="sr-only">
           Email address
         </label>
