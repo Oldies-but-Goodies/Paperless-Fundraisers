@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "sqlPassword#",
+    "password": "password_here",
     "database": "pf_db",
     "host": "127.0.0.1",
     "dialect": "mysql"
