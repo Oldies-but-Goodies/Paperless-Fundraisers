@@ -1,5 +1,5 @@
-CREATE DATABASE "name";
-USE "name";
+CREATE DATABASE "pf_db";
+USE "pf_db";
 
 
 CREATE TABLE `sessions` (
