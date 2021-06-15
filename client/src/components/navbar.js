@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <a className="navbar-brand" href="#">Navbar</a>
+       {/* <a className="navbar-brand" href="#">Navbar</a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
@@ -44,7 +44,7 @@ const Navbar = () => {
       <li className="nav-item">
         <a className="nav-link" href="#">Pricing</a>
       </li>
-      <li className="nav-item dropdown">
+      <li className="nav-item dropdown dropdown-show">
         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Dropdown link
         </a>
@@ -55,8 +55,8 @@ const Navbar = () => {
         </div>
       </li>
     </ul>
-  </div>
-      {/* <Link to="/" className="btn btn-link text-secondary">
+  </div>  */}
+      <Link to="/" className="btn btn-link text-secondary">
         <span className="text-secondary">Paperless Fundraisers</span>
       </Link>
       <button
@@ -98,12 +98,12 @@ const Navbar = () => {
           Dropdown link
         </a>
         <div classname="dropdown-menu" areia-aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">My Profile</a>
-          <a class="dropdown-item" href="#">Change Fundraiser</a>
-          <a class="dropdown-item" href="#">My Profile</a>
+          <a className="dropdown-item" href="#">My Profile</a>
+          <a className="dropdown-item" href="#">Change Fundraiser</a>
+          <a className="dropdown-item" href="#">My Profile</a>
         </div>
         </div>
-      </div> */}
+      </div> 
     </nav>
   );
 };
