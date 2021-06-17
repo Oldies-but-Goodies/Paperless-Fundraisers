@@ -10,6 +10,7 @@ import { LOADING, SET_USER, UNSET_USER } from "./store/actions";
 import { useStoreContext } from "./store/store";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Splash from "./pages/splash";
+import Container from "react-bootstrap/Container";
 
 const App = () => {
   const history = useHistory();
@@ -30,21 +31,24 @@ const App = () => {
   }, [dispatch, history]);
 
   return (
-    <div>
+    <Container>
       <Navigation />
-      <Splash></Splash>
+
       {state.user ? (
         <Switch>
           <Route exact path='/' component={Home} />
         </Switch>
       ) : (
-        <Switch>
-          <Route exact path='/login' component={Login} />
-          <Route exact path='/signup' component={Signup} />
-          <Redirect to='/login' />
-        </Switch>
+        <div>
+          <Splash></Splash>
+          <Switch>
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/signup' component={Signup} />
+            <Redirect to='/login' />
+          </Switch>
+        </div>
       )}
-    </div>
+    </Container>
   );
 };
 
