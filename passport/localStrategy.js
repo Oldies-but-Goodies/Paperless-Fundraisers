@@ -18,9 +18,9 @@ const strategy = new LocalStrategy(
       return done(null, false, { message: 'Incorrect email.' });
     }
 
-    // if (!user.validPassword(password)) {
-    //   return done(null, false, { message: 'Incorrect password.' });
-    // }
+    if (!user.comparePassword(password)) {
+      return done(null, false, { message: 'Incorrect password.' });
+    }
 
     return done(null, user);
   }

@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
 
   userFundraiser.init(
     {
-      id: DataTypes.INTEGER,
       user_id: DataTypes.INTEGER,
       fundraiser_id: DataTypes.INTEGER,
       customer_remit: DataTypes.STRING,
@@ -26,20 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'userFundraiser',
     }
   );
-
-  User.prototype.isValidPassword = function (password) {
-    if (password.length >= 8) {
-      return true;
-    }
-
-    return false;
-  };
-
-  User.prototype.isValidUserID = function (id) {
-    const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    return emailRegex.test(String(email).toLowerCase());
-  };
 
   return userFundraiser;
 };

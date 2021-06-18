@@ -34,18 +34,14 @@ router.post('/signup', async function (req, res, next) {
       email: req.body.email,
     },
   });
-
+  console.log(user, "user")
   if (user) {
+    console.log('1')
     res
       .status(400)
       .json({ message: `Sorry, a user is already using that email: ${req.body.email}` });
     return;
   }
-
-  const salt = crypto.randomBytes(64).toString('hex');
-  const password = crypto
-    .pbkdf2Sync(req.body.password, salt, 10000, 64, 'sha512')
-    .toString('base64');
 
   if (!isValidPassword(req.body.password)) {
     return res
@@ -64,10 +60,10 @@ router.post('/signup', async function (req, res, next) {
       last_name: req.body.last_name,
       email: req.body.email,
       role: 'user',
-      password: password,
-      salt: salt,
+      password: req.body.password,
     });
   } catch (err) {
+    console.log(err);
     return res.json({ status: 'error', message: 'Email address already exists.' });
   }
 
@@ -105,7 +101,7 @@ router.post('/login', function (req, res, next) {
         return next(err);
       }
 
-      return res.json({ status: 'ok' });
+      return res.json({ status: 'ok', ...user });
     });
   })(req, res, next);
 });

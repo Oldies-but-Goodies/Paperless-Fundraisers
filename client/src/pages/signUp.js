@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 const SignUp = () => {
   const history = useHistory();
-
+  const [errorMsg, setErrorMsg] = useState(null);
   const [signUpCreds, setSignUpCreds] = useState({
     email: '',
     password: '',
@@ -30,16 +30,27 @@ const SignUp = () => {
       })
       .then((response) => {
         console.log('RESPONSE', response);
+        if (response.data.status === 'error'){
+          setErrorMsg(response.data.message);
+          return
+        }
+        setErrorMsg(null);
         history.replace('/login');
       })
       .catch((error) => {
         console.log('ERROR', error);
+        setErrorMsg(error)
       });
   };
 
   return (
     <div className="text-center">
       <h4>Sign Up</h4>
+      {errorMsg ? 
+      <p>
+        {errorMsg}
+      </p> : null
+      }
       <form className="form-signin">
       <label htmlFor="inputFirst" className="sr-only">
           First Name
