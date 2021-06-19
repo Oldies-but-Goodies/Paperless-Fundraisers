@@ -1,7 +1,7 @@
 CREATE DATABASE pf_db;
 DROP DATABASE IF EXISTS pf_db;
 
-USE p_fDB;
+USE pf_db;
 
 CREATE TABLE user (
   id INT NOT NULL,
@@ -15,8 +15,8 @@ CREATE TABLE user (
 CREATE TABLE product (
   id INT NOT NULL,
   product_name VARCHAR(40) NULL,
-  product_description VARCHAR(60) NULL, //do we need?
-  price INT NULL,
+  product_description VARCHAR(60) NULL,
+  price DECIMAL(10,2) NULL,
   PRIMARY KEY (id)
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE customer (
   us_state VARCHAR(50),
   zip VARCHAR(50),
   phone VARCHAR(15),
-  passwords VARCHAR(50) NULL, //do we need?
+  passwords VARCHAR(50) NULL,
   created_date TIMESTAMP,
   updated_date TIMESTAMP,
   PRIMARY KEY (id)
@@ -78,9 +78,9 @@ CREATE TABLE user_fundraiser (
 );
 
 
-CREATE TABLE `pf` (
-  `pf_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `expires` int(11) unsigned NOT NULL,
-  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
-  PRIMARY KEY (`session_id`)
+CREATE TABLE sessions (
+  session_id varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  expires int(11) unsigned NOT NULL,
+  data text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  PRIMARY KEY (session_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

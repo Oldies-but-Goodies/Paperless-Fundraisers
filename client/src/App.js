@@ -22,10 +22,8 @@ const App = () => {
     axios.get("/api/users").then((response) => {
       if (!isNil(response.data.user)) {
         dispatch({ type: SET_USER, user: response.data.user });
-        history.push("/");
       } else {
         dispatch({ type: UNSET_USER });
-        history.push("/login");
       }
     });
   }, [dispatch, history]);
