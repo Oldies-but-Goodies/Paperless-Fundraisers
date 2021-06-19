@@ -1,40 +1,20 @@
 import React, { Table } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
 
 const Home = (props) => {
   return (
     <div>
-      <h7>Welcome to Your fundraiser </h7>
-      <p>Description of fundraiser goes here </p>
-      <h4>Our goal is to raise $XXXX and so far we've raised $XXXX</h4>
-{/* table only shows if user is non-Admin */}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Customer Name </th>
-            <th>Total Sale </th>
-            <th>Customer Paid</th>
-            <th>Admin Paid</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Stefan</td>
-            <td>$50</td>
-            <td>Yes</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Tammy </td>
-            <td>$40</td>
-            <td>Yes</td>
-            <td>No</td>
-          </tr>
-          </tbody>
-      </Table>
+      <Navbar bg="light" expand="lg">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="#home">Sales Person</Nav.Link>
+            <Nav.Link href="#link">Products</Nav.Link>
+            <Nav.Link href="#link">Orders</Nav.Link> 
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     </div>
   );
 };
