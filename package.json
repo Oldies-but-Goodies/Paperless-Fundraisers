@@ -1,7 +1,7 @@
 {
-  "name": "MERN_with_Passport",
-  "version": "1.0.0",
-  "description": "",
+  "name": "PaperlessFundraisers",
+  "version": "0.0.1",
+  "description": "A Group Project by Tammy, Jason, Stefan and Josh",
   "main": "index.js",
   "scripts": {
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.6.0",
     "dotenv": "^8.6.0",
