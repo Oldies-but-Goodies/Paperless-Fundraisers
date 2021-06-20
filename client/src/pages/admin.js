@@ -1,44 +1,65 @@
-import React, { Table } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { Component, useState } from "react";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import AdminNav from "../components/adminNav";
+import { Container, Table, Dropdown } from "react-bootstrap";
 
-const Home = (props) => {
+const Admin = (props) => {
+
+  const [activeTab, setActiveTab] = useState("SALES_PERSON");
+
   return (
-    <div>
-      <h7>Welcome to Your fundraiser </h7>
-      <p>Description of fundraiser goes here </p>
-      <h4>Our goal is to raise $XXXX and so far we've raised $XXXX</h4>
-{/* table only shows if user is non-Admin */}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Customer Name </th>
-            <th>Total Sale </th>
-            <th>Customer Paid</th>
-            <th>Admin Paid</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Stefan</td>
-            <td>$50</td>
-            <td>Yes</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Tammy </td>
-            <td>$40</td>
-            <td>Yes</td>
-            <td>No</td>
-          </tr>
-          </tbody>
-      </Table>
-    </div>
+    <Container>
+      <AdminNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div>
+        <Dropdown className="my-2 float-right">
+          <Dropdown.Toggle variant="dark" id="dropdown-basic">
+            Select Salesperson
+          </Dropdown.Toggle>
+
+          <Dropdown.Menu>
+            <Dropdown.Item href="#/action-1">Jim</Dropdown.Item>
+            <Dropdown.Item href="#/action-2">Dwight</Dropdown.Item>
+            <Dropdown.Item href="#/action-3">Phyllis</Dropdown.Item>
+            <Dropdown.Item href="#/action-3">Stanley</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
+        {activeTab === "SALES_PERSON" ?
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>Salesperson</th>
+                <th>Total Sales </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Jim</td>
+                <td>$200</td>
+              </tr>
+              <tr>
+                <td>Dwight</td>
+                <td>$150</td>
+              </tr>
+              <tr>
+                <td>Phyllis</td>
+                <td>$150</td>
+              </tr>
+              <tr>
+                <td>Stanley</td>
+                <td>$150</td>
+              </tr>
+            </tbody>
+          </Table> : activeTab === "PRODUCTS" ?
+          <div>
+            Products
+          </div> :
+          <div>
+            {activeTab}
+          </div>
+        }
+      </div>
+    </Container>
   );
 };
 
-Home.propTypes = {};
-
-export default Home;
+export default Admin;
