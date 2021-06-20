@@ -1,5 +1,6 @@
-CREATE DATABASE pf_db;
 DROP DATABASE IF EXISTS pf_db;
+CREATE DATABASE pf_db;
+
 
 USE pf_db;
 
