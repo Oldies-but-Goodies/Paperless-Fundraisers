@@ -1,9 +1,9 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { LOADING, SET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
-
+// import { Link } from 'react-router';
 const Login = () => {
   const [, /* state */ dispatch] = useStoreContext();
   const history = useHistory();
@@ -84,6 +84,8 @@ const Login = () => {
           Login
         </button>
       </form>
+      <h5>Not yet a user, click <Link
+      to="/signUp">here </Link> to signup</h5>
     </div>
   );
 };
