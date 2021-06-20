@@ -6,6 +6,8 @@ import Navigation from "./components/navbar";
 import Home from "./pages/home";
 import Login from "./pages/login";
 import Signup from "./pages/signUp";
+import Admin from "./pages/admin";
+import NewOrder from "./pages/newOrder";
 import { LOADING, SET_USER, UNSET_USER } from "./store/actions";
 import { useStoreContext } from "./store/store";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -26,8 +28,8 @@ const App = () => {
         dispatch({ type: UNSET_USER });
       }
     });
-  }, [dispatch, history]);
-
+  }, []);
+  
   return (
     <Container>
       <Navigation />
@@ -35,6 +37,12 @@ const App = () => {
       {state.user ? (
         <Switch>
           <Route exact path='/' component={Home} />
+          <Route exact path='/admin' >
+            <Admin />
+          </Route>
+          <Route exact path='/newOrder' >
+            <NewOrder />    
+          </Route>
         </Switch>
       ) : (
         <div>
@@ -42,7 +50,7 @@ const App = () => {
           <Switch>
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
-            <Redirect to='/login' />
+            {/* <Redirect to='/login' /> */}
           </Switch>
         </div>
       )}

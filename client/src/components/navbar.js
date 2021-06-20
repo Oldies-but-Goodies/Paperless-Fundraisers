@@ -31,16 +31,16 @@ const Navigation = () => {
 <div>
 <Navbar bg="light" expand="lg">
   <Container>
-    <Navbar.Brand href="#home">Paperless Fundraisers</Navbar.Brand>
+    <Navbar.Brand href="/">Paperless Fundraisers</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav variant="pills"  defaultActiveKey="/home" className="container-fluid">
-        <Nav.Link href="#home">Admin</Nav.Link>
-        <Nav.Link href="#link">New Order</Nav.Link>
+        <Nav.Link href="/admin">Admin</Nav.Link>
+        <Nav.Link href="/newOrder">New Order</Nav.Link>
         <NavDropdown className="ml-auto" title="UserName" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2">Change Fundraiser</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3" onClick={logout}>Logout</NavDropdown.Item>
+          <NavDropdown.Item  onClick={logout}>Logout</NavDropdown.Item>
           
         </NavDropdown>
       </Nav>

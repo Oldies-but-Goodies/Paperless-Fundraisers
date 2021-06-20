@@ -1,44 +1,38 @@
-import React, { Table } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { Component, useState } from "react";
+// import "bootstrap/dist/css/bootstrap.min.css";
+import AdminNav from "../components/adminNav";
+import { Container } from "react-bootstrap";
+import SalesPersonTab from "../components/salesPersonTab";
+import OrdersTab from "../components/ordersTab";
+import ProductsTab from "../components/productsTab";
 
-const Home = (props) => {
+const Admin = (props) => {
+
+  const [activeTab, setActiveTab] = useState("SALES_PERSON");
+
   return (
-    <div>
-      <h7>Welcome to Your fundraiser </h7>
-      <p>Description of fundraiser goes here </p>
-      <h4>Our goal is to raise $XXXX and so far we've raised $XXXX</h4>
-{/* table only shows if user is non-Admin */}
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Customer Name </th>
-            <th>Total Sale </th>
-            <th>Customer Paid</th>
-            <th>Admin Paid</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Stefan</td>
-            <td>$50</td>
-            <td>Yes</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Tammy </td>
-            <td>$40</td>
-            <td>Yes</td>
-            <td>No</td>
-          </tr>
-          </tbody>
-      </Table>
-    </div>
+    <Container>
+      <AdminNav activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div>
+       
+        {activeTab === "SALES_PERSON" ?
+          <SalesPersonTab>
+            
+          </SalesPersonTab> : activeTab === "PRODUCTS" ?
+          <div>
+            <ProductsTab>
+              
+            </ProductsTab>
+          </div> :
+          <div>
+            <OrdersTab>
+
+            </OrdersTab>
+          </div>
+        }
+      </div>
+    </Container>
   );
 };
 
-Home.propTypes = {};
-
-export default Home;
+export default Admin;

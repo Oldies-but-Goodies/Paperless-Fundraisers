@@ -47,9 +47,23 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
       freezeTableName: true,
       underscored: true,
-      modelName: "fundraiser",
+      modelName: "Fundraiser",
     }
   );
+
+  // Fundraiser.associate = function(models) {
+  //   Fundraiser.hasMany(models.Order, {
+  //     onDelete: 'cascade'
+  //   });
+
+  //   Fundraiser.belongsToMany(models.User, {
+  //     through: models.userFundraiser
+  //   });
+
+  //   Fundraiser.hasMany(models.product, {
+  //     onDelete: 'cascade'
+  //   });
+  // }
 
   return Fundraiser;
 };  
