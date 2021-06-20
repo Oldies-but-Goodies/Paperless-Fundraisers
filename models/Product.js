@@ -1,32 +1,37 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+const { sequelize } = require('.');
 
-class Product extends Model {}
+module.exports = (sequelize, DataTypes) => {
 
-Product.init(
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    price: {
+  class Product extends Model {}
+  
+  Product.init(
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-  },
-  {
-    sequelize,
-    timestamps: false,
-    freezeTableName: true,
-    underscored: true,
-    modelName: 'product',
-  }
-);
+      price: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+    },
+    {
+      sequelize,
+      timestamps: false,
+      freezeTableName: true,
+      underscored: true,
+      modelName: 'Product',
+    }
+  );
 
-module.exports = Product;
+  return Product;
+};
+
+

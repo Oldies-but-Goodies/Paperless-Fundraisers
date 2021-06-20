@@ -7,7 +7,7 @@ import { useStoreContext } from '../store/store';
 const Login = () => {
   const [, /* state */ dispatch] = useStoreContext();
   const history = useHistory();
-
+  const [errorMsg, setErrorMsg] = useState(null);
   const [loginCreds, setLoginCreds] = useState({
     email: '',
     password: '',
@@ -30,8 +30,14 @@ const Login = () => {
         password: loginCreds.password,
       })
       .then((response) => {
+        if (response.data.status === 'error'){
+          setErrorMsg(response.data.message);
+          return
+        }
+
         if (response.status === 200) {
           dispatch({ type: SET_USER, user: response.data });
+          setErrorMsg(null);
           history.replace('/');
         }
       })
@@ -44,6 +50,11 @@ const Login = () => {
   return (
     <div className="text-center">
       <h4>Login</h4>
+      {errorMsg ? 
+      <p>
+        {errorMsg}
+      </p> : null
+      }
       <form className="form-signin">
         <label htmlFor="inputEmail" className="sr-only">
           Email address
