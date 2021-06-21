@@ -39,7 +39,7 @@ const Navigation = () => {
         <Nav.Link href="/newOrder">New Order</Nav.Link>
         <NavDropdown className="ml-auto" title="UserName" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Change Fundraiser</NavDropdown.Item>
+          <NavDropdown.Item eventKey="disabled" disabled >Change Fundraiser</NavDropdown.Item>
           <NavDropdown.Item  onClick={logout}>Logout</NavDropdown.Item>
           
         </NavDropdown>
