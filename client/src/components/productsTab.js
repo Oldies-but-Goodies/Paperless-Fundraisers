@@ -1,12 +1,13 @@
 import React from "react";
 import { Table, Container, Button } from "react-bootstrap";
+import AddProductModal from "./addProductModal";
 
 const OrdersTab = () => {
   return (
     <Container>
-      <Button href="/newOrder" className="my-2">
-        New Product
-      </Button>
+      <AddProductModal>
+          
+      </AddProductModal>
       <Table striped bordered hover>
         <thead>
           <tr>
