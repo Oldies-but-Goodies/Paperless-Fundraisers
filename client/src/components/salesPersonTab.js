@@ -1,12 +1,13 @@
 import React from "react";
-import { Table, Container, Dropdown, Button } from "react-bootstrap";
+import { Table, Container, Dropdown } from "react-bootstrap";
+import AddPersonModal from "./addPersonModal";
 
 const SalesPersonTab = () => {
   return (
     <Container>
-      <Button href="#" className="my-2">
-        Add Salesperson
-      </Button>
+      <AddPersonModal>
+
+      </AddPersonModal>
       <Dropdown className="my-2 float-right">
         <Dropdown.Toggle variant="dark" id="dropdown-basic">
           Select Salesperson
