@@ -15,9 +15,6 @@ module.exports = (sequelize, DataTypes) => {
 
   userFundraiser.init(
     {
-      user_id: DataTypes.INTEGER,
-      fundraiser_id: DataTypes.INTEGER,
-      customer_remit: DataTypes.STRING,
       admin_level: DataTypes.STRING,   
     },
     {
