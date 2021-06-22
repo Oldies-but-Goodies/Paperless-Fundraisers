@@ -1,0 +1,46 @@
+[
+    {
+        "first_name": "Josh",
+        "last_name": "Walters",
+        "email": "josh@test.com",
+        "address_line1": "123 Main St",
+        "address_line2": "Apt. 5b",
+        "city": "Concord",
+        "state": "NC",
+        "zip_code": "28027",
+        "phone_number": 9805554444
+    },
+    {
+        "first_name": "Jason",
+        "last_name": "Jones",
+        "email": "jason@test.com",
+        "address_line1": "135 Elm St",
+        "address_line2": null,
+        "city": "Rock Hill",
+        "state": "SC",
+        "zip_code": "29730",
+        "phone_number": 7048887777
+    },
+    {
+        "first_name": "Tammy",
+        "last_name": "Gegoski",
+        "email": "tammy@test.com",
+        "address_line1": "741 Pine Dr",
+        "address_line2": "Apt. 10C",
+        "city": "Charlotte",
+        "state": "NC",
+        "zip_code": "28216",
+        "phone_number": 3363339999
+    },
+    {
+        "first_name": "Stefan",
+        "last_name": "Podzinski",
+        "email": "jpodfather@test.com",
+        "address_line1": "21 Jump St",
+        "address_line2": null,
+        "city": "Matthews",
+        "state": "NC",
+        "zip_code": "28082",
+        "phone_number": 8285432222
+    }
+]
