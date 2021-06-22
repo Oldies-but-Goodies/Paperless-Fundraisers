@@ -9,6 +9,8 @@ const {
   Order
 } = require("../models");
 
+const db = require("../models");
+
 const userData = require("./Users.json");
 const fundraisersData = require("./Fundraisers.json");
 const userFundraisersData = require("./UsersFundraisers.json");
@@ -18,7 +20,7 @@ const productsData = require("./Products.json");
 const ordersData = require("./Orders.json");
 
 const seedDatabase = async () => {
-  await sequelize.sync({ force: true });
+  await db.sequelize.sync({ force: true });
 
   try {
     
