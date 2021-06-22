@@ -26,5 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  userFundraiser.associate = function(models) {
+    userFundraiser.belongsTo(models.User);
+
+    userFundraiser.belongsTo(models.Fundraiser);
+  }
+
   return userFundraiser;
 };
