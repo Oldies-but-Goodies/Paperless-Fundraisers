@@ -1,5 +1,6 @@
 [
     {
+        "id": 1,
         "first_name": "Josh",
         "last_name": "Walters",
         "email": "josh@test.com",
@@ -8,9 +9,10 @@
         "city": "Concord",
         "state": "NC",
         "zip_code": "28027",
-        "phone_number": 9805554444
+        "phone_number": "980-555-4444"
     },
     {
+        "id": 2,
         "first_name": "Jason",
         "last_name": "Jones",
         "email": "jason@test.com",
@@ -19,9 +21,10 @@
         "city": "Rock Hill",
         "state": "SC",
         "zip_code": "29730",
-        "phone_number": 7048887777
+        "phone_number": "704-888-7777"
     },
     {
+        "id": 3,
         "first_name": "Tammy",
         "last_name": "Gegoski",
         "email": "tammy@test.com",
@@ -30,17 +33,18 @@
         "city": "Charlotte",
         "state": "NC",
         "zip_code": "28216",
-        "phone_number": 3363339999
+        "phone_number": "336-333-9999"
     },
     {
+        "id": 4,
         "first_name": "Stefan",
         "last_name": "Podzinski",
-        "email": "jpodfather@test.com",
+        "email": "podfather@test.com",
         "address_line1": "21 Jump St",
         "address_line2": null,
         "city": "Matthews",
         "state": "NC",
         "zip_code": "28082",
-        "phone_number": 8285432222
+        "phone_number": "828-543-2222"
     }
 ]
