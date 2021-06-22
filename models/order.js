@@ -25,9 +25,22 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
+      timestamps: true,
       modelName: 'Order',
     }
   );
+
+  Order.associate = function(models) {
+    Order.belongsTo(models.User);
+
+    Order.belongsTo(models.Customer);
+
+    Order.belongsTo(models.Fundraiser);
+
+    Order.hasMany(models.Order_Details, {
+      onDelete: 'cascade'
+    });
+  }
 
   return Order;
 };

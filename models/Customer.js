@@ -1,9 +1,8 @@
-const { Model } = require('sequelize');
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-
   class Customer extends Model {}
-  
+
   Customer.init(
     {
       id: {
@@ -34,39 +33,34 @@ module.exports = (sequelize, DataTypes) => {
       },
       city: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
       },
       state: {
         type: DataTypes.STRING,
         allowNull: false,
-        },
-        zip_code: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        phone_number: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        created_date: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-        updated_date: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        }
-  
       },
-    
+      zip_code: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      phone_number: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+
     {
       sequelize,
-      timestamps: false,
+      timestamps: true,
       freezeTableName: true,
       underscored: true,
-      modelName: 'Customer'
+      modelName: "Customer",
     }
   );
 
-  return Customer
+  Customer.associate = function (models) {
+    Customer.hasMany(models.Order);
+  };
+
+  return Customer;
 };
