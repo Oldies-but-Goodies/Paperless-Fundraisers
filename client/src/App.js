@@ -51,7 +51,7 @@ const App = () => {
             <Route exact path='/' component={Login} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
-            {/* <Redirect to='/login' /> */}
+            
           </Switch>
         </div>
       )}

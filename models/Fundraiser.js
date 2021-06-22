@@ -30,40 +30,32 @@ module.exports = (sequelize, DataTypes) => {
       },
       goal: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      created_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updated_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
     },
   
     {
       sequelize,
-      timestamps: false,
+      timestamps: true,
       freezeTableName: true,
       underscored: true,
       modelName: "Fundraiser",
     }
   );
 
-  // Fundraiser.associate = function(models) {
-  //   Fundraiser.hasMany(models.Order, {
-  //     onDelete: 'cascade'
-  //   });
+  Fundraiser.associate = function(models) {
+    Fundraiser.hasMany(models.Order, {
+      onDelete: 'cascade'
+    });
 
-  //   Fundraiser.belongsToMany(models.User, {
-  //     through: models.userFundraiser
-  //   });
+    Fundraiser.belongsToMany(models.User, {
+      through: models.userFundraiser
+    });
 
-  //   Fundraiser.hasMany(models.product, {
-  //     onDelete: 'cascade'
-  //   });
-  // }
+    Fundraiser.hasMany(models.Product, {
+      onDelete: 'cascade'
+    });
+  }
 
   return Fundraiser;
 };  

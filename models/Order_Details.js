@@ -23,24 +23,24 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      created_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updated_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
+     
     },
   
     {
       sequelize,
-      timestamps: false,
+      timestamps: true,
       freezeTableName: true,
       underscored: true,
       modelName: "Order_Details",
     }
   );
+
+  Order_Details.associate = function(models) {
+    Order_Details.hasOne(models.Product);
+
+    Order_Details.belongsTo(models.Order);
+
+  }
 
   return Order_Details
 };
