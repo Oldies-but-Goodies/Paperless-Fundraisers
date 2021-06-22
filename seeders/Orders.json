@@ -1,0 +1,44 @@
+[
+  {
+    "customer_id": 1,
+    "order_total": 35,
+    "customer_remit": "yes",
+    "seller_remit": "yes",
+    "order_status": "delivered"
+  },
+  {
+    "customer_id": 1,
+    "order_total": 30,
+    "customer_remit": "no",
+    "seller_remit": "no",
+    "order_status": "open"
+  },
+  {
+    "customer_id": 2,
+    "order_total": 50,
+    "customer_remit": "yes",
+    "seller_remit": "no",
+    "order_status": "open"
+  },
+  {
+    "customer_id": 2,
+    "order_total": 30,
+    "customer_remit": "yes",
+    "seller_remit": "yes",
+    "order_status": "delivered"
+  },
+  {
+    "customer_id": 3,
+    "order_total": 20,
+    "customer_remit": "yes",
+    "seller_remit": "no",
+    "order_status": "open"
+  },
+  {
+    "customer_id": 4,
+    "order_total": 100,
+    "customer_remit": "yes",
+    "seller_remit": "yes",
+    "order_status": "delivered"
+  }
+]
