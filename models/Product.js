@@ -1,4 +1,4 @@
-const { Model, DataTypes } = require('sequelize');
+const { Model, DataTypes, INTEGER } = require('sequelize');
 const { sequelize } = require('.');
 
 module.exports = (sequelize, DataTypes) => {
@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING,
           allowNull: false,
         },
+      fundraiser_id: {
+        type: DataTypes.INTEGER,
+        foreignKey: true,
+        allowNull: false
+      }
     },
     {
       sequelize,
@@ -30,6 +35,12 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Product',
     }
   );
+
+  Product.associate = function(models) {
+    Product.belongsTo(models.Fundraiser, {
+      onDelete: 'cascade'
+    });
+  }
 
   return Product;
 };
