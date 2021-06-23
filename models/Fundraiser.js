@@ -30,21 +30,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       goal: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      created_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updated_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
     },
   
     {
       sequelize,
-      timestamps: false,
+      timestamps: true,
       freezeTableName: true,
       underscored: true,
       modelName: "Fundraiser",
@@ -60,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       through: models.userFundraiser
     });
 
-    Fundraiser.hasMany(models.product, {
+    Fundraiser.hasMany(models.Product, {
       onDelete: 'cascade'
     });
   }

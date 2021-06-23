@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "first_name": "Jason",
+    "last_name": "Jones",
+    "email": "jason.e.jones+test1@gmail.com",
+    "password": "password"
+  },
+  {
+    "id": 2,
+    "first_name": "Josh",
+    "last_name": "Walters",
+    "email": "jason.e.jones+test2@gmail.com",
+    "password": "password"
+  },
+  {
+    "id": 3,
+    "first_name": "Tammy",
+    "last_name": "Gegoski",
+    "email": "jason.e.jones+test3@gmail.com",
+    "password": "password"
+  },
+  {
+    "id": 4,
+    "first_name": "Stefan",
+    "last_name": "Podzinski",
+    "email": "jason.e.jones+test4@gmail.com",
+    "password": "password"
+  },
+  {
+    "id": 5,
+    "first_name": "Fred",
+    "last_name": "Flintstone",
+    "email": "jason.e.jones+test5@gmail.com",
+    "password": "password"
+  }
+]
