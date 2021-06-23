@@ -1,6 +1,7 @@
 {
-  "name": "mern_with_passport",
-  "version": "0.1.0",
+  "name": "PaperlessFundraisers",
+  "version": "0.0.1",
+  "description": "A Group Project by Tammy, Jason, Stefan and Josh",
   "private": true,
   "proxy": "http://localhost:3001",
   "dependencies": {
