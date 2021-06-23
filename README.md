@@ -6,6 +6,10 @@
 2. install server side dependencies (cd to root of project and run `npm i`)
 3. install client side dependencies (cd to ./client and run `npm i`)
 4. install mysql community edition and ensure that mysqld is running
+
+   - [detailed instructions for installing MySQL on Windows](./docs/mysql-windows-guide.md)
+   - [detailed instructions for installing MySQL on MacOS](./docs/mysql-mac-guide.md)
+
 5. in the root of the project, create `.env` file - which we're expecting the following
 
 ```DB_HOST=[insert IP address or hostname of your MySQL database - for dev environments maybe this is 127.0.0.1]
