@@ -1,5 +1,5 @@
 import axios from "axios";
-import { isNil } from "lodash";
+//lodash isNIl was removed
 import React, { useEffect } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import Navigation from "./components/navbar";
@@ -22,19 +22,20 @@ const App = () => {
     dispatch({ type: LOADING });
 
     axios.get("/api/users").then((response) => {
-      if (!isNil(response.data.user)) {
+      if (response.data.user) {
         dispatch({ type: SET_USER, user: response.data.user });
       } else {
         dispatch({ type: UNSET_USER });
       }
-    });
+    })
   }, []);
   
   return (
     <Container>
-      <Navigation />
 
       {state.user ? (
+        <div>
+        <Navigation />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/admin' >
@@ -44,6 +45,7 @@ const App = () => {
             <NewOrder />    
           </Route>
         </Switch>
+        </div>
       ) : (
         <div>
           <Splash></Splash>
