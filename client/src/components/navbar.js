@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React from 'react';
+import React, {useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { LOADING, UNSET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
-import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap'
+import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
+import { LOADING, SET_USER, UNSET_USER } from "../store/actions";
+import { isNil } from "lodash";
 
 const Navigation = () => {
   const [state, dispatch] = useStoreContext();
@@ -27,17 +28,30 @@ const Navigation = () => {
       });
   };
 
+  useEffect(() => {
+    dispatch({ type: LOADING });
+
+    axios.get("/api/users").then((response) => {
+      if (response.data.user) {
+        dispatch({ type: SET_USER, user: response.data.user });
+      } else {
+        dispatch({ type: UNSET_USER });
+      }
+    })
+  }, []);
+
   return (
+    
 <div>
 <Navbar bg="light" expand="lg">
-  <Container>
+  <Container className="mb-3">
     <Navbar.Brand href="/">Paperless Fundraisers</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav variant="pills"  defaultActiveKey="/home" className="container-fluid">
         <Nav.Link href="/admin">Admin</Nav.Link>
         <Nav.Link href="/newOrder">New Order</Nav.Link>
-        <NavDropdown className="ml-auto" title="UserName" id="basic-nav-dropdown">
+        <NavDropdown className="ml-auto" title={state.user.first_name} id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
           <NavDropdown.Item eventKey="disabled" disabled >Change Fundraiser</NavDropdown.Item>
           <NavDropdown.Item  onClick={logout}>Logout</NavDropdown.Item>
