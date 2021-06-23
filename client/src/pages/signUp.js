@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 const SignUp = () => {
   const history = useHistory();
-
+  const [errorMsg, setErrorMsg] = useState(null);
   const [signUpCreds, setSignUpCreds] = useState({
     email: "",
     password: "",
@@ -43,7 +43,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log("ERROR", error);
-        setErrorMsg(error.message);
+        setErrorMsg(error);
       });
   };
 

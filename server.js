@@ -6,7 +6,7 @@ const mysql = require('mysql');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
-
+const db = require('./models');
 const routes = require('./routes');
 =======
 const express = require("express");
@@ -70,4 +70,4 @@ db.sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, function () {
     console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
   });
-});
+})
