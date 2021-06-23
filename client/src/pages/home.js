@@ -5,12 +5,18 @@ import { Container, Table } from "react-bootstrap"
 const Home = (props) => {
   
   return (
-    <Container>
-    <div className="d-flex justify-content-center">
-      <h2 className="row">Welcome to Troop 82 BBQ Fundraiser </h2>
-      <p className="row">We're raising money to get our troop leader, JSON, some extra coding classes </p>
-      <h5 className="row">Our goal is to raise $XXXX and so far we've raised $XXXX</h5>
-    </div>
+    <Container fluid>
+   
+      <div className="row my-2  text-center">
+      <h2 className="col">Welcome to Troop 82 BBQ Fundraiser </h2>
+      </div>
+      <div className="row my-2 text-center">
+      <p className="col">We're raising money to get our troop leader, JSON, some extra coding classes </p>
+      </div>
+      <div className="row my-2 text-center">
+      <h5 className="col">Our goal is to raise $XXXX and so far we've raised $XXXX</h5>
+      </div>
+   
 {/* table only shows if user is non-Admin */}
       <Table striped bordered hover>
         <thead>
