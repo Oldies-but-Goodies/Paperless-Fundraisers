@@ -8,6 +8,7 @@ import Login from "./pages/login";
 import Signup from "./pages/signUp";
 import Admin from "./pages/admin";
 import NewOrder from "./pages/newOrder";
+import Profile from "./pages/profile";
 import { LOADING, SET_USER, UNSET_USER } from "./store/actions";
 import { useStoreContext } from "./store/store";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -27,24 +28,26 @@ const App = () => {
       } else {
         dispatch({ type: UNSET_USER });
       }
-    })
+    });
   }, []);
-  
+
   return (
     <Container>
-
       {state.user ? (
         <div>
-        <Navigation />
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route exact path='/admin' >
-            <Admin />
-          </Route>
-          <Route exact path='/newOrder' >
-            <NewOrder />    
-          </Route>
-        </Switch>
+          <Navigation />
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/admin'>
+              <Admin />
+            </Route>
+            <Route exact path='/newOrder'>
+              <NewOrder />
+            </Route>
+            <Route exact path='/profile'>
+              <Profile />
+            </Route>
+          </Switch>
         </div>
       ) : (
         <div>
@@ -53,7 +56,6 @@ const App = () => {
             <Route exact path='/' component={Login} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
-            
           </Switch>
         </div>
       )}
