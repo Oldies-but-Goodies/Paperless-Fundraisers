@@ -60,6 +60,8 @@ const Navigation = () => {
                 id='basic-nav-dropdown'
               >
                 <NavDropdown.Item href='/profile'>My Profile</NavDropdown.Item>
+                  My Profile
+                </NavDropdown.Item>
                 <NavDropdown.Item eventKey='disabled' disabled>
                   Change Fundraiser
                 </NavDropdown.Item>
