@@ -1,9 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Modal, Button, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Container,
+  Card,
+  Row,
+  Col,
+  Button,
+  Form,
+  Modal,
+} from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { useStoreContext } from "../store/store";
 
-const AddPersonModal = () => {
+const Profile = (props) => {
+  const [state, dispatch] = useStoreContext();
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -47,18 +59,17 @@ const AddPersonModal = () => {
         console.log("ERROR", error);
         setErrorMsg(error);
       });
-    handleClose();
   };
 
   return (
     <>
       <Button variant='primary' className='my-2' onClick={handleShow}>
-        Add Person
+        Update Account
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Salesperson</Modal.Title>
+          <Modal.Title>Edit User Information</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className='form-signin'>
@@ -70,7 +81,7 @@ const AddPersonModal = () => {
               id='inputFirst'
               className='form-control'
               name='first_name'
-              placeholder='First Name'
+              placeholder={state.user.first_name}
               value={signUpCreds.first_name}
               onChange={handleChange}
             />
@@ -82,7 +93,7 @@ const AddPersonModal = () => {
               id='inputLast'
               className='form-control'
               name='last_name'
-              placeholder='Last Name'
+              placeholder={state.user.last_name}
               value={signUpCreds.last_name}
               onChange={handleChange}
             />
@@ -94,7 +105,7 @@ const AddPersonModal = () => {
               id='inputEmail'
               className='form-control'
               name='email'
-              placeholder='Email address'
+              placeholder={state.user.email}
               value={signUpCreds.email}
               onChange={handleChange}
             />
@@ -110,8 +121,20 @@ const AddPersonModal = () => {
               value={signUpCreds.password}
               onChange={handleChange}
             />
+            <label htmlFor='inputPasswordAgain' className='sr-only'>
+              Password Again
+            </label>
+            <input
+              type='password'
+              id='inputPassword'
+              className='form-control'
+              name='password'
+              placeholder='Password'
+              value={signUpCreds.password}
+              onChange={handleChange}
+            />
             {/* <Checkbox style={{ marginLeft: '15px' }} >Admin User </Checkbox> */}
-            <Form.Check className='mt-2' type='checkbox' label='Admin User' />
+            {/* <Form.Check className='mt-2' type='checkbox' label='Admin User' /> */}
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -126,5 +149,7 @@ const AddPersonModal = () => {
     </>
   );
 };
-export default AddPersonModal;
-//   render(<addPersonModal/>);
+
+Profile.propTypes = {};
+
+export default Profile;
