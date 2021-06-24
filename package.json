@@ -10,7 +10,8 @@
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
     "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "seed": "node seeders/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "express-mysql-session": "^2.1.4",
     "express-session": "^1.17.1",
     "if-env": "^1.0.4",
+    "lodash": "^4.17.21",
     "mysql2": "^2.2.5",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",

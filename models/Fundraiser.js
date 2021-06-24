@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       goal: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
     },
   

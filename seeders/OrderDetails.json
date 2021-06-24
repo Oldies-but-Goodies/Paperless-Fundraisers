@@ -37,12 +37,6 @@
         "line_total": 10
       },
       {
-        "order_id": 4,
-        "product_id": 5,
-        "product_qty": 1,
-        "line_total": 5
-      },
-      {
         "order_id": 5,
         "product_id": 1,
         "product_qty": 1,
