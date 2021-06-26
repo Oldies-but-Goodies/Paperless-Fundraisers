@@ -59,6 +59,7 @@ const Navigation = () => {
                 title={state.user.first_name}
                 id='basic-nav-dropdown'
               >
+
                 <NavDropdown.Item href='/profile'>Settings</NavDropdown.Item>
                 <NavDropdown.Item eventKey='disabled' disabled>
                   Change Fundraiser
