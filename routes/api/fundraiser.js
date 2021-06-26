@@ -1,65 +1,64 @@
-// const router = require('express').Router();
-// const { Fundraiser, User, Product } = require('../../models');
+const router = require('express').Router();
+const { Fundraiser, User, Product } = require('../../models');
 
-// // GET all fundraisers
-// router.get('/', async (req, res) => {
-//   try {
-//     const fundraiserData = await Order.findAll();
-//     res.status(200).json(fundraiserData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+// GET all fundraisers
+router.get('/', async (req, res) => {
+  try {
+    const fundraiserData = await Fundraiser.findAll();
+    res.status(200).json(fundraiserData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// // GET a single fundraiser
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const fundraiserData = await Order.findByPk(req.params.id, {
-//       // JOIN with Order, using the Order_Details through table
-//       include: [{ model: Fundraiser, through: User_Fundraiser, as: 'fundraiser_user_fundraiser' }]
-//     });
+// GET a single fundraiser
+router.get('/:id', async (req, res) => {
+  try {
+    const fundraiserData = await Fundraiser.findByPk(req.params.id);
 
-//     if (!fundraiserData) {
-//       res.status(404).json({ message: 'No fundraiser found with this id!' });
-//       return;
-//     }
+    if (!fundraiserData) {
+      res.status(404).json({ message: 'No fundraiser found with this id!' });
+      return;
+    }
 
-//     res.status(200).json(fundraiserData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.status(200).json(fundraiserData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// // CREATE a fundraiser
-// router.post('/', WithAuth, async (req, res) => {
-//   try {
-//     const fundraiserData = await Fundraiser.create(req.body);
-//     res.status(200).json(fundraiserData);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+// CREATE a fundraiser
+// TODO add with auth
+router.post('/', async (req, res) => {
+  try {
+    const fundraiserData = await Fundraiser.create(req.body);
+    res.status(200).json(fundraiserData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
-// // ADD a product?
+// ? ADD a product?
 
-// // DELETE a fundraiser
-// router.delete('/:id', WithAuth, async (req, res) => {
-//   try {
-//     const fundraiserData = await Location.destroy({
-//       where: {
-//         id: req.params.id
-//       }
-//     });
+// DELETE a fundraiser
+// TODO add with auth
+router.delete('/:id', async (req, res) => {
+  try {
+    const fundraiserData = await Fundraiser.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
 
-//     if (!locationData) {
-//       res.status(404).json({ message: 'No fundraiser found with this id!' });
-//       return;
-//     }
+    if (!fundraiserData) {
+      res.status(404).json({ message: 'No fundraiser found with this id!' });
+      return;
+    }
 
-//     res.status(200).json(orderData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.status(200).json(fundraiserData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// module.exports = router;
+module.exports = router;

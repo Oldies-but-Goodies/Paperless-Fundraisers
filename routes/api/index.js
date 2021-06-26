@@ -8,6 +8,14 @@ const userRoutes = require("./user");
 const userFundraiserRoutes = require("./userFundraiser");
 
 // router.use('/customer', customerRoutes);
+router.use("/fundraiser", fundraiserRoutes);
+// router.use('/order', orderRoutes);
+// router.use('/orderDetails', orderDetailsRoutes);
+// router.use('/product', productRoutes);
+router.use("/users", userRoutes);
+// router.use('/userFundraiser', userFundraiserRoutes);
+
+// router.use('/customer', customerRoutes);
 // router.use('/fundraiser', fundraiserRoutes);
 // router.use('/order', orderRoutes);
 // router.use('/orderDetails', orderDetailsRoutes);
