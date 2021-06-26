@@ -1,7 +1,7 @@
 // const router = require('express').Router();
-// const { User, Fundraiser, userFundraiser } = require('../../models');
+// const { Fundraiser, User, Product } = require('../../models');
 
-// GET all fundraisers
+// // GET all fundraisers
 // router.get('/', async (req, res) => {
 //   try {
 //     const fundraiserData = await Order.findAll();
@@ -11,7 +11,7 @@
 //   }
 // });
 
-// GET a single fundraiser
+// // GET a single fundraiser
 // router.get('/:id', async (req, res) => {
 //   try {
 //     const fundraiserData = await Order.findByPk(req.params.id, {
@@ -30,8 +30,8 @@
 //   }
 // });
 
-// CREATE a fundraiser
-// router.post('/', async (req, res) => {
+// // CREATE a fundraiser
+// router.post('/', WithAuth, async (req, res) => {
 //   try {
 //     const fundraiserData = await Fundraiser.create(req.body);
 //     res.status(200).json(fundraiserData);
@@ -40,8 +40,10 @@
 //   }
 // });
 
-// DELETE a fundraiser
-// router.delete('/:id', async (req, res) => {
+// // ADD a product?
+
+// // DELETE a fundraiser
+// router.delete('/:id', WithAuth, async (req, res) => {
 //   try {
 //     const fundraiserData = await Location.destroy({
 //       where: {
