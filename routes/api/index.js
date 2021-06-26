@@ -7,7 +7,7 @@ const productRoutes = require("./product");
 const userRoutes = require("./user");
 const userFundraiserRoutes = require("./userFundraiser");
 
-// router.use('/customer', customerRoutes);
+router.use("/customer", customerRoutes);
 router.use("/fundraiser", fundraiserRoutes);
 // router.use('/order', orderRoutes);
 // router.use('/orderDetails', orderDetailsRoutes);
