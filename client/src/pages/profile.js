@@ -49,6 +49,9 @@ const Profile = (props) => {
     const formData = new FormData(event.target),
       formDataObj = Object.fromEntries(formData.entries());
     console.log(formDataObj);
+    console.log(formDataObj.formCurrentPasswordCheck);
+    console.log(formDataObj.formNewPasswordFirst);
+    console.log(formDataObj.formNewPasswordSecond);
 
     handleClose();
 
