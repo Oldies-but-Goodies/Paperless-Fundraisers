@@ -46,8 +46,8 @@ const AddProductModal = () => {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Product</Modal.Title>
+        <Modal.Header closeButton style={{ background: '#007bff' }}>
+          <Modal.Title style={{ color: 'white' }}>Add New Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="form-signin">
@@ -57,7 +57,7 @@ const AddProductModal = () => {
             <input
               type="string"
               id="inputProdcut"
-              className="form-control"
+              className="form-control mt-1"
               name="product_name"
               placeholder="Product Name"
               // value={signUpCreds.first_name}
@@ -69,7 +69,7 @@ const AddProductModal = () => {
             <input
               type="integer"
               id="inputPrice"
-              className="form-control"
+              className="form-control mt-1"
               name="Price"
               placeholder="Price"
               // value={signUpCreds.last_name}
@@ -81,7 +81,7 @@ const AddProductModal = () => {
             <input
               type="Description"
               id="inputDescription"
-              className="form-control"
+              className="form-control mt-1"
               name="Description"
               placeholder="Description"
               // value={signUpCreds.email}
