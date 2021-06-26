@@ -1,20 +1,20 @@
-const router = require('express').Router();
-const { User, fundraiser, userFundraiser } = require('../../models');
+// const router = require('express').Router();
+// const { Fundraiser, User, Product } = require('../../models');
 
 // // GET all fundraisers
 // router.get('/', async (req, res) => {
 //   try {
-//     const orderData = await Order.findAll();
-//     res.status(200).json(orderData);
+//     const fundraiserData = await Order.findAll();
+//     res.status(200).json(fundraiserData);
 //   } catch (err) {
 //     res.status(500).json(err);
 //   }
 // });
 
-// GET a single fundraiser
+// // GET a single fundraiser
 // router.get('/:id', async (req, res) => {
 //   try {
-//     const orderData = await Order.findByPk(req.params.id, {
+//     const fundraiserData = await Order.findByPk(req.params.id, {
 //       // JOIN with Order, using the Order_Details through table
 //       include: [{ model: Fundraiser, through: User_Fundraiser, as: 'fundraiser_user_fundraiser' }]
 //     });
@@ -31,7 +31,7 @@ const { User, fundraiser, userFundraiser } = require('../../models');
 // });
 
 // // CREATE a fundraiser
-// router.post('/', async (req, res) => {
+// router.post('/', WithAuth, async (req, res) => {
 //   try {
 //     const fundraiserData = await Fundraiser.create(req.body);
 //     res.status(200).json(fundraiserData);
@@ -40,8 +40,10 @@ const { User, fundraiser, userFundraiser } = require('../../models');
 //   }
 // });
 
+// // ADD a product?
+
 // // DELETE a fundraiser
-// router.delete('/:id', async (req, res) => {
+// router.delete('/:id', WithAuth, async (req, res) => {
 //   try {
 //     const fundraiserData = await Location.destroy({
 //       where: {
