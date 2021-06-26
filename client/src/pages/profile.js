@@ -10,6 +10,7 @@ import {
   Form,
   Modal,
 } from "react-bootstrap";
+
 import { useHistory } from "react-router-dom";
 import { useStoreContext } from "../store/store";
 
@@ -30,6 +31,12 @@ const Profile = (props) => {
     last_name: "",
   });
 
+  const [passwordChange, setPasswordChange] = useState({
+    currentPassword: "",
+    changedPassword1: "",
+    changedPassword2: "",
+  });
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -39,112 +46,88 @@ const Profile = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios
-      .post("/api/users/signup", {
-        email: signUpCreds.email,
-        password: signUpCreds.password,
-        first_name: signUpCreds.first_name,
-        last_name: signUpCreds.last_name,
-      })
-      .then((response) => {
-        console.log("RESPONSE", response);
-        if (response.data.status === "error") {
-          setErrorMsg(response.data.message);
-          return;
-        }
-        setErrorMsg(null);
-        history.replace("/admin");
-      })
-      .catch((error) => {
-        console.log("ERROR", error);
-        setErrorMsg(error);
-      });
+    const formData = new FormData(event.target),
+      formDataObj = Object.fromEntries(formData.entries());
+    console.log(formDataObj);
+
+    handleClose();
+
+    // STEP 1: compare formNewPasswordFirst and formNewPasswordSecond to be sure that the proposed passwords match
+    // STEP 2: validate that the proposed password can validate
+    // STEP 3: validate that the current password @ formCurrentPasswordCheck is in fact the current password
+    // STEP 4: if everything is rigth, then call a user route to update the password with the new password
+    // axios
+    //   .post("/api/users/signup", {
+    //     email: signUpCreds.email,
+    //     password: signUpCreds.password,
+    //     first_name: signUpCreds.first_name,
+    //     last_name: signUpCreds.last_name,
+    //   })
+    //   .then((response) => {
+    //     console.log("RESPONSE", response);
+    //     if (response.data.status === "error") {
+    //       setErrorMsg(response.data.message);
+    //       return;
+    //     }
+    //     setErrorMsg(null);
+    //     history.replace("/admin");
+    //   })
+    //   .catch((error) => {
+    //     console.log("ERROR", error);
+    //     setErrorMsg(error);
+    //   });
   };
 
   return (
     <>
-      <Button variant='primary' className='my-2' onClick={handleShow}>
-        Update Account
-      </Button>
+      <Row className='justify-content-md-center'>
+        <Col xs lg='4'>
+          <Button variant='primary' onClick={handleShow} block>
+            Change Password
+          </Button>
+        </Col>
+      </Row>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit User Information</Modal.Title>
+          <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className='form-signin'>
-            <label htmlFor='inputFirst' className='sr-only'>
-              First Name
-            </label>
-            <input
-              type='string'
-              id='inputFirst'
-              className='form-control'
-              name='first_name'
-              placeholder={state.user.first_name}
-              value={signUpCreds.first_name}
-              onChange={handleChange}
-            />
-            <label htmlFor='inputLast' className='sr-only'>
-              Last Name
-            </label>
-            <input
-              type='string'
-              id='inputLast'
-              className='form-control'
-              name='last_name'
-              placeholder={state.user.last_name}
-              value={signUpCreds.last_name}
-              onChange={handleChange}
-            />
-            <label htmlFor='inputEmail' className='sr-only'>
-              Email address
-            </label>
-            <input
-              type='email'
-              id='inputEmail'
-              className='form-control'
-              name='email'
-              placeholder={state.user.email}
-              value={signUpCreds.email}
-              onChange={handleChange}
-            />
-            <label htmlFor='inputPassword' className='sr-only'>
-              Password
-            </label>
-            <input
-              type='password'
-              id='inputPassword'
-              className='form-control'
-              name='password'
-              placeholder='Password'
-              value={signUpCreds.password}
-              onChange={handleChange}
-            />
-            <label htmlFor='inputPasswordAgain' className='sr-only'>
-              Password Again
-            </label>
-            <input
-              type='password'
-              id='inputPassword'
-              className='form-control'
-              name='password'
-              placeholder='Password'
-              value={signUpCreds.password}
-              onChange={handleChange}
-            />
-            {/* <Checkbox style={{ marginLeft: '15px' }} >Admin User </Checkbox> */}
-            {/* <Form.Check className='mt-2' type='checkbox' label='Admin User' /> */}
-          </form>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId='formCurrentPasswordCheck'>
+              <Form.Label>Current Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Enter current password'
+                name='formCurrentPasswordCheck'
+              />
+            </Form.Group>
+
+            <Form.Group controlId='formNewPasswordFirst'>
+              <Form.Label>New Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Password'
+                name='formNewPasswordFirst'
+              />
+            </Form.Group>
+            <Form.Group controlId='formNewPasswordSecond'>
+              <Form.Control
+                type='password'
+                placeholder='Confirm New Password'
+                name='formNewPasswordSecond'
+              />
+            </Form.Group>
+            <Modal.Footer>
+              <Button variant='secondary' onClick={handleClose}>
+                Cancel
+              </Button>
+              <Button variant='primary' type='submit'>
+                Change Password
+              </Button>
+            </Modal.Footer>
+          </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={handleSubmit}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
