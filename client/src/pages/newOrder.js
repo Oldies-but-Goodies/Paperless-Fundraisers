@@ -35,38 +35,38 @@ const NewOrder = (props) => {
  
     <Container className="text-center">
     <h1>New Order</h1>
-    <div className="border border-bold py-1">
+    <div className="border border-dark py-4">
   <div className="form-group row">
   {/* <label htmlFor="first_name" className="col-sm-2 sr-only">First Name</label> */}
-  <div className="col-sm-6">
+  <div className="col-sm-5 ml-2">
     <input type="text" className="form-control" name="first_name" defaultValue="" required placeholder="First Name" ></input>
   </div>
   {/* <label for="product_name" className="col-sm-2 col-form-label">Last Name</label> */}
-  <div className="col-sm-6">
+  <div className="col-sm-5 mr-2">
     <input type="text" className="form-control" name="last_name" defaultValue="" required placeholder="Last Name"></input>
   </div>
 </div>
 <div className="form-group row">
-<div className="col-sm-12 mt-1">
+<div className="col-sm-10 mt-1 ml-2">
     <input type="text" className="form-control" name="address" defaultValue="" required placeholder="Address"></input>
   </div>
-  <div className="col-sm-12 mt-1">
+  <div className="col-sm-10 mt-1 ml-2">
     <input type="text" className="form-control" name="address2" defaultValue="" required placeholder="Address 2"></input>
   </div>
-  <div className="col-sm-5 mt-1">
+  <div className="col-sm-5 mt-1 ml-2">
     <input type="text" className="form-control" name="city" defaultValue="" required placeholder="City"></input>
   </div>
-  <div className="col-sm-3 mt-1">
+  <div className="col-sm-2 mt-1">
     <input type="text" className="form-control" name="state" defaultValue="" required placeholder="State"></input>
   </div>
-  <div className="col-sm-4 mt-1">
+  <div className="col-sm-3 mt-1">
     <input type="integer" className="form-control" name="zip" defaultValue="" required placeholder="Zip Code"></input>
   </div>
   </div>
   </div>
 
 
-  <Table striped bordered hover>
+  <Table striped bordered hover className="mt-3">
         <thead>
           <tr>
             <th>Product</th>
