@@ -1,5 +1,5 @@
-const { Model, DataTypes, INTEGER } = require('sequelize');
-const { sequelize } = require('.');
+const { Model } = require("sequelize");
+
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       fundraiser_id: {
         type: DataTypes.INTEGER,
         foreignKey: true,
-        allowNull: false
+        // allowNull: false
       }
     },
     {
