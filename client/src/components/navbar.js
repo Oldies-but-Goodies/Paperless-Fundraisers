@@ -42,9 +42,9 @@ const Navigation = () => {
 
   return (
     <div>
-      <Navbar bg='light' expand='lg'>
+      <Navbar className="nav-style" expand='lg'>
         <Container className='mb-3'>
-          <Navbar.Brand href='/'>Paperless Fundraisers</Navbar.Brand>
+          <Navbar.Brand href='/' style={{color:"white"}}>Paperless Fundraisers</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav
@@ -52,16 +52,14 @@ const Navigation = () => {
               defaultActiveKey='/home'
               className='container-fluid'
             >
-              <Nav.Link href='/admin'>Admin</Nav.Link>
-              <Nav.Link href='/newOrder'>New Order</Nav.Link>
-              <NavDropdown
+              <Nav.Link href='/admin' style={{color:"white"}}>Admin</Nav.Link>
+              <Nav.Link href='/newOrder' style={{color:"white"}}>New Order</Nav.Link>
+              <NavDropdown style={{color:"white"}}
                 className='ml-auto'
                 title={state.user.first_name}
                 id='basic-nav-dropdown'
               >
-                <NavDropdown.Item href='/profile'>
-                  My Profile
-                </NavDropdown.Item>
+                <NavDropdown.Item href='/profile'>Settings</NavDropdown.Item>
                 <NavDropdown.Item eventKey='disabled' disabled>
                   Change Fundraiser
                 </NavDropdown.Item>

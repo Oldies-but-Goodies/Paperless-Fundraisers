@@ -1,3 +1,5 @@
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -16,3 +18,11 @@ code {
   display: block;
   position: absolute;
 } */
+
+.admin-nav {
+  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+}
+
+.nav-style {
+  background: linear-gradient(15deg, #0528f1ef 0%, #80d0c7 100%);
+}
