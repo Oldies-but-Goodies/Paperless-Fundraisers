@@ -19,10 +19,6 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-      line_total: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
      
     },
   
