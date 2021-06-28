@@ -57,11 +57,11 @@ router.put('/:id',  async (req, res) => {
       }
     );
 
-    if (!updatedCustomer) {
-      res.status(404).json({ message: 'No customer_id found with this id' });
+    if (!updatedFundraiser) {
+      res.status(404).json({ message: 'No Fundraiser_id found with this id' });
       return;
     }
-    res.json(updatedCustomer);
+    res.json(updatedFundraiser);
   } catch (err) {
     res.status(500).json(err);
   }
