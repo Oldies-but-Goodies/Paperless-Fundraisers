@@ -1,95 +1,98 @@
-// const router = require('express').Router();
-// const { Customer, Order } = require('../../models');
+const router = require('express').Router();
+const { Customer, Order } = require('../../models');
 
 
-// // GET all customers
-// router.get('/', async (req, res) => {
-//   try {
-//     const customerData = await Customer.findAll();
-//     res.status(200).json(customerData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+// GET all customers
+router.get('/', async (req, res) => {
+  try {
+    const customerData = await Customer.findAll();
+    res.status(200).json(customerData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// // GET a single customer
-// router.get('/:id', async (req, res) => {
-//   try {
-//     const customerData = await Customer.findByPk(req.params.id, {
-//       // JOIN with Order
-//       include: [{ model: Order }]
-//     });
+// GET a single customer
+router.get('/:id', async (req, res) => {
+  try {
+    const customerData = await Customer.findByPk(req.params.id, {
+      // JOIN with Order
+      include: [{ model: Order }]
+    });
 
-//     if (!customerData) {
-//       res.status(404).json({ message: 'No customer found with this id!' });
-//       return;
-//     }
+    if (!customerData) {
+      res.status(404).json({ message: 'No customer found with this id!' });
+      return;
+    }
 
-//     res.status(200).json(customerData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    res.status(200).json(customerData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
-// // CREATE a customer
-// router.post('/', WithAuth, async (req, res) => {
-//     try {
-//       const customerData = await Customer.create(req.body);
-//       res.status(200).json(customerData);
-//     } catch (err) {
-//       res.status(400).json(err);
-//     }
-//   });
+// CREATE a customer
+// TODO add with auth
+router.post('/',  async (req, res) => {
+    try {
+      const customerData = await Customer.create(req.body);
+      res.status(200).json(customerData);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  });
 
-// //   UPDATE a customer
-//   router.put('/:id', withAuth, async (req, res) => {
-//     try {
-//       const updatedCustomer = await Customer.update(
-//         {
-//           first_name: req.body.first_name,
-//           last_name: req.body.last_name,
-//           email: req.body.email,
-//           address_line1: req.body.address_line1,
-//           address_line2: req.body.address_line2,
-//           city: req.body.city,
-//           state: req.body.state,
-//           zip_code: req.body.zip_code,
-//           phone_number: req.body.phone_number,
-//         },
-//         {
-//           where: {
-//             id: req.params.id,
-//           },
-//         }
-//       );
+//   UPDATE a customer
+// TODO add with auth
+  router.put('/:id',  async (req, res) => {
+    try {
+      const updatedCustomer = await Customer.update(
+        {
+          first_name: req.body.first_name,
+          last_name: req.body.last_name,
+          email: req.body.email,
+          address_line1: req.body.address_line1,
+          address_line2: req.body.address_line2,
+          city: req.body.city,
+          state: req.body.state,
+          zip_code: req.body.zip_code,
+          phone_number: req.body.phone_number,
+        },
+        {
+          where: {
+            id: req.params.id,
+          },
+        }
+      );
 
-//       if (!updatedCustomer) {
-//         res.status(404).json({ message: 'No customer_id found with this id' });
-//         return;
-//       }
-//       res.json(updatedCustomer);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   });
-//   // DELETE a customer
-//   router.delete('/:id', WithAuth, async (req, res) => {
-//     try {
-//       const customerData = await Customer.destroy({
-//         where: {
-//           id: req.params.id
-//         }
-//       });
+      if (!updatedCustomer) {
+        res.status(404).json({ message: 'No customer_id found with this id' });
+        return;
+      }
+      res.json(updatedCustomer);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
+  // DELETE a customer
+  // TODO add with auth
+  router.delete('/:id',  async (req, res) => {
+    try {
+      const customerData = await Customer.destroy({
+        where: {
+          id: req.params.id
+        }
+      });
   
-//       if (!customerData) {
-//         res.status(404).json({ message: 'No customer found with this id!' });
-//         return;
-//       }
+      if (!customerData) {
+        res.status(404).json({ message: 'No customer found with this id!' });
+        return;
+      }
   
-//       res.status(200).json(customerData);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   });
+      res.status(200).json(customerData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
-// module.exports = router;
+module.exports = router;

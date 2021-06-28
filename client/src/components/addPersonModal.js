@@ -56,8 +56,9 @@ const AddPersonModal = () => {
         Add Person
       </Button>
 
+
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton style={{ background: '#007bff' }}>
+        <Modal.Header style={{ background:`linear-gradient(${'#007bff'}, ${'#002853'})`}}>
           <Modal.Title style={{ color: 'white' }}>Add New Salesperson</Modal.Title>
         </Modal.Header>
         <Modal.Body>

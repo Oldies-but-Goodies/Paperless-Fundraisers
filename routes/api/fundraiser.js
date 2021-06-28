@@ -38,7 +38,35 @@ router.post('/', async (req, res) => {
   }
 });
 
-// ? ADD a product?
+// UPDATE a fundraiser
+// TODO add with auth
+router.put('/:id',  async (req, res) => {
+  try {
+    const updatedFundraiser = await Fundraiser.update(
+      {
+        name: req.body.name,
+        start: req.body.start,
+        end: req.body.end,
+        description: req.body.description,
+        goal: req.body.goal
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    if (!updatedFundraiser) {
+      res.status(404).json({ message: 'No Fundraiser_id found with this id' });
+      return;
+    }
+    res.json(updatedFundraiser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 // DELETE a fundraiser
 // TODO add with auth

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-const AddProductModal = () => {
+const AddFundraiserModal = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -41,38 +41,26 @@ const AddProductModal = () => {
 
   return (
     <>
-      <Button variant="primary" className="my-2" onClick={handleShow}>
-        Add Product
+      <Button variant="primary" className="ml-2" onClick={handleShow}>
+        Add Fundraiser
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ background:`linear-gradient(${'#007bff'}, ${'#002853'})`}}>
-          <Modal.Title style={{ color: 'white' }}>Add New Product</Modal.Title>
+          <Modal.Title style={{ color: 'white' }}>Add New Fundraiser</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className="form-signin">
-            <label htmlFor="inputProduct" className="sr-only">
-              Product Name
+            <label htmlFor="inputFundraiser" className="sr-only">
+              Fundraiser Name
             </label>
             <input
               type="string"
-              id="inputProdcut"
+              id="inputFundraiser"
               className="form-control mt-1"
-              name="product_name"
-              placeholder="Product Name"
+              name="name"
+              placeholder="Fundraiser Name"
               // value={signUpCreds.first_name}
-              // onChange={handleChange}
-            />
-            <label htmlFor="inputPrice" className="sr-only">
-              Price
-            </label>
-            <input
-              type="integer"
-              id="inputPrice"
-              className="form-control mt-1"
-              name="Price"
-              placeholder="Price"
-              // value={signUpCreds.last_name}
               // onChange={handleChange}
             />
             <label htmlFor="inputDescription" className="sr-only">
@@ -87,7 +75,43 @@ const AddProductModal = () => {
               // value={signUpCreds.email}
               // onChange={handleChange}
             />
-            <Form.Check className="mt-2" type="checkbox" label="Product Active" />
+            <label htmlFor="inputStartDate" className="sr-only">
+              Start Date
+            </label>
+            <input
+              type="date"
+              id="inputStartDate"
+              className="form-control mt-1"
+              name="start_date"
+              placeholder="Start Date"
+              // value={signUpCreds.last_name}
+              // onChange={handleChange}
+            />
+            <label htmlFor="inputEndDate" className="sr-only">
+              End Date
+            </label>
+            <input
+              type="date"
+              id="inputEndDate"
+              className="form-control mt-1"
+              name="end_date"
+              placeholder="End Date"
+              // value={signUpCreds.last_name}
+              // onChange={handleChange}
+            />
+            <label htmlFor="inputGoal" className="sr-only">
+              Goal
+            </label>
+            <input
+              type="integer"
+              id="inputGoal"
+              className="form-control mt-1"
+              name="goal"
+              placeholder="$$ Goal"
+              // value={signUpCreds.last_name}
+              // onChange={handleChange}
+            />
+            <Form.Check className="mt-2" type="checkbox" label="Fundraiser Active" />
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -102,5 +126,5 @@ const AddProductModal = () => {
     </>
   );
 };
-export default AddProductModal;
+export default AddFundraiserModal;
 //   render(<addPersonModal/>);
