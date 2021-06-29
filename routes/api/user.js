@@ -7,7 +7,7 @@ const { isValidEmail, isValidPassword } = require("../../utilities/authUtils");
 
 const router = express.Router();
 
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
   if (req.user) {
     const user = await User.findOne({
       where: {
