@@ -1,6 +1,6 @@
-"use strict";
-const { Model } = require("sequelize");
-const bcrypt = require("bcryptjs");
+'use strict';
+const { Model } = require('sequelize');
+const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User',
       hooks: {
         beforeCreate: async (userData) => {
           userData.password = await bcrypt.hash(userData.password, 10);
@@ -41,13 +41,25 @@ module.exports = (sequelize, DataTypes) => {
           userData.password = await bcrypt.hash(userData.password, 10);
           return userData;
         },
+        //
+        // we need BulkUpdate and we need to reach in to the attributes if
+        // we are gonna user.update = which we need to change the password
+        //
+        beforeBulkUpdate: async (userData) => {
+          // console.log(userData);
+          userData.attributes.password = await bcrypt.hash(
+            userData.attributes.password,
+            10
+          );
+          return userData;
+        },
       },
     }
   );
 
   User.associate = function (models) {
     User.hasMany(models.Order, {
-      onDelete: "cascade",
+      onDelete: 'cascade',
     });
 
     User.belongsToMany(models.Fundraiser, {
