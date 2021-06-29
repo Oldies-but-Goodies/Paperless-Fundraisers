@@ -43,7 +43,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.log("ERROR", error);
-        setErrorMsg(error);
+        setErrorMsg(error.message);
       });
   };
 
