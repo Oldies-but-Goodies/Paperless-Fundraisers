@@ -30,16 +30,29 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// // CREATE  order detail
-// // TODO add with auth
-// router.post("/", async (req, res) => {
-//   try {
-//     const orderDetails = await Order_Details.create(req.body);
-//     res.status(200).json(orderDetails);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+// CREATE  order detail
+// TODO add with auth
+router.post("/", async (req, res) => {
+  try {
+    const orderDetails = await Order_Details.create(
+      {
+        order_id: req.body.order_id,
+        product_id: req.body.product_id,
+        product_qty: req.body.product_qty,
+        line_total: req.body.line_total,
+        
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+    res.status(200).json(orderDetails);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 //   UPDATE an order detail
 // TODO add with auth

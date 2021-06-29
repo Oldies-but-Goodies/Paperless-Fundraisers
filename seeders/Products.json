@@ -1,22 +1,27 @@
 [
     {
         "name": "1lb pork BBQ",
-        "price": 15     
+        "price": 15,
+        "description": "It's pork!"     
       },
       {
         "name": "1lb smoked turkey",
-        "price": 20     
+        "price": 20,
+        "description": "It's turkey!"     
       },
       {
         "name": "full rack ribs",
-        "price": 25     
+        "price": 25,
+        "description": "It's ribs!"     
       },
       {
         "name": "family size baked beans",
-        "price": 5     
+        "price": 5,
+        "description": "It's beans!"     
       },
       {
         "name": "family size cole slaw",
-        "price": 5     
+        "price": 5,
+        "description": "It's cole slaw!"     
       }
 ]
