@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const productData = await Product.findByPk(req.params.id, {
-      
       //   include: [{ model: Product, through: ' }]
     });
 
@@ -49,7 +48,6 @@ router.put("/:id", async (req, res) => {
       {
         name: req.body.name,
         price: req.body.price,
-        
       },
       {
         where: {
