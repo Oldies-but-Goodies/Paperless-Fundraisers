@@ -21,6 +21,13 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.STRING,
           allowNull: false,
         },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      active: {
+        type: DataTypes.BOOLEAN
+      },
       fundraiser_id: {
         type: DataTypes.INTEGER,
         foreignKey: true,
