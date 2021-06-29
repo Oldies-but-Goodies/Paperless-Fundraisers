@@ -1,44 +1,39 @@
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
-module.exports = (sequelize, DataTypes) => {
-  class Order_Details extends Model {}
-  
-  Order_Details.init(
-    {
-      order_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        foreignKey: true,
-      },
-      product_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        foreignKey: true,
-      },
-      product_qty: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-     
+class Order_Details extends Model {}
+
+Order_Details.init(
+  {
+    order_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      foreignKey: true,
     },
-  
-    {
-      sequelize,
-      timestamps: true,
-      freezeTableName: true,
-      underscored: true,
-      modelName: "Order_Details",
-    }
-  );
+    product_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      foreignKey: true,
+    },
+    product_qty: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+  },
 
-  Order_Details.associate = function(models) {
-    Order_Details.hasOne(models.Product);
-
-    Order_Details.belongsTo(models.Order);
-
+  {
+    sequelize,
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'Order_Details',
   }
+);
 
-  return Order_Details
+Order_Details.associate = function (models) {
+  Order_Details.hasOne(models.Product);
+
+  Order_Details.belongsTo(models.Order);
 };
 
-
+module.exports = Order_Details;
