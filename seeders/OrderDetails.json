@@ -1,69 +1,62 @@
 [
-    {
-      "order_id": 1,
-      "product_id": 1,
-      "product_qty": 1
-      
-    },
-    {
-        "order_id": 1,
-        "product_id": 2,
-        "product_qty": 1
-         
-      },
-      {
-        "order_id": 2,
-        "product_id": 1,
-        "product_qty": 2
-        
-      },
-      {
-        "order_id": 3,
-        "product_id": 3,
-        "product_qty": 2
-        
-      },
-      {
-        "order_id": 4,
-        "product_id": 1,
-        "product_qty": 1
-        
-      },
-      {
-        "order_id": 4,
-        "product_id": 4,
-        "product_qty": 2
-        
-      },
-      {
-        "order_id": 5,
-        "product_id": 1,
-        "product_qty": 1
-        
-      },
-      {
-        "order_id": 5,
-        "product_id": 5,
-        "product_qty": 1
-        
-      },
-      {
-        "order_id": 6,
-        "product_id": 1,
-        "product_qty": 2
-        
-      },
-      {
-        "order_id": 6,
-        "product_id": 3,
-        "product_qty": 2
-        
-      },
-      {
-        "order_id": 6,
-        "product_id": 2,
-        "product_qty": 1
-        
-      }
-      
+  {
+    "OrderId": 1,
+    "ProductId": 1,
+    "product_qty": 1
+  },
+  {
+    "OrderId": 1,
+    "ProductId": 2,
+    "product_qty": 1
+  },
+  {
+    "OrderId": 2,
+    "ProductId": 1,
+    "product_qty": 2
+  },
+  {
+    "OrderId": 3,
+    "ProductId": 3,
+    "product_qty": 2
+  },
+  {
+    "OrderId": 4,
+    "ProductId": 1,
+    "product_qty": 1
+  },
+  {
+    "OrderId": 4,
+    "ProductId": 4,
+    "product_qty": 2
+  },
+  {
+    "OrderId": 4,
+    "ProductId": 5,
+    "product_qty": 1
+  },
+  {
+    "OrderId": 5,
+    "ProductId": 1,
+    "product_qty": 1
+  },
+  {
+    "OrderId": 5,
+    "ProductId": 5,
+    "product_qty": 1
+  },
+  {
+    "OrderId": 6,
+    "ProductId": 1,
+    "product_qty": 2
+  },
+  {
+    "OrderId": 6,
+    "ProductId": 3,
+    "product_qty": 2
+  },
+  {
+    "OrderId": 6,
+    "ProductId": 2,
+    "product_qty": 1
+  }
 ]

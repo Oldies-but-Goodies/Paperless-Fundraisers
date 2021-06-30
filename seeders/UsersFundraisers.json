@@ -1,30 +1,25 @@
 [
   {
-    "id": 100,
     "UserId": 1,
     "FundraiserId": 1000,
     "admin_level": "admin"
   },
   {
-    "id": 101,
     "UserId": 2,
     "FundraiserId": 1000,
     "admin_level": "admin"
   },
   {
-    "id": 102,
     "UserId": 3,
     "FundraiserId": 1000,
     "admin_level": "admin"
   },
   {
-    "id": 103,
     "UserId": 4,
     "FundraiserId": 1000,
     "admin_level": "admin"
   },
   {
-    "id": 104,
     "UserId": 5,
     "FundraiserId": 1000,
     "admin_level": "user"
