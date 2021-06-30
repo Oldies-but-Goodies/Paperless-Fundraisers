@@ -1,7 +1,7 @@
 const express = require('express');
 const crypto = require('crypto');
 
-const User = require('../../models').User;
+const { User, Fundraiser } = require('../../models');
 const passport = require('../../passport');
 const { isValidEmail, isValidPassword } = require('../../utilities/authUtils');
 
@@ -13,6 +13,11 @@ router.get('/', async (req, res) => {
       where: {
         id: req.user.id,
       },
+      include: [
+        {
+          model: Fundraiser
+        }
+      ]
     });
 
     if (user) {
@@ -101,13 +106,27 @@ router.post('/login', function (req, res, next) {
       return res.json({ status: 'error', message: info.message });
     }
 
-    req.logIn(user, function (err) {
-      if (err) {
-        return next(err);
-      }
+    User.findOne({
+      where: {
+        id: user.id,
+      },
+      include: [
+        {
+          model: Fundraiser
+        }
+      ]
+    }).then(data => {
+      req.logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+  
+        return res.json({ status: 'ok', ...data.dataValues });
+      });
 
-      return res.json({ status: 'ok', ...user });
-    });
+    })
+
+
   })(req, res, next);
 });
 

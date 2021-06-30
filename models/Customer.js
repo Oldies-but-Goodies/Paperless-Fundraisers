@@ -53,13 +53,8 @@ Customer.init(
     sequelize,
     timestamps: true,
     freezeTableName: true,
-    underscored: true,
     modelName: 'Customer',
   }
 );
-
-Customer.associate = function (models) {
-  Customer.hasMany(models.Order);
-};
 
 module.exports = Customer;

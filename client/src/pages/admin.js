@@ -5,10 +5,18 @@ import { Container } from "react-bootstrap";
 import SalesPersonTab from "../components/salesPersonTab";
 import OrdersTab from "../components/ordersTab";
 import ProductsTab from "../components/productsTab";
+import FundraisersTab from "../components/fundraisersTab"
 
 const Admin = (props) => {
 
   const [activeTab, setActiveTab] = useState("SALES_PERSON");
+
+  const renderActiveTab = () => {
+    switch (activeTab) {
+      case "SALES_PERSON": 
+       return <SalesPersonTab></SalesPersonTab>;
+    }
+  }
 
   return (
     <Container>
@@ -26,8 +34,8 @@ const Admin = (props) => {
       </div>
       <AdminNav activeTab={activeTab} setActiveTab={setActiveTab} />
       <div>
-       
-        {activeTab === "SALES_PERSON" ?
+        {renderActiveTab ()}
+        {/* {activeTab === "SALES_PERSON" ?
           <SalesPersonTab>
             
           </SalesPersonTab> : activeTab === "PRODUCTS" ?
@@ -40,8 +48,13 @@ const Admin = (props) => {
             <OrdersTab>
 
             </OrdersTab>
+          </div> :
+          <div>
+            <FundraisersTab>
+
+            </FundraisersTab>
           </div>
-        }
+        } */}
       </div>
     </Container>
   );

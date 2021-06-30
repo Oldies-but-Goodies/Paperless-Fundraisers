@@ -37,23 +37,9 @@ Fundraiser.init(
     sequelize,
     timestamps: true,
     freezeTableName: true,
-    underscored: true,
     modelName: 'Fundraiser',
   }
 );
 
-Fundraiser.associate = function (models) {
-  Fundraiser.hasMany(models.Order, {
-    onDelete: 'cascade',
-  });
-
-  Fundraiser.belongsToMany(models.User, {
-    through: models.userFundraiser,
-  });
-
-  Fundraiser.hasMany(models.Product, {
-    onDelete: 'cascade',
-  });
-};
 
 module.exports = Fundraiser;
