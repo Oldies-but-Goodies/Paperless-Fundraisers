@@ -1,70 +1,59 @@
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
-module.exports = (sequelize, DataTypes) => {
+class Fundraiser extends Model {}
 
-  class Fundraiser extends Model {}
-  
-  Fundraiser.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      name: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-      start: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-      end: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      goal: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      created_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      updated_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
+Fundraiser.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-  
-    {
-      sequelize,
-      timestamps: false,
-      freezeTableName: true,
-      underscored: true,
-      modelName: "Fundraiser",
-    }
-  );
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    start: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    end: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    goal: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+  },
 
-  // Fundraiser.associate = function(models) {
-  //   Fundraiser.hasMany(models.Order, {
-  //     onDelete: 'cascade'
-  //   });
+  {
+    sequelize,
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true,
+    modelName: 'Fundraiser',
+  }
+);
 
-  //   Fundraiser.belongsToMany(models.User, {
-  //     through: models.userFundraiser
-  //   });
+Fundraiser.associate = function (models) {
+  Fundraiser.hasMany(models.Order, {
+    onDelete: 'cascade',
+  });
 
-  //   Fundraiser.hasMany(models.product, {
-  //     onDelete: 'cascade'
-  //   });
-  // }
+  Fundraiser.belongsToMany(models.User, {
+    through: models.userFundraiser,
+  });
 
-  return Fundraiser;
-};  
+  Fundraiser.hasMany(models.Product, {
+    onDelete: 'cascade',
+  });
+};
 
+module.exports = Fundraiser;

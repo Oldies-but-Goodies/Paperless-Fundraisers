@@ -4,7 +4,7 @@ import { Table, Container, Button } from "react-bootstrap";
 const OrdersTab = () => {
   return (
     <Container>
-      <Button href="/newOrder" className="my-2">
+      <Button href='/newOrder' className='my-2'>
         New Order
       </Button>
       <Table striped bordered hover>
