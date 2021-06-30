@@ -1,27 +1,37 @@
 [
-    {
-        "name": "1lb pork BBQ",
-        "price": 15,
-        "description": "It's pork!"     
-      },
-      {
-        "name": "1lb smoked turkey",
-        "price": 20,
-        "description": "It's turkey!"     
-      },
-      {
-        "name": "full rack ribs",
-        "price": 25,
-        "description": "It's ribs!"     
-      },
-      {
-        "name": "family size baked beans",
-        "price": 5,
-        "description": "It's beans!"     
-      },
-      {
-        "name": "family size cole slaw",
-        "price": 5,
-        "description": "It's cole slaw!"     
-      }
+  {
+    "name": "1lb pork BBQ",
+    "price": 15,
+    "description": "It's pork!",
+    "fundraiser_id": 1000,
+    "active": true
+  },
+  {
+    "name": "1lb smoked turkey",
+    "price": 20,
+    "description": "It's turkey!",
+    "fundraiser_id": 1000,
+    "active": true
+  },
+  {
+    "name": "full rack ribs",
+    "price": 25,
+    "description": "It's ribs!",
+    "fundraiser_id": 1000,
+    "active": true
+  },
+  {
+    "name": "family size baked beans",
+    "price": 5,
+    "description": "It's beans!",
+    "fundraiser_id": 1000,
+    "active": true
+  },
+  {
+    "name": "family size cole slaw",
+    "price": 5,
+    "description": "It's cole slaw!",
+    "fundraiser_id": 1000,
+    "active": true
+  }
 ]
