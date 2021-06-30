@@ -1,4 +1,6 @@
-
+/* :root {
+  background-color: burlywood;
+} */
 
 body {
   margin: 0;
@@ -25,4 +27,10 @@ code {
 
 .nav-style {
   background: linear-gradient(15deg, #0528f1ef 0%, #80d0c7 100%);
+}
+
+.homeContainer {
+  max-width: 70%;
+  margin-top: 20px;
+  background-color: lightblue;
 }
