@@ -1,6 +1,7 @@
 import React from "react";
 import { Table, Container, Dropdown } from "react-bootstrap";
 import AddPersonModal from "./addPersonModal";
+import AddFundraiserModal from "./addFundraiserModal";
 
 const SalesPersonTab = () => {
   return (
@@ -8,8 +9,12 @@ const SalesPersonTab = () => {
       <AddPersonModal>
 
       </AddPersonModal>
+
+      <AddFundraiserModal>
+
+      </AddFundraiserModal>
       <Dropdown className="my-2 float-right">
-        <Dropdown.Toggle variant="dark" id="dropdown-basic">
+        <Dropdown.Toggle variant="primary" id="dropdown-basic">
           Select Salesperson
         </Dropdown.Toggle>
 

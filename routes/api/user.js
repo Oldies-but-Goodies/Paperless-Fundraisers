@@ -34,24 +34,26 @@ router.post('/signup', async function (req, res, next) {
       email: req.body.email,
     },
   });
-  console.log(user, "user")
+  console.log(user, 'user');
   if (user) {
-    console.log('1')
-    res
-      .status(400)
-      .json({ message: `Sorry, a user is already using that email: ${req.body.email}` });
+    console.log('1');
+    res.status(400).json({
+      message: `Sorry, a user is already using that email: ${req.body.email}`,
+    });
     return;
   }
 
   if (!isValidPassword(req.body.password)) {
-    return res
-      .status(400)
-      .json({ status: 'error', message: 'Password must be 8 or more characters.' });
+    return res.status(400).json({
+      status: 'error',
+      message: 'Password must be 8 or more characters.',
+    });
   }
   if (!isValidEmail(req.body.email)) {
-    return res
-      .status(400)
-      .json({ status: 'error', message: 'Email address not formed correctly.' });
+    return res.status(400).json({
+      status: 'error',
+      message: 'Email address not formed correctly.',
+    });
   }
 
   try {
@@ -64,7 +66,10 @@ router.post('/signup', async function (req, res, next) {
     });
   } catch (err) {
     console.log(err);
-    return res.json({ status: 'error', message: 'Email address already exists.' });
+    return res.json({
+      status: 'error',
+      message: 'Email address already exists.',
+    });
   }
 
   if (user) {
@@ -107,8 +112,41 @@ router.post('/login', function (req, res, next) {
 });
 
 router.get('/logout', function (req, res) {
-  req.logout();
+  console.log('logout');
+  req.logOut();
+  // res.sendStatus(200);
   res.redirect('/');
+});
+
+router.put('/updatePassword', (req, res, next) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
+
+    if (!isValidPassword(req.body.newPassword)) {
+      return res.status(400).send('Password must be 8 or more characters.');
+    }
+
+    const userData = await User.update(
+      {
+        password: req.body.newPassword,
+      },
+      {
+        where: {
+          id: req.user.id,
+        },
+      }
+    );
+
+    console.log(userData);
+
+    res.json(userData);
+  })(req, res, next);
 });
 
 module.exports = router;

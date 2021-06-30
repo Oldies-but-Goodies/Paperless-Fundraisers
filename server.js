@@ -5,7 +5,7 @@ const mysql = require('mysql');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const passport = require('passport');
-const db = require('./models');
+const sequelize = require('./config/connection');
 const routes = require('./routes');
 
 const app = express();
@@ -56,8 +56,13 @@ app.use(passport.session());
 app.use(routes);
 
 // Start the API server
-db.sequelize.sync({ force: false }).then(() => {
-  app.listen(PORT, function () {
-    console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    app.listen(PORT, function () {
+      console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
+    });
+  })
+  .catch((err) => {
+    console.log(err);
   });
-})
