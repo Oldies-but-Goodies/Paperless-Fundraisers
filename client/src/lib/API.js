@@ -10,4 +10,10 @@ export default {
       });
     },
   },
+
+  Products: {
+    getAllForFundraiser: function (fundraiserId) {
+      return axios.get('/api/product/fundraiser/all/' + fundraiserId);
+    }
+  }
 };

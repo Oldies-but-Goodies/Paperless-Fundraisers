@@ -26,25 +26,13 @@ Product.init(
     active: {
       type: DataTypes.BOOLEAN,
     },
-    fundraiser_id: {
-      type: DataTypes.INTEGER,
-      foreignKey: true,
-      // allowNull: false
-    },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
-    underscored: true,
     modelName: 'Product',
   }
 );
-
-Product.associate = function (models) {
-  Product.belongsTo(models.Fundraiser, {
-    onDelete: 'cascade',
-  });
-};
 
 module.exports = Product;

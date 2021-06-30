@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Table, Button, Form } from "react-bootstrap";
 // import { Container, Table } from "react-bootstrap"
+import API from '../lib/API';
+import { useStoreContext } from "../store/store";
+
 
 const NewOrder = (props) => {
+  const [state, dispatch] = useStoreContext();
+
   const [quanity, setQuantity] = useState({
     quantity: "",
     
   });
+
+  const [products, setProducts] = useState([])
   
   // const [grandTotal, setGrandTotal] = useState({
   //   grandTotal: [],
@@ -15,6 +22,18 @@ const NewOrder = (props) => {
   // const [productTotal, setProductTotal] = useState({
   //   productTotal: 0
   // });
+
+  const getProductData = async () => {
+    console.log(state.currentFundraiser)
+    const productData = await API.Products.getAllForFundraiser(state.currentFundraiser)
+    console.log(productData);
+    setProducts(productData.data)
+  }
+
+
+  useEffect(() => {
+    getProductData()
+  }, [])
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -76,6 +95,7 @@ const NewOrder = (props) => {
           </tr>
         </thead>
         <tbody>
+          
           <tr>
             <td>1lb pork BBQ</td>
             <td>$20</td>
