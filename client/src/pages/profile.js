@@ -42,6 +42,9 @@ const Profile = (props) => {
     setErrorMsg(null);
     console.log(passwordChange);
 
+    //
+    // lets check to be sure that they entered SOMETHING
+    //
     if (
       passwordChange.formCurrentPasswordCheck.length <= 0 ||
       passwordChange.formNewPasswordFirst.length <= 0 ||
@@ -50,6 +53,10 @@ const Profile = (props) => {
       setErrorMsg('complete all required fields');
       return;
     }
+
+    //
+    // validate that the two passwords they typed are the same
+    //
     if (
       passwordChange.formNewPasswordFirst !==
       passwordChange.formNewPasswordSecond
@@ -57,7 +64,9 @@ const Profile = (props) => {
       setErrorMsg('passwords must match');
       return;
     }
-
+    //
+    // the updatePassword method on the Users model will try to change the password
+    //
     try {
       const updatePasswordData = await API.Users.updatePassword(
         passwordChange.formCurrentPasswordCheck,
