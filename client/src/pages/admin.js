@@ -15,6 +15,16 @@ const Admin = (props) => {
     switch (activeTab) {
       case "SALES_PERSON": 
        return <SalesPersonTab></SalesPersonTab>;
+       break;
+
+      case "ORDERS":
+        return <OrdersTab></OrdersTab>;
+
+      case "PRODUCTS":
+        return <ProductsTab></ProductsTab>;
+
+      case "FUNDRAISERS":
+        return <FundraisersTab></FundraisersTab>;
     }
   }
 
@@ -34,7 +44,7 @@ const Admin = (props) => {
       </div>
       <AdminNav activeTab={activeTab} setActiveTab={setActiveTab} />
       <div>
-        {renderActiveTab ()}
+       {renderActiveTab ()} 
         {/* {activeTab === "SALES_PERSON" ?
           <SalesPersonTab>
             
@@ -54,7 +64,7 @@ const Admin = (props) => {
 
             </FundraisersTab>
           </div>
-        } */}
+        }  */} 
       </div>
     </Container>
   );
