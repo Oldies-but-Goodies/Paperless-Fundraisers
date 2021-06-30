@@ -76,6 +76,7 @@ const NewOrder = (props) => {
           </tr>
         </thead>
         <tbody>
+          
           <tr>
             <td>1lb pork BBQ</td>
             <td>$20</td>
