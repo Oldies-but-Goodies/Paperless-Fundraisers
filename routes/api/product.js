@@ -2,9 +2,14 @@ const router = require("express").Router();
 const { Product } = require("../../models");
 
 // GET all products
-router.get("/", async (req, res) => {
+router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
   try {
-    const productData = await Product.findAll();
+    const productData = await Product.findAll({
+      where: {
+        fundraiser_id: req.params.fundraiserId,
+        active: true
+      }
+    });
     res.status(200).json(productData);
   } catch (err) {
     res.status(500).json(err);

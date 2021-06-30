@@ -9,13 +9,11 @@ class User extends Model {
    * This method is not a part of Sequelize lifecycle.
    * The `models/index` file will call this method automatically.
    */
-
+  
   comparePassword(givenPassword) {
     return bcrypt.compareSync(givenPassword, this.password);
   }
-  static associate(models) {
-    // define association here
-  }
+
 }
 
 User.init(
@@ -57,15 +55,5 @@ User.init(
     },
   }
 );
-
-User.associate = function (models) {
-  User.hasMany(models.Order, {
-    onDelete: 'cascade',
-  });
-
-  User.belongsToMany(models.Fundraiser, {
-    through: models.userFundraiser,
-  });
-};
 
 module.exports = User;

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Table, Button, Form } from "react-bootstrap";
 // import { Container, Table } from "react-bootstrap"
-
+import API from '../lib/API';
 const NewOrder = (props) => {
   const [quanity, setQuantity] = useState({
     quantity: "",
@@ -15,6 +15,15 @@ const NewOrder = (props) => {
   // const [productTotal, setProductTotal] = useState({
   //   productTotal: 0
   // });
+
+  const getProductData = async () => {
+    const productData = await API.Products.getAllForFundraiser()
+  }
+
+
+  useEffect(() => {
+    getProductData()
+  }, [])
 
   const handleChange = (event) => {
     const { name, value } = event.target;

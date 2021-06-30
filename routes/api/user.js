@@ -1,7 +1,7 @@
 const express = require('express');
 const crypto = require('crypto');
 
-const User = require('../../models').User;
+const { User, Fundraiser } = require('../../models');
 const passport = require('../../passport');
 const { isValidEmail, isValidPassword } = require('../../utilities/authUtils');
 
@@ -13,6 +13,11 @@ router.get('/', async (req, res) => {
       where: {
         id: req.user.id,
       },
+      include: [
+        {
+          model: Fundraiser
+        }
+      ]
     });
 
     if (user) {
