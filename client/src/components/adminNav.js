@@ -32,6 +32,12 @@ const AdminNav = ({ activeTab, setActiveTab }) => {
             >
               Orders
             </Nav.Link>
+            <Nav.Link style={{color:"white"}}
+            data-name='FUNDRAISERS' 
+            onClick={(e) => handleOnClick(e)}
+            >
+              Fundraisers
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

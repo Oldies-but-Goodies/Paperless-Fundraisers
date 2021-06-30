@@ -2,6 +2,7 @@ import React from "react";
 import { Table, Container, Button} from "react-bootstrap";
 import AddPersonModal from "./addPersonModal";
 import AddFundraiserModal from "./addFundraiserModal";
+import ViewOrdersModal from "./viewOrdersModal";
 
 const SalesPersonTab = () => {
   return (
@@ -36,9 +37,8 @@ const SalesPersonTab = () => {
           <tr>
             <td>Jim</td>
             <td>$200</td>
-            <td><Button>
-              View Orders
-              </Button></td>
+            <td><ViewOrdersModal>
+              </ViewOrdersModal></td>
               
           </tr>
           <tr>
