@@ -106,13 +106,27 @@ router.post('/login', function (req, res, next) {
       return res.json({ status: 'error', message: info.message });
     }
 
-    req.logIn(user, function (err) {
-      if (err) {
-        return next(err);
-      }
+    User.findOne({
+      where: {
+        id: user.id,
+      },
+      include: [
+        {
+          model: Fundraiser
+        }
+      ]
+    }).then(data => {
+      req.logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
+  
+        return res.json({ status: 'ok', ...data.dataValues });
+      });
 
-      return res.json({ status: 'ok', ...user });
-    });
+    })
+
+
   })(req, res, next);
 });
 

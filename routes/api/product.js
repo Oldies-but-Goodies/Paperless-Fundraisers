@@ -4,9 +4,10 @@ const { Product } = require("../../models");
 // GET all products
 router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
   try {
+    console.log("product")
     const productData = await Product.findAll({
       where: {
-        fundraiser_id: req.params.fundraiserId,
+        fundraiserId: req.params.fundraiserId,
         active: true
       }
     });

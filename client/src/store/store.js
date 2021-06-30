@@ -14,16 +14,21 @@ const reducer = (state, action) => {
       };
 
     case SET_USER:
+      let currentFundraiserId = null
+      if(action.user.Fundraisers.length > 0){
+        currentFundraiserId = action.user.Fundraisers[0].id
+      }
       return {
         ...state,
         user: action.user,
         loading: false,
+        currentFundraiser: currentFundraiserId
       };
 
     case SET_FUNDRAISERS:
       return {
         ...state,
-        fundraisers: action.fundraisers
+        fundraisers: action.fundraiser
       }
 
     case UNSET_USER:
@@ -42,7 +47,7 @@ const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
     user: null,
     loading: false,
-    fundraisers: null
+    currentFundraiser: null
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

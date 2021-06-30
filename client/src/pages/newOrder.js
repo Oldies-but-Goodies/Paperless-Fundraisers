@@ -3,11 +3,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Table, Button, Form } from "react-bootstrap";
 // import { Container, Table } from "react-bootstrap"
 import API from '../lib/API';
+import { useStoreContext } from "../store/store";
+
+
 const NewOrder = (props) => {
+  const [state, dispatch] = useStoreContext();
+
   const [quanity, setQuantity] = useState({
     quantity: "",
     
   });
+
+  const [products, setProducts] = useState([])
   
   // const [grandTotal, setGrandTotal] = useState({
   //   grandTotal: [],
@@ -17,7 +24,10 @@ const NewOrder = (props) => {
   // });
 
   const getProductData = async () => {
-    const productData = await API.Products.getAllForFundraiser()
+    console.log(state.currentFundraiser)
+    const productData = await API.Products.getAllForFundraiser(state.currentFundraiser)
+    console.log(productData);
+    setProducts(productData.data)
   }
 
 
