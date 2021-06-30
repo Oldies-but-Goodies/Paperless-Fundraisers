@@ -128,9 +128,13 @@ router.put('/updatePassword', (req, res, next) => {
       return res.json({ status: 'error', message: info.message });
     }
 
+    if (!isValidPassword(req.body.newPassword)) {
+      return res.status(400).send('Password must be 8 or more characters.');
+    }
+
     const userData = await User.update(
       {
-        password: req.body.nextPassword,
+        password: req.body.newPassword,
       },
       {
         where: {
