@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { Product } = require("../../models");
 
-// GET all products
+// GET all products for a given fundraiser Id
 router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
   try {
     console.log("product")
