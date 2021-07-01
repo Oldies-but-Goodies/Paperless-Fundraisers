@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Container } from "react-bootstrap";
 import AddFundraiserModal from "./addFundraiserModal";
+import API from '../lib/API';
+import { useStoreContext } from "../store/store";
 
-const OrdersTab = () => {
+const FundraisersTab = () => {
+  const [state, dispatch] = useStoreContext();
+
+  const [fundraisers, setFundraisers] = useState([])
+
+const getFundraiserData = async () => {
+  const fundraiserData = await API.Fundraisers.getFundraisers()
+  setFundraisers(fundraiserData.data)
+}
+
+useEffect(() => {
+  getFundraiserData()
+}, [])
+
   return (
     <Container>
       <AddFundraiserModal>
@@ -15,17 +30,21 @@ const OrdersTab = () => {
             <th>Description</th>
             <th>Goal</th>
             <th>Start Date</th>
-            <th>Start Date</th>
+            <th>End Date</th>
           </tr>
         </thead>
         <tbody>
+          {fundraisers.map(fundraiser => (
+
           <tr>
-            <td>1lb BBQ</td>
-            <td>$20</td>
-            <td>1lb pulled pork</td>
-            <td>Yes</td>
+            <td>{fundraiser.name}</td>
+            <td>{fundraiser.description}</td>
+            <td>${fundraiser.goal}</td>
+            <td>{fundraiser.start}</td>
+            <td>{fundraiser.end}</td>
           </tr>
-          <tr>
+          ))}
+          {/* <tr>
             <td>Smoked Turkey</td>
             <td>$30</td>
             <td>sliced turkey breast</td>
@@ -42,11 +61,11 @@ const OrdersTab = () => {
             <td>$7</td>
             <td>1 gallon of sweet tea</td>
             <td>No</td>
-          </tr>
+          </tr> */}
         </tbody>
       </Table>
     </Container>
   );
 };
 
-export default OrdersTab;
+export default FundraisersTab;
