@@ -1,62 +1,45 @@
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config/connection');
 
-module.exports = (sequelize, DataTypes) => {
+class Fundraiser extends Model {}
 
-  class Fundraiser extends Model {}
-  
-  Fundraiser.init(
-    {
-      id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      name: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-      start: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-      end: {
-        type: DataTypes.DATE,
-        allowNull: false,
-      },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      goal: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
+Fundraiser.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
-  
-    {
-      sequelize,
-      timestamps: true,
-      freezeTableName: true,
-      underscored: true,
-      modelName: "Fundraiser",
-    }
-  );
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    start: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    end: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    goal: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+  },
 
-  Fundraiser.associate = function(models) {
-    Fundraiser.hasMany(models.Order, {
-      onDelete: 'cascade'
-    });
-
-    Fundraiser.belongsToMany(models.User, {
-      through: models.userFundraiser
-    });
-
-    Fundraiser.hasMany(models.Product, {
-      onDelete: 'cascade'
-    });
+  {
+    sequelize,
+    timestamps: true,
+    freezeTableName: true,
+    modelName: 'Fundraiser',
   }
+);
 
-  return Fundraiser;
-};  
 
+module.exports = Fundraiser;

@@ -5,7 +5,7 @@ import { Container, Table } from "react-bootstrap"
 const Home = (props) => {
   
   return (
-    <Container fluid>
+    <Container fluid className="homeContainer">
    
       <div className="row my-2  text-center">
       <h2 className="col">Welcome to Troop 82 BBQ Fundraiser </h2>

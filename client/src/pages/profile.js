@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import axios from "axios";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from 'react';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Container,
   Card,
@@ -9,10 +9,10 @@ import {
   Button,
   Form,
   Modal,
-} from "react-bootstrap";
-
-import { useHistory } from "react-router-dom";
-import { useStoreContext } from "../store/store";
+} from 'react-bootstrap';
+import API from '../lib/API';
+import { useHistory } from 'react-router-dom';
+import { useStoreContext } from '../store/store';
 
 const Profile = (props) => {
   const [state, dispatch] = useStoreContext();
@@ -24,82 +24,100 @@ const Profile = (props) => {
 
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState(null);
-  const [signUpCreds, setSignUpCreds] = useState({
-    email: "",
-    password: "",
-    first_name: "",
-    last_name: "",
-  });
 
   const [passwordChange, setPasswordChange] = useState({
-    currentPassword: "",
-    changedPassword1: "",
-    changedPassword2: "",
+    formCurrentPasswordCheck: '',
+    formNewPasswordFirst: '',
+    formNewPasswordSecond: '',
   });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    setSignUpCreds({ ...signUpCreds, [name]: value });
+    setPasswordChange({ ...passwordChange, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setErrorMsg(null);
+    console.log(passwordChange);
 
-    const formData = new FormData(event.target),
-      formDataObj = Object.fromEntries(formData.entries());
-    console.log(formDataObj);
-    console.log(formDataObj.formCurrentPasswordCheck);
-    console.log(formDataObj.formNewPasswordFirst);
-    console.log(formDataObj.formNewPasswordSecond);
+    //
+    // lets check to be sure that they entered SOMETHING
+    //
+    if (
+      passwordChange.formCurrentPasswordCheck.length <= 0 ||
+      passwordChange.formNewPasswordFirst.length <= 0 ||
+      passwordChange.formNewPasswordSecond.length <= 0
+    ) {
+      setErrorMsg('complete all required fields');
+      return;
+    }
 
-    handleClose();
+    //
+    // validate that the two passwords they typed are the same
+    //
+    if (
+      passwordChange.formNewPasswordFirst !==
+      passwordChange.formNewPasswordSecond
+    ) {
+      setErrorMsg('passwords must match');
+      return;
+    }
+    //
+    // the updatePassword method on the Users model will try to change the password
+    //
+    try {
+      const updatePasswordData = await API.Users.updatePassword(
+        passwordChange.formCurrentPasswordCheck,
+        passwordChange.formNewPasswordFirst,
+        state.user.email
+      );
+      console.log(updatePasswordData);
 
-    // STEP 1: compare formNewPasswordFirst and formNewPasswordSecond to be sure that the proposed passwords match
-    // STEP 2: validate that the proposed password can validate
-    // STEP 3: validate that the current password @ formCurrentPasswordCheck is in fact the current password
-    // STEP 4: if everything is rigth, then call a user route to update the password with the new password
-    // axios
-    //   .post("/api/users/signup", {
-    //     email: signUpCreds.email,
-    //     password: signUpCreds.password,
-    //     first_name: signUpCreds.first_name,
-    //     last_name: signUpCreds.last_name,
-    //   })
-    //   .then((response) => {
-    //     console.log("RESPONSE", response);
-    //     if (response.data.status === "error") {
-    //       setErrorMsg(response.data.message);
-    //       return;
-    //     }
-    //     setErrorMsg(null);
-    //     history.replace("/admin");
-    //   })
-    //   .catch((error) => {
-    //     console.log("ERROR", error);
-    //     setErrorMsg(error);
-    //   });
+      if (updatePasswordData.data.status === 'error') {
+        setErrorMsg(updatePasswordData.data.message);
+        return;
+      }
+
+      setErrorMsg('Success!');
+      setPasswordChange({
+        formCurrentPasswordCheck: '',
+        formNewPasswordFirst: '',
+        formNewPasswordSecond: '',
+      });
+      setTimeout(() => {
+        setShow(!show);
+        setErrorMsg('');
+      }, 1000);
+    } catch (err) {
+      console.log(err);
+      console.log(err.response);
+      setErrorMsg(err.response.data);
+    }
   };
 
   return (
     <>
       <Row className='justify-content-md-center'>
         <Col xs lg='4'>
-          <Button variant='primary' onClick={handleShow} block>
+          <Button variant='primary' onClick={() => setShow(!show)} block>
             Change Password
           </Button>
         </Col>
       </Row>
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={() => setShow(!show)}>
         <Modal.Header closeButton>
           <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {errorMsg && <p>{errorMsg}</p>}
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId='formCurrentPasswordCheck'>
               <Form.Label>Current Password</Form.Label>
               <Form.Control
+                onChange={handleChange}
                 type='password'
                 placeholder='Enter current password'
                 name='formCurrentPasswordCheck'
@@ -109,6 +127,7 @@ const Profile = (props) => {
             <Form.Group controlId='formNewPasswordFirst'>
               <Form.Label>New Password</Form.Label>
               <Form.Control
+                onChange={handleChange}
                 type='password'
                 placeholder='Password'
                 name='formNewPasswordFirst'
@@ -116,13 +135,14 @@ const Profile = (props) => {
             </Form.Group>
             <Form.Group controlId='formNewPasswordSecond'>
               <Form.Control
+                onChange={handleChange}
                 type='password'
                 placeholder='Confirm New Password'
                 name='formNewPasswordSecond'
               />
             </Form.Group>
             <Modal.Footer>
-              <Button variant='secondary' onClick={handleClose}>
+              <Button variant='secondary' onClick={() => setShow(!show)}>
                 Cancel
               </Button>
               <Button variant='primary' type='submit'>

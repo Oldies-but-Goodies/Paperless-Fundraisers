@@ -32,7 +32,8 @@ const App = () => {
   }, []);
 
   return (
-    <Container>
+    <div>
+      <Container>
       {state.user ? (
         <div>
           <Navigation />
@@ -59,7 +60,8 @@ const App = () => {
           </Switch>
         </div>
       )}
-    </Container>
+      </Container>
+    </div>
   );
 };
 

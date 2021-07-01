@@ -1,34 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Table, Button, Form } from "react-bootstrap";
 // import { Container, Table } from "react-bootstrap"
+import API from '../lib/API';
+import { useStoreContext } from "../store/store";
+
 
 const NewOrder = (props) => {
-  const [quanity, setQuantity] = useState({
-    quantity: "",
-    
-  });
+  const [state, dispatch] = useStoreContext();
+
+  const [quanities, setQuantities] = useState({
+      });
+  
+
+  const [products, setProducts] = useState([])
   
   // const [grandTotal, setGrandTotal] = useState({
   //   grandTotal: [],
   // })
-  // const [productTotal, setProductTotal] = useState({
-  //   productTotal: 0
-  // });
+  const [productTotal, setProductTotal] = useState({
+    productTotal: 0
+  });
 
-  const handleChange = (event) => {
+  const getProductData = async () => {
+    console.log(state.currentFundraiser)
+    const productData = await API.Products.getAllForFundraiser(state.currentFundraiser)
+    console.log(productData);
+    setProducts(productData.data)
+  }
+
+
+  useEffect(() => {
+    getProductData()
+  }, [])
+
+  const handleChange = (productId) => (event) => {
     const { name, value } = event.target;
 
-    setQuantity({ [name]: value });
-    // setProductTotal({...productTotal, [name]: multiply(value, this.state.product.price)})
+    setQuantities({...quanities, [productId]: value });
+    // setProductTotal({ [name]: (this.state.quantity.value * this.product.price.value) })
     // setGrandTotal({[name]: this.state.productTotal && this.state.productValue.reduce((a,v) => a + v.value, 0) })
 
+    // const productTotal = () => 
+    // this.state.quantity.reduce((sum, quantity) =>
+    // sum + quantity * this.state.product.price, 0);
   };
 
-  const productTotal = () => 
-  this.state.quantity.reduce((sum, quantity) =>
-  sum + quantity * 20, 0);
-
+  
  
   
   return (
@@ -76,45 +94,28 @@ const NewOrder = (props) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1lb pork BBQ</td>
-            <td>$20</td>
-            <td>
-            <label htmlFor="inputQuantity" className="sr-only">
-              Quantity
-            </label>
-            <input
-              type="integer"
-              id="inputQuantity"
-              className="form-control"
-              name="quantity"
-              value={quanity}
-              onChange={handleChange}
-            />
-            </td>
-            {/* <td>{productTotal}</td> */}
-            <td>Row Total $$</td>
-          </tr>
-          <tr>
-            <td>1lb smoked turkey</td>
-            <td>$25</td>
-            <td>
-            <label htmlFor="inputQuantity" className="sr-only">
-              Quantity
-            </label>
-            <input
-              type="integer"
-              id="inputQuantity"
-              className="form-control"
-              name="quantity"
-              // value={signUpCreds.first_name}
-              // onChange={handleChange}
-            />
-            </td>
-            {/* <td>{productTotal}</td> */}
-            <td> Row total $$</td>
-          </tr>
           
+            {products.map(product => (
+          <tr>
+
+            <td>{product.name}</td>
+            <td>${product.price}</td>
+            <td>
+            <label htmlFor="inputQuantity" className="sr-only">
+              Quantity
+            </label>
+            <input
+              type="integer"
+              id="inputQuantity"
+              className="form-control"
+              name="quantity"
+              value={quanities[product.id] || 0}
+              onChange={handleChange(product.id)}
+            />
+            </td>
+            <td>{quanities[product.id]? quanities[product.id] * product.price : 0}</td>
+          </tr>
+            ))}          
         </tbody>
       </Table>
       

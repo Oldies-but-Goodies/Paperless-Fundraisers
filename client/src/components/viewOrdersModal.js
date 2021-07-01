@@ -3,7 +3,7 @@ import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 
-const AddFundraiserModal = () => {
+const ViewOrdersModal = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -42,25 +42,38 @@ const AddFundraiserModal = () => {
   return (
     <>
       <Button variant="primary" className="my-2" onClick={handleShow}>
-        Add Fundraiser
+        View Orders
       </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ background:`linear-gradient(${'#007bff'}, ${'#002853'})`}}>
-          <Modal.Title style={{ color: 'white' }}>Add New Fundraiser</Modal.Title>
+          <Modal.Title style={{ color: 'white' }}>Orders for Jim</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className="form-signin">
-            <label htmlFor="inputFundraiser" className="sr-only">
-              Fundraiser Name
+          order details go here
+          {/* <form className="form-signin">
+            <label htmlFor="inputProduct" className="sr-only">
+              Product Name
             </label>
             <input
               type="string"
-              id="inputFundraiser"
+              id="inputProdcut"
               className="form-control mt-1"
-              name="name"
-              placeholder="Fundraiser Name"
+              name="product_name"
+              placeholder="Product Name"
               // value={signUpCreds.first_name}
+              // onChange={handleChange}
+            />
+            <label htmlFor="inputPrice" className="sr-only">
+              Price
+            </label>
+            <input
+              type="integer"
+              id="inputPrice"
+              className="form-control mt-1"
+              name="Price"
+              placeholder="Price"
+              // value={signUpCreds.last_name}
               // onChange={handleChange}
             />
             <label htmlFor="inputDescription" className="sr-only">
@@ -75,44 +88,8 @@ const AddFundraiserModal = () => {
               // value={signUpCreds.email}
               // onChange={handleChange}
             />
-            <label htmlFor="inputStartDate" className="sr-only">
-              Start Date
-            </label>
-            <input
-              type="date"
-              id="inputStartDate"
-              className="form-control mt-1"
-              name="start_date"
-              placeholder="Start Date"
-              // value={signUpCreds.last_name}
-              // onChange={handleChange}
-            />
-            <label htmlFor="inputEndDate" className="sr-only">
-              End Date
-            </label>
-            <input
-              type="date"
-              id="inputEndDate"
-              className="form-control mt-1"
-              name="end_date"
-              placeholder="End Date"
-              // value={signUpCreds.last_name}
-              // onChange={handleChange}
-            />
-            <label htmlFor="inputGoal" className="sr-only">
-              Goal
-            </label>
-            <input
-              type="integer"
-              id="inputGoal"
-              className="form-control mt-1"
-              name="goal"
-              placeholder="$$ Goal"
-              // value={signUpCreds.last_name}
-              // onChange={handleChange}
-            />
-            <Form.Check className="mt-2" type="checkbox" label="Fundraiser Active" />
-          </form>
+            <Form.Check className="mt-2" type="checkbox" label="Product Active" />
+          </form> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -126,5 +103,5 @@ const AddFundraiserModal = () => {
     </>
   );
 };
-export default AddFundraiserModal;
+export default ViewOrdersModal;
 //   render(<addPersonModal/>);

@@ -1,7 +1,7 @@
 const express = require('express');
 const crypto = require('crypto');
 
-const User = require('../../models').User;
+const { User, Fundraiser } = require('../../models');
 const passport = require('../../passport');
 const { isValidEmail, isValidPassword } = require('../../utilities/authUtils');
 
@@ -13,6 +13,11 @@ router.get('/', async (req, res) => {
       where: {
         id: req.user.id,
       },
+      include: [
+        {
+          model: Fundraiser,
+        },
+      ],
     });
 
     if (user) {
@@ -34,24 +39,26 @@ router.post('/signup', async function (req, res, next) {
       email: req.body.email,
     },
   });
-  console.log(user, "user")
+  console.log(user, 'user');
   if (user) {
-    console.log('1')
-    res
-      .status(400)
-      .json({ message: `Sorry, a user is already using that email: ${req.body.email}` });
+    console.log('1');
+    res.status(400).json({
+      message: `Sorry, a user is already using that email: ${req.body.email}`,
+    });
     return;
   }
 
   if (!isValidPassword(req.body.password)) {
-    return res
-      .status(400)
-      .json({ status: 'error', message: 'Password must be 8 or more characters.' });
+    return res.status(400).json({
+      status: 'error',
+      message: 'Password must be 8 or more characters.',
+    });
   }
   if (!isValidEmail(req.body.email)) {
-    return res
-      .status(400)
-      .json({ status: 'error', message: 'Email address not formed correctly.' });
+    return res.status(400).json({
+      status: 'error',
+      message: 'Email address not formed correctly.',
+    });
   }
 
   try {
@@ -64,7 +71,10 @@ router.post('/signup', async function (req, res, next) {
     });
   } catch (err) {
     console.log(err);
-    return res.json({ status: 'error', message: 'Email address already exists.' });
+    return res.json({
+      status: 'error',
+      message: 'Email address already exists.',
+    });
   }
 
   if (user) {
@@ -96,20 +106,66 @@ router.post('/login', function (req, res, next) {
       return res.json({ status: 'error', message: info.message });
     }
 
-    req.logIn(user, function (err) {
-      if (err) {
-        return next(err);
-      }
+    User.findOne({
+      where: {
+        id: user.id,
+      },
+      include: [
+        {
+          model: Fundraiser,
+        },
+      ],
+    }).then((data) => {
+      req.logIn(user, function (err) {
+        if (err) {
+          return next(err);
+        }
 
-      return res.json({ status: 'ok', ...user });
+        return res.json({ status: 'ok', ...data.dataValues });
+      });
     });
   })(req, res, next);
 });
 
 router.get('/logout', function (req, res) {
-  req.session.destroy(() => {
-    res.redirect('/');
-  })
+  console.log('logout');
+  // Not sure what / why this res.redirect is not working, but this combo
+  // of the req.logOut and then sending the status of 200 gets insomnia to work
+  // and also returns us to the home page from the website
+  // res.redirect('/');
+  req.logOut();
+  res.sendStatus(200);
+});
+
+router.put('/updatePassword', (req, res, next) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
+
+    if (!isValidPassword(req.body.newPassword)) {
+      return res.status(400).send('Password must be 8 or more characters.');
+    }
+
+    const userData = await User.update(
+      {
+        password: req.body.newPassword,
+      },
+      {
+        where: {
+          id: req.user.id,
+        },
+      }
+    );
+
+    console.log(userData);
+
+    res.json(userData);
+  })(req, res, next);
 });
 
 module.exports = router;

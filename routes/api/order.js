@@ -2,9 +2,15 @@ const router = require("express").Router();
 const { User, Order, Customer, orderDetails, Fundraiser } = require("../../models");
 
 // GET all orders
-router.get("/", async (req, res) => {
+router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
   try {
-    const orderData = await Order.findAll();
+    const orderData = await Order.findAll({
+      where: {
+        fundraiserId: req.params.fundraiserId,
+        // active: true
+      },
+      include: [{ model: User }]
+    });
     res.status(200).json(orderData);
   } catch (err) {
     res.status(500).json(err);

@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const customerRoutes = require("./customer");
 const fundraiserRoutes = require("./fundraiser");
+const emailRoutes = require("./emailRoutes");
 const orderRoutes = require("./order");
 const orderDetailsRoutes = require("./orderDetails");
 const productRoutes = require("./product");
@@ -9,12 +10,11 @@ const userFundraiserRoutes = require("./userFundraiser");
 
 router.use("/customer", customerRoutes);
 router.use("/fundraiser", fundraiserRoutes);
-router.use('/order', orderRoutes);
-router.use('/orderDetails', orderDetailsRoutes);
-router.use('/product', productRoutes);
+router.use("/emailRoutes", emailRoutes);
+router.use("/order", orderRoutes);
+router.use("/orderDetails", orderDetailsRoutes);
+router.use("/product", productRoutes);
 router.use("/users", userRoutes);
-router.use('/userFundraiser', userFundraiserRoutes);
-
-
+router.use("/userFundraiser", userFundraiserRoutes);
 
 module.exports = router;
