@@ -15,5 +15,17 @@ export default {
     getAllForFundraiser: function (fundraiserId) {
       return axios.get('/api/product/fundraiser/all/' + fundraiserId);
     }
-  }
+  },
+
+  Fundraisers: {
+    getFundraisers: function () {
+      return axios.get('/api/fundraiser/');
+    }
+  },
+
+  Orders: {
+    getAllOrders: function (fundraiserId) {
+      return axios.get('/api/order/fundraiser/all/' + fundraiserId);
+    }
+  },
 };
