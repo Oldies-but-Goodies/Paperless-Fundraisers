@@ -15,9 +15,9 @@ router.get('/', async (req, res) => {
       },
       include: [
         {
-          model: Fundraiser
-        }
-      ]
+          model: Fundraiser,
+        },
+      ],
     });
 
     if (user) {
@@ -112,29 +112,29 @@ router.post('/login', function (req, res, next) {
       },
       include: [
         {
-          model: Fundraiser
-        }
-      ]
-    }).then(data => {
+          model: Fundraiser,
+        },
+      ],
+    }).then((data) => {
       req.logIn(user, function (err) {
         if (err) {
           return next(err);
         }
-  
+
         return res.json({ status: 'ok', ...data.dataValues });
       });
-
-    })
-
-
+    });
   })(req, res, next);
 });
 
 router.get('/logout', function (req, res) {
   console.log('logout');
+  // Not sure what / why this res.redirect is not working, but this combo
+  // of the req.logOut and then sending the status of 200 gets insomnia to work
+  // and also returns us to the home page from the website
+  // res.redirect('/');
   req.logOut();
-  // res.sendStatus(200);
-  res.redirect('/');
+  res.sendStatus(200);
 });
 
 router.put('/updatePassword', (req, res, next) => {

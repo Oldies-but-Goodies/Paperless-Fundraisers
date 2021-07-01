@@ -47,10 +47,11 @@ const ViewOrdersModal = () => {
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header style={{ background:`linear-gradient(${'#007bff'}, ${'#002853'})`}}>
-          <Modal.Title style={{ color: 'white' }}>Add New Product</Modal.Title>
+          <Modal.Title style={{ color: 'white' }}>Orders for Jim</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className="form-signin">
+          order details go here
+          {/* <form className="form-signin">
             <label htmlFor="inputProduct" className="sr-only">
               Product Name
             </label>
@@ -88,7 +89,7 @@ const ViewOrdersModal = () => {
               // onChange={handleChange}
             />
             <Form.Check className="mt-2" type="checkbox" label="Product Active" />
-          </form>
+          </form> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
