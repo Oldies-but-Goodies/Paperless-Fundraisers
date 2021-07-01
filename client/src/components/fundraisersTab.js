@@ -1,13 +1,13 @@
 import React from "react";
-import { Table, Container, Button } from "react-bootstrap";
-import AddProductModal from "./addProductModal";
+import { Table, Container } from "react-bootstrap";
+import AddFundraiserModal from "./addFundraiserModal";
 
 const OrdersTab = () => {
   return (
     <Container>
-      <AddProductModal>
-          
-      </AddProductModal>
+      <AddFundraiserModal>
+
+      </AddFundraiserModal>
       <Table striped bordered hover>
         <thead>
           <tr>
