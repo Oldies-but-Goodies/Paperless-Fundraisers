@@ -1,20 +1,35 @@
-import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React, {useState, useEffect} from "react";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Table } from "react-bootstrap"
+import API from '../lib/API';
+import { useStoreContext } from "../store/store";
 
 const Home = (props) => {
+  const [state, dispatch] = useStoreContext();
+
+  const [fundraiser, setFundraiser] = useState([])
+
+const getCurrentundraiser = async () => {
+  const fundraiserData = await API.FundraisersID.getCurrentFundraiser(state.currentFundraiser)
+  console.log(fundraiserData);
+  setFundraiser(fundraiserData.data);
+}
+
+useEffect(() => {
+  getCurrentundraiser()
+}, [])
   
   return (
     <Container fluid className="homeContainer">
    
       <div className="row my-2  text-center">
-      <h2 className="col">Welcome to Troop 82 BBQ Fundraiser </h2>
+      <h2 className="col">Welcome to {fundraiser.name} Fundraiser </h2>
       </div>
       <div className="row my-2 text-center">
-      <p className="col">We're raising money to get our troop leader, JSON, some extra coding classes </p>
+      <p className="col">{fundraiser.description} </p>
       </div>
       <div className="row my-2 text-center">
-      <h5 className="col">Our goal is to raise $XXXX and so far we've raised $XXXX</h5>
+      <h5 className="col">Our goal is to raise ${fundraiser.goal} and so far we've raised $XXXX</h5>
       </div>
    
 {/* table only shows if user is non-Admin */}
