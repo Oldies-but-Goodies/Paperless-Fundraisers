@@ -168,4 +168,33 @@ router.put('/updatePassword', (req, res, next) => {
   })(req, res, next);
 });
 
+//   UPDATE a user (salesperson)
+// TODO add with auth
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedUser = await User.update(
+      {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      role: 'user',
+      password: req.body.password,
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    if (!updatedUser) {
+      res.status(404).json({ message: "No Salesperson found with this id" });
+      return;
+    }
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
