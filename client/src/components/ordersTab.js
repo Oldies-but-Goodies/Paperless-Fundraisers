@@ -38,7 +38,7 @@ useEffect(() => {
           <tr>
             <td>{order.User.first_name + " " + order.User.last_name}</td>
             <td>${order.order_total}</td>
-            <td>{order.createdAt}</td>
+            <td>{new Date (order.createdAt).toLocaleDateString()}</td>
             <td>{order.order_status}</td>
             <td>{order.seller_remit}</td>
           </tr>

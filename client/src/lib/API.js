@@ -23,6 +23,12 @@ export default {
     }
   },
 
+  FundraisersID: {
+    getCurrentFundraiser: function (fundraiserId) {
+      return axios.get('/api/fundraiser/' + fundraiserId);
+    }
+  },
+
   Orders: {
     getAllOrders: function (fundraiserId) {
       return axios.get('/api/order/fundraiser/all/' + fundraiserId);

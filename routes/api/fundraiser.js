@@ -12,9 +12,11 @@ router.get('/', async (req, res) => {
 });
 
 // GET a single fundraiser
-router.get('/:id', async (req, res) => {
+router.get('/:fundraiserId', async (req, res) => {
   try {
-    const fundraiserData = await Fundraiser.findByPk(req.params.id);
+    const fundraiserData = await Fundraiser.findByPk(
+        req.params.fundraiserId
+    );
 
     if (!fundraiserData) {
       res.status(404).json({ message: 'No fundraiser found with this id!' });

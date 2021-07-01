@@ -40,8 +40,8 @@ useEffect(() => {
             <td>{fundraiser.name}</td>
             <td>{fundraiser.description}</td>
             <td>${fundraiser.goal}</td>
-            <td>{fundraiser.start}</td>
-            <td>{fundraiser.end}</td>
+            <td>{new Date (fundraiser.start).toLocaleDateString()}</td>
+            <td>{new Date (fundraiser.end).toLocaleDateString()}</td>
           </tr>
           ))}
           {/* <tr>
