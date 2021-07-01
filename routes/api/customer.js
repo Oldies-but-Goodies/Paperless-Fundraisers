@@ -14,6 +14,14 @@ router.get('/', async (req, res) => {
 
 // GET a single customer
 router.get('/:id', async (req, res) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
   try {
     const customerData = await Customer.findByPk(req.params.id, {
       // JOIN with Order
@@ -24,11 +32,13 @@ router.get('/:id', async (req, res) => {
       res.status(404).json({ message: 'No customer found with this id!' });
       return;
     }
-
+  
     res.status(200).json(customerData);
   } catch (err) {
     res.status(500).json(err);
   }
+  })(req, res, next);
+  
 });
 
 // CREATE a customer
@@ -93,6 +103,7 @@ router.post('/',  async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
+  
   });
 
 module.exports = router;
