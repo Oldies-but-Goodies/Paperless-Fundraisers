@@ -34,8 +34,8 @@ const OrdersTab = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr>
+          {products.map((product, i) => (
+            <tr key={i}>
               <td>{product.name}</td>
               <td>${product.price}</td>
               <td>{product.description}</td>
