@@ -1,47 +1,47 @@
-import React from "react";
-import { Table, Container, Button } from "react-bootstrap";
-import AddProductModal from "./addProductModal";
+import React, { useState, useEffect } from 'react';
+import { Table, Container, Button } from 'react-bootstrap';
+import AddProductModal from './addProductModal';
+import API from '../lib/API';
+import { useStoreContext } from '../store/store';
 
 const OrdersTab = () => {
+  const [state, dispatch] = useStoreContext();
+  const [products, setProducts] = useState([]);
+
+  const getProductData = async () => {
+    console.log(state.currentFundraiser);
+    const productData = await API.Products.getAllForFundraiser(
+      state.currentFundraiser
+    );
+    console.log(productData);
+    setProducts(productData.data);
+  };
+
+  useEffect(() => {
+    getProductData();
+  }, []);
+
   return (
     <Container>
-      <AddProductModal>
-          
-      </AddProductModal>
-      <Table striped bordered hover>
+      <AddProductModal></AddProductModal>
+      <Table striped bordered hover className='mt-3'>
         <thead>
           <tr>
             <th>Product</th>
-            <th>Price</th>
+            <th>Price </th>
             <th>Description</th>
-            <th>Active</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1lb BBQ</td>
-            <td>$20</td>
-            <td>1lb pulled pork</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Smoked Turkey</td>
-            <td>$30</td>
-            <td>sliced turkey breast</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Baked Beans</td>
-            <td>$5</td>
-            <td>family size container of baked beans</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Sweet Tea</td>
-            <td>$7</td>
-            <td>1 gallon of sweet tea</td>
-            <td>No</td>
-          </tr>
+          {products.map((product) => (
+            <tr>
+              <td>{product.name}</td>
+              <td>${product.price}</td>
+              <td>{product.description}</td>
+              <td>{product.active ? 'ACTIVE' : 'HIDDEN'}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </Container>
