@@ -73,7 +73,7 @@ const Profile = (props) => {
         passwordChange.formNewPasswordFirst,
         state.user.email
       );
-      console.log(updatePasswordData);
+      // console.log(updatePasswordData);
 
       if (updatePasswordData.data.status === 'error') {
         setErrorMsg(updatePasswordData.data.message);
