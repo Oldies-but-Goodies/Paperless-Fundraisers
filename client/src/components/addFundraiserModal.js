@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import API from '../lib/API';
 
 const AddFundraiserModal = () => {
   const [show, setShow] = useState(false);
@@ -9,35 +10,43 @@ const AddFundraiserModal = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const history = useHistory();
+  // const history = useHistory();
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // ***Need to creat post route***
+  const [formData, setFormData] = useState({});
 
-  // const handleSubmit = (event) => {
-  //   event.preventDefault();
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFormData({...formData, [name]: value})
+  };
 
-  //   axios
-  //     .post("/api/users/signup", {
-  //       email: signUpCreds.email,
-  //       password: signUpCreds.password,
-  //       first_name: signUpCreds.first_name,
-  //       last_name: signUpCreds.last_name,
-  //     })
-  //     .then((response) => {
-  //       console.log("RESPONSE", response);
-  //       if (response.data.status === "error") {
-  //         setErrorMsg(response.data.message);
-  //         return;
-  //       }
-  //       setErrorMsg(null);
-  //       history.replace("/admin");
-  //     })
-  //     .catch((error) => {
-  //       console.log("ERROR", error);
-  //       setErrorMsg(error);
-  //     });
-  // };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(formData);
+    // const newFundraiser = () => {
+      API.Fundraisers.addFundraiser(
+        {
+              name: formData.name,
+              description: formData.description,
+              start: formData.start,
+              end: formData.end,
+              goal: formData.goal
+        }
+      ).then((response) => {
+        console.log("RESPONSE", response);
+        if (response.data.status === "error") {
+          setErrorMsg(response.data.message);
+          return;
+        }
+        setErrorMsg(null);
+        // history.replace("/admin");
+      })
+      .catch((error) => {
+        console.log("ERROR", error);
+        setErrorMsg(error);
+      });
+      handleClose();
+  };
 
   return (
     <>
@@ -60,20 +69,20 @@ const AddFundraiserModal = () => {
               className="form-control mt-1"
               name="name"
               placeholder="Fundraiser Name"
-              // value={signUpCreds.first_name}
-              // onChange={handleChange}
+              value={formData.name}
+              onChange={handleChange}
             />
             <label htmlFor="inputDescription" className="sr-only">
               Product Description
             </label>
             <input
-              type="Description"
+              type="description"
               id="inputDescription"
               className="form-control mt-1"
-              name="Description"
-              placeholder="Description"
-              // value={signUpCreds.email}
-              // onChange={handleChange}
+              name="description"
+              placeholder="description"
+              value={formData.description}
+              onChange={handleChange}
             />
             <label htmlFor="inputStartDate" className="sr-only">
               Start Date
@@ -82,10 +91,10 @@ const AddFundraiserModal = () => {
               type="date"
               id="inputStartDate"
               className="form-control mt-1"
-              name="start_date"
+              name="start"
               placeholder="Start Date"
-              // value={signUpCreds.last_name}
-              // onChange={handleChange}
+              value={formData.start}
+              onChange={handleChange}
             />
             <label htmlFor="inputEndDate" className="sr-only">
               End Date
@@ -94,10 +103,10 @@ const AddFundraiserModal = () => {
               type="date"
               id="inputEndDate"
               className="form-control mt-1"
-              name="end_date"
+              name="end"
               placeholder="End Date"
-              // value={signUpCreds.last_name}
-              // onChange={handleChange}
+              value={formData.end}
+              onChange={handleChange}
             />
             <label htmlFor="inputGoal" className="sr-only">
               Goal
@@ -108,8 +117,8 @@ const AddFundraiserModal = () => {
               className="form-control mt-1"
               name="goal"
               placeholder="$$ Goal"
-              // value={signUpCreds.last_name}
-              // onChange={handleChange}
+              value={formData.goal}
+              onChange={handleChange}
             />
             <Form.Check className="mt-2" type="checkbox" label="Fundraiser Active" />
           </form>
@@ -118,7 +127,7 @@ const AddFundraiserModal = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleSubmit}>
             Save Changes
           </Button>
         </Modal.Footer>

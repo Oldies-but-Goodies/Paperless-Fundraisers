@@ -10,7 +10,7 @@ const Home = (props) => {
   const [fundraiser, setFundraiser] = useState([])
 
 const getCurrentundraiser = async () => {
-  const fundraiserData = await API.FundraisersID.getCurrentFundraiser(state.currentFundraiser)
+  const fundraiserData = await API.Fundraisers.getCurrentFundraiser(state.currentFundraiser)
   console.log(fundraiserData);
   setFundraiser(fundraiserData.data);
 }
