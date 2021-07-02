@@ -1,47 +1,57 @@
-import React from "react";
-import { Table, Container, Button } from "react-bootstrap";
-import AddProductModal from "./addProductModal";
+import React, { useState, useEffect } from 'react';
+import { Table, Container, Button } from 'react-bootstrap';
+import AddProductModal from './addProductModal';
+import API from '../lib/API';
+import { useStoreContext } from '../store/store';
 
 const OrdersTab = () => {
+  const [state, dispatch] = useStoreContext();
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
+
+  const getProductData = async () => {
+    const productData = await API.Products.getAllForFundraiser(
+      state.currentFundraiser
+    );
+    setProducts(productData.data);
+  };
+
+  useEffect(() => {
+    getProductData();
+  }, []);
+
+  const handleRowClick = async (productIdToEdit) => {
+    const singleProductData = await API.Products.getOne(productIdToEdit);
+    setProduct(singleProductData.data);
+    console.log(productIdToEdit);
+    console.table(product);
+  };
+
   return (
     <Container>
-      <AddProductModal>
-          
-      </AddProductModal>
-      <Table striped bordered hover>
+      <AddProductModal></AddProductModal>
+      <Table striped bordered hover className='mt-3'>
         <thead>
           <tr>
             <th>Product</th>
-            <th>Price</th>
+            <th>Price </th>
             <th>Description</th>
-            <th>Active</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1lb BBQ</td>
-            <td>$20</td>
-            <td>1lb pulled pork</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Smoked Turkey</td>
-            <td>$30</td>
-            <td>sliced turkey breast</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Baked Beans</td>
-            <td>$5</td>
-            <td>family size container of baked beans</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Sweet Tea</td>
-            <td>$7</td>
-            <td>1 gallon of sweet tea</td>
-            <td>No</td>
-          </tr>
+          {products.map((product, i) => (
+            //
+            // product.id corresponds to the row that is clicked on in the onClick we shall open the
+            // edit product modal and prepopulate that with all the relevant data
+            //
+            <tr key={i} onClick={() => handleRowClick(product.id)}>
+              <td>{product.name}</td>
+              <td>${product.price}</td>
+              <td>{product.description}</td>
+              <td>{product.active ? 'ACTIVE' : 'HIDDEN'}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </Container>

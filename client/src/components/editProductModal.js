@@ -3,9 +3,11 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-const AddProductModal = () => {
-  const [show, setShow] = useState(false);
-
+const EditProductModal = () => {
+  //
+  // default for the EditProductModal is to be SHOWN when it is called
+  //
+  const [show, setShow] = useState(true);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -14,9 +16,9 @@ const AddProductModal = () => {
 
   return (
     <>
-      <Button variant='primary' className='my-2' onClick={handleShow}>
+      {/* <Button variant='primary' className='my-2' onClick={handleShow}>
         Add Product
-      </Button>
+      </Button> */}
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header
@@ -81,5 +83,4 @@ const AddProductModal = () => {
     </>
   );
 };
-export default AddProductModal;
-//   render(<addPersonModal/>);
+export default EditProductModal;
