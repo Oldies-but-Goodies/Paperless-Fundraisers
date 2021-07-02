@@ -7,19 +7,25 @@ import { useStoreContext } from '../store/store';
 const OrdersTab = () => {
   const [state, dispatch] = useStoreContext();
   const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState([]);
 
   const getProductData = async () => {
-    console.log(state.currentFundraiser);
     const productData = await API.Products.getAllForFundraiser(
       state.currentFundraiser
     );
-    console.log(productData);
     setProducts(productData.data);
   };
 
   useEffect(() => {
     getProductData();
   }, []);
+
+  const handleRowClick = async (productIdToEdit) => {
+    const singleProductData = await API.Products.getOne(productIdToEdit);
+    setProduct(singleProductData.data);
+    console.log(productIdToEdit);
+    console.table(product);
+  };
 
   return (
     <Container>
@@ -35,7 +41,11 @@ const OrdersTab = () => {
         </thead>
         <tbody>
           {products.map((product, i) => (
-            <tr key={i}>
+            //
+            // product.id corresponds to the row that is clicked on in the onClick we shall open the
+            // edit product modal and prepopulate that with all the relevant data
+            //
+            <tr key={i} onClick={() => handleRowClick(product.id)}>
               <td>{product.name}</td>
               <td>${product.price}</td>
               <td>{product.description}</td>
