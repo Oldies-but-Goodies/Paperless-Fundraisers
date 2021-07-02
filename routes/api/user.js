@@ -197,4 +197,28 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+//   CREATE a user (salesperson)
+// TODO add with auth
+router.post("/", async (req, res) => {
+  try {
+    const createUser = await User.create(
+      {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      role: 'user',
+      password: req.body.password,
+      }
+    );
+
+    if (!createUser) {
+      res.status(404).json({ message: "Could not create new user" });
+      return;
+    }
+    res.json(createUser);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 module.exports = router;
