@@ -27,6 +27,10 @@ export default {
     addOne: function (productObj) {
       return axios.post('/api/product/', productObj);
     },
+
+    updateOne: function (productObj, productId) {
+      return axios.put('/api/product/' + productId, productObj);
+    },
   },
 
   Fundraisers: {
@@ -38,16 +42,15 @@ export default {
     },
     addFundraiser: function (obj) {
       return axios.post('/api/fundraiser', obj);
-    }
+    },
   },
 
-    Orders: {
+  Orders: {
     getAllOrders: function (fundraiserId) {
       return axios.get('/api/order/fundraiser/all/' + fundraiserId);
     },
-    createOrder: function(obj) {
-      return axios.post('/api/order/', obj)
-    }
-  }
-  
+    createOrder: function (obj) {
+      return axios.post('/api/order/', obj);
+    },
+  },
 };

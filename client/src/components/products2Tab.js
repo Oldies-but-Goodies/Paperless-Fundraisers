@@ -24,6 +24,10 @@ const Products2Tab = () => {
 
   const [productIndex, setProductIndex] = useState(0);
 
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  // react-bootstrap-table-next - lets set up our columns here
+
   const columns = [
     {
       dataField: 'id',
@@ -81,12 +85,6 @@ const Products2Tab = () => {
     },
   ];
 
-  // const cellEdit = {
-  //   afterSaveCell: (oldValue, newValue, row, column) => {
-  //     console.log(oldValue, newValue, row, column);
-  //   },
-  // };
-
   const getProductData = async () => {
     const productData = await API.Products.getAdminAllForFundraiser(
       state.currentFundraiser
@@ -101,6 +99,30 @@ const Products2Tab = () => {
   const handleRowClick = async (i) => {
     setShowEdit(true);
     setProductIndex(i);
+  };
+
+  const handleCellEdit = async (oldValue, newValue, row, column) => {
+    const productObj = {
+      name: row.name,
+      description: row.description,
+      price: row.price,
+      active: row.active,
+      FundraiserId: state.currentFundraiser,
+    };
+    setErrorMsg(null);
+
+    try {
+      const productData = await API.Products.updateOne(productObj, row.id);
+      // setToggleRender(!toggleRender);
+      setErrorMsg('Product Updated');
+
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 3000);
+    } catch (err) {
+      console.log(err);
+      setErrorMsg(err.message);
+    }
   };
 
   return (
@@ -123,45 +145,29 @@ const Products2Tab = () => {
         showEdit={showEdit}
         setShowEdit={setShowEdit}
       />
-      {/* https://react-bootstrap-table.github.io/react-bootstrap-table2/docs/basic-celledit.html */}
+
+      {errorMsg && <p>{errorMsg}</p>}
+
       <BootstrapTable
         keyField='id'
         data={products}
         columns={columns}
         defaultSorted={defaultSorted}
         noDataIndication='No products defined'
-        cellEdit={cellEditFactory({ mode: 'click' })}
+        cellEdit={cellEditFactory({
+          mode: 'click',
+          afterSaveCell: (oldValue, newValue, row, column) => {
+            handleCellEdit(oldValue, newValue, row, column);
+          },
+        })}
         // afterSaveCell={cellEdit.afterSaveCell()}
         // filter={filterFactory()}
         striped
         hover
         condensed
         bootstrap4
+        blurToSave
       />
-      {/* <Table striped bordered hover className='mt-3'>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Price </th>
-            <th>Description</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product, i) => (
-            //
-            // product.id corresponds to the row that is clicked on in the onClick we shall open the
-            // edit product modal and prepopulate that with all the relevant data
-            //
-            <tr key={i} onClick={() => handleRowClick(i)}>
-              <td>{product.name}</td>
-              <td>${product.price}</td>
-              <td>{product.description}</td>
-              <td>{product.active ? 'ACTIVE' : 'HIDDEN'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table> */}
     </Container>
   );
 };
