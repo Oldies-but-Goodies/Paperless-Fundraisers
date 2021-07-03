@@ -36,6 +36,9 @@ export default {
     Orders: {
     getAllOrders: function (fundraiserId) {
       return axios.get('/api/order/fundraiser/all/' + fundraiserId);
+    },
+    createOrder: function(obj) {
+      return axios.post('/api/order/', obj)
     }
   }
   

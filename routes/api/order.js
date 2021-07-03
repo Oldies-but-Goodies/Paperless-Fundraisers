@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Order, Customer, orderDetails, Fundraiser } = require("../../models");
+const { User, Order, Customer, Order_Details, Fundraiser } = require("../../models");
 
 // GET all orders
 router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
@@ -64,8 +64,59 @@ router.get("/:id", async (req, res) => {
 // TODO add with auth
 router.post("/", async (req, res) => {
   try {
-    const orderData = await Order.create(req.body);
-    res.status(200).json(orderData);
+    // we need, customer details, products and quanitiy, fundraiser id, 
+    // req.body = {
+    //   orderObj: {
+    //     // order details
+    //   },
+    //   productsObj: {
+    //     1: 2,
+    //     5: 2,
+    //   },
+    //   customer: {
+
+    //   },
+    //   FundraiserId: ""
+    // }
+    const { orderObj, customer, productsObj } = req.body
+
+    // create a new customer
+
+    const customerData = await Customer.create(customer);
+
+    console.log(customerData);
+
+    // order
+    const orderObjNew = {
+      ...orderObj,
+      UserId: req.user.id,
+      CustomerId: customerData.dataValues.id,
+    }
+
+    const orderData = await Order.create(orderObjNew);
+
+    console.log(orderData);
+    // // create multiple order details
+
+    const productsArr = [];
+
+    for (const productId in productsObj) {
+      let product = {
+        ProductId: productId,
+        product_qty: productsObj[productId]
+      }
+
+      productsArr.push(product);
+    }
+
+    let orderDetailsData = await Promise.all(productsArr.map(val => Order_Details.create({
+        ...val,
+        OrderId: orderData.dataValues.id
+      })))
+
+      console.log(orderDetailsData);
+
+    res.status(200).json([customerData, orderData, orderDetailsData]);
   } catch (err) {
     res.status(400).json(err);
   }

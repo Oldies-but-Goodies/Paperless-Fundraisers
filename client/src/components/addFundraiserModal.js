@@ -4,6 +4,8 @@ import { Modal, Button, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import API from '../lib/API';
 
+import { format } from 'date-fns';
+
 const AddFundraiserModal = () => {
   const [show, setShow] = useState(false);
 
@@ -88,7 +90,7 @@ const AddFundraiserModal = () => {
               Start Date
             </label>
             <input
-              type="date"
+              type="datetime-local"
               id="inputStartDate"
               className="form-control mt-1"
               name="start"
@@ -100,7 +102,7 @@ const AddFundraiserModal = () => {
               End Date
             </label>
             <input
-              type="date"
+              type="datetime-local"
               id="inputEndDate"
               className="form-control mt-1"
               name="end"
