@@ -2,30 +2,72 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import API from '../lib/API';
+import { useStoreContext } from '../store/store';
 
-const AddProductModal = () => {
-  const [show, setShow] = useState(false);
+const AddProductModal = ({
+  showAdd,
+  setShowAdd,
+  toggleRender,
+  setToggleRender,
+}) => {
+  const [state, dispatch] = useStoreContext();
+  const handleClose = () => setShowAdd(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [price, setPrice] = useState('');
+  const [active, setActive] = useState(false);
 
-  const history = useHistory();
   const [errorMsg, setErrorMsg] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (name.length === 0 || price.length === 0) {
+      setErrorMsg('We need at least a name and a price');
+      return;
+    }
+    const productObj = {
+      name,
+      description,
+      price,
+      active,
+      FundraiserId: state.currentFundraiser,
+    };
+    setErrorMsg(null);
+
+    console.log(productObj);
+    try {
+      const productData = await API.Products.addOne(productObj);
+      setToggleRender(!toggleRender);
+      setErrorMsg('Product Added');
+      setName('');
+      setDescription('');
+      setPrice('');
+      setActive(false);
+
+      setTimeout(() => {
+        setShowAdd(false);
+      }, 1000);
+    } catch (err) {
+      console.log(err);
+      setErrorMsg(err.message);
+    }
+
+    // setProducts(productData.data);
+  };
 
   return (
     <>
-      <Button variant='primary' className='my-2' onClick={handleShow}>
-        Add Product
-      </Button>
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showAdd} onHide={handleClose}>
         <Modal.Header
           style={{ background: `linear-gradient(${'#007bff'}, ${'#002853'})` }}
         >
           <Modal.Title style={{ color: 'white' }}>Add New Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form className='form-signin'>
+          {errorMsg && <p>{errorMsg}</p>}
+          <Form className='form-signin' onSubmit={(e) => handleSubmit(e)}>
             <label htmlFor='inputProduct' className='sr-only'>
               Product Name
             </label>
@@ -35,8 +77,7 @@ const AddProductModal = () => {
               className='form-control mt-1'
               name='product_name'
               placeholder='Product Name'
-              // value={signUpCreds.first_name}
-              // onChange={handleChange}
+              onChange={(e) => setName(e.target.value)}
             />
             <label htmlFor='inputPrice' className='sr-only'>
               Price
@@ -47,8 +88,7 @@ const AddProductModal = () => {
               className='form-control mt-1'
               name='Price'
               placeholder='Price'
-              // value={signUpCreds.last_name}
-              // onChange={handleChange}
+              onChange={(e) => setPrice(e.target.value)}
             />
             <label htmlFor='inputDescription' className='sr-only'>
               Product Description
@@ -59,24 +99,25 @@ const AddProductModal = () => {
               className='form-control mt-1'
               name='Description'
               placeholder='Description'
-              // value={signUpCreds.email}
-              // onChange={handleChange}
+              onChange={(e) => setDescription(e.target.value)}
             />
             <Form.Check
               className='mt-2'
               type='checkbox'
               label='Product Active'
+              checked={active}
+              onChange={(e) => setActive(e.target.checked)}
             />
-          </form>
+            <Modal.Footer>
+              <Button variant='secondary' onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant='primary' type='submit'>
+                Save Changes
+              </Button>
+            </Modal.Footer>
+          </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

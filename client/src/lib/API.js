@@ -16,8 +16,16 @@ export default {
       return axios.get('/api/product/fundraiser/all/' + fundraiserId);
     },
 
+    getAdminAllForFundraiser: function (fundraiserId) {
+      return axios.get('/api/product/fundraiser/adminall/' + fundraiserId);
+    },
+
     getOne: function (productId) {
       return axios.get('/api/product/' + productId);
+    },
+
+    addOne: function (productObj) {
+      return axios.post('/api/product/', productObj);
     },
   },
 

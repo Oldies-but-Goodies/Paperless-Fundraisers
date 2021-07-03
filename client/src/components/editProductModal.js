@@ -3,28 +3,17 @@ import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-const EditProductModal = () => {
-  //
-  // default for the EditProductModal is to be SHOWN when it is called
-  //
-  const [show, setShow] = useState(true);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+const EditProductModal = ({ showEdit, setShowEdit, product }) => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState(null);
 
   return (
     <>
-      {/* <Button variant='primary' className='my-2' onClick={handleShow}>
-        Add Product
-      </Button> */}
-
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={showEdit} onHide={() => setShowEdit(false)}>
         <Modal.Header
           style={{ background: `linear-gradient(${'#007bff'}, ${'#002853'})` }}
         >
-          <Modal.Title style={{ color: 'white' }}>Add New Product</Modal.Title>
+          <Modal.Title style={{ color: 'white' }}>Edit Product</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form className='form-signin'>
@@ -37,6 +26,7 @@ const EditProductModal = () => {
               className='form-control mt-1'
               name='product_name'
               placeholder='Product Name'
+              value={product.name}
               // value={signUpCreds.first_name}
               // onChange={handleChange}
             />
@@ -49,6 +39,7 @@ const EditProductModal = () => {
               className='form-control mt-1'
               name='Price'
               placeholder='Price'
+              value={product.price}
               // value={signUpCreds.last_name}
               // onChange={handleChange}
             />
@@ -61,6 +52,7 @@ const EditProductModal = () => {
               className='form-control mt-1'
               name='Description'
               placeholder='Description'
+              value={product.description}
               // value={signUpCreds.email}
               // onChange={handleChange}
             />
@@ -68,14 +60,16 @@ const EditProductModal = () => {
               className='mt-2'
               type='checkbox'
               label='Product Active'
+              value={product.active}
+              checked={product.active}
             />
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button variant='secondary' onClick={() => setShowEdit(false)}>
             Close
           </Button>
-          <Button variant='primary' onClick={handleClose}>
+          <Button variant='primary' onClick={() => setShowEdit(false)}>
             Save Changes
           </Button>
         </Modal.Footer>
