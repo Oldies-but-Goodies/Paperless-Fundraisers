@@ -33,17 +33,21 @@ export default {
     getFundraisers: function () {
       return axios.get('/api/fundraiser/');
     },
-  },
-
-  FundraisersID: {
     getCurrentFundraiser: function (fundraiserId) {
       return axios.get('/api/fundraiser/' + fundraiserId);
     },
+    addFundraiser: function (obj) {
+      return axios.post('/api/fundraiser', obj);
+    }
   },
 
-  Orders: {
+    Orders: {
     getAllOrders: function (fundraiserId) {
       return axios.get('/api/order/fundraiser/all/' + fundraiserId);
     },
-  },
+    createOrder: function(obj) {
+      return axios.post('/api/order/', obj)
+    }
+  }
+  
 };
