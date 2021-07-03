@@ -170,15 +170,15 @@ router.put('/updatePassword', (req, res, next) => {
 
 //   UPDATE a user (salesperson)
 // TODO add with auth
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedUser = await User.update(
       {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      role: 'user',
-      password: req.body.password,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        role: 'user',
+        password: req.body.password,
       },
       {
         where: {
@@ -188,7 +188,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!updatedUser) {
-      res.status(404).json({ message: "No Salesperson found with this id" });
+      res.status(404).json({ message: 'No Salesperson found with this id' });
       return;
     }
     res.json(updatedUser);
@@ -199,26 +199,24 @@ router.put("/:id", async (req, res) => {
 
 //   CREATE a user (salesperson)
 // TODO add with auth
-router.post("/", async (req, res) => {
-  try {
-    const createUser = await User.create(
-      {
-      first_name: req.body.first_name,
-      last_name: req.body.last_name,
-      email: req.body.email,
-      role: 'user',
-      password: req.body.password,
-      }
-    );
+// router.post('/', async (req, res) => {
+//   try {
+//     const createUser = await User.create({
+//       first_name: req.body.first_name,
+//       last_name: req.body.last_name,
+//       email: req.body.email,
+//       role: 'user',
+//       password: req.body.password,
+//     });
 
-    if (!createUser) {
-      res.status(404).json({ message: "Could not create new user" });
-      return;
-    }
-    res.json(createUser);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+//     if (!createUser) {
+//       res.status(404).json({ message: 'Could not create new user' });
+//       return;
+//     }
+//     res.json(createUser);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
 
 module.exports = router;
