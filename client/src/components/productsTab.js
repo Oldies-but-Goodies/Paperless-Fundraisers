@@ -6,7 +6,7 @@ import EditProductModal from './editProductModal';
 import { useStoreContext } from '../store/store';
 import BootstrapTable from 'react-bootstrap-table-next';
 
-const OrdersTab = () => {
+const ProductsTab = () => {
   const [state, dispatch] = useStoreContext();
   const [products, setProducts] = useState([
     { name: '', price: '', description: '', active: '' },
@@ -82,4 +82,4 @@ const OrdersTab = () => {
   );
 };
 
-export default OrdersTab;
+export default ProductsTab;
