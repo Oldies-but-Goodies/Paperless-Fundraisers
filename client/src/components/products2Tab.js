@@ -113,7 +113,6 @@ const Products2Tab = () => {
 
     try {
       const productData = await API.Products.updateOne(productObj, row.id);
-      // setToggleRender(!toggleRender);
       setErrorMsg('Product Updated');
 
       setTimeout(() => {
