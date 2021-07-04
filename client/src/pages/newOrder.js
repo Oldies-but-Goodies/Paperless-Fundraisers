@@ -44,8 +44,8 @@ const NewOrder = (props) => {
     // sum + quantity * this.state.product.price, 0);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async () => {
+    
 
     const orderData = await API.Orders.createOrder({
       customer: {
@@ -234,13 +234,12 @@ const NewOrder = (props) => {
                   onChange={handleChange(product.id)}
                 />
               </td>
-              <td>
+              <td className='d-flex justify-content-center'>
                 {<div className='col-3 font-weight-bold'> {quanities[product.id]
                   ? quanities[product.id] * product.price
                   : 0}
                   </div>
-                  ? quanities[product.id] * product.price
-                  : 0}
+                  }
               </td>
             </tr>
           ))}
@@ -255,7 +254,7 @@ const NewOrder = (props) => {
         value={formData.customer_remit}
         onChange={handleChange}
         />
-        <div className='col-3 font-weight-bold'> Grand Total: $$$</div>
+        <div className='col-3 font-weight-bold'> Grand Total: $$</div>
       </div>
 
       <Button
