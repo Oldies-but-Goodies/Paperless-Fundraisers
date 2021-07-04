@@ -67,17 +67,11 @@ router.post('/', async (req, res) => {
 // TODO add with auth
 router.put('/:id', async (req, res) => {
   try {
-    const updatedProduct = await Product.update(
-      {
-        name: req.body.name,
-        price: req.body.price,
+    const updatedProduct = await Product.update(req.body, {
+      where: {
+        id: req.params.id,
       },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
+    });
 
     if (!updatedProduct) {
       res.status(404).json({ message: 'No product found with this id' });
