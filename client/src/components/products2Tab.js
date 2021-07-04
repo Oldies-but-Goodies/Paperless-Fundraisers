@@ -164,7 +164,7 @@ const Products2Tab = () => {
         // filter={filterFactory()}
         striped
         hover
-        condensed
+        // condensed
         bootstrap4
         blurToSave
       />
