@@ -3,16 +3,34 @@ const { Fundraiser, User, Product } = require('../../models');
 
 // GET all fundraisers
 router.get('/', async (req, res) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
   try {
     const fundraiserData = await Fundraiser.findAll();
     res.status(200).json(fundraiserData);
   } catch (err) {
     res.status(500).json(err);
   }
+  })(req, res, next);
+
 });
 
 // GET a single fundraiser
 router.get('/:fundraiserId', async (req, res) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
   try {
     const fundraiserData = await Fundraiser.findByPk(
         req.params.fundraiserId
@@ -27,11 +45,20 @@ router.get('/:fundraiserId', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+  })(req, res, next);
+
 });
 
 // CREATE a fundraiser
-// TODO add with auth
 router.post('/', async (req, res) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
   try {
     console.log(req.body);
     const fundraiserData = await Fundraiser.create(req.body);
@@ -39,11 +66,20 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+  })(req, res, next);
+
 });
 
 // UPDATE a fundraiser
-// TODO add with auth
 router.put('/:id',  async (req, res) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
   try {
     const updatedFundraiser = await Fundraiser.update(
       {
@@ -68,12 +104,20 @@ router.put('/:id',  async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+  })(req, res, next);
+
 });
 
-
 // DELETE a fundraiser
-// TODO add with auth
 router.delete('/:id', async (req, res) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
   try {
     const fundraiserData = await Fundraiser.destroy({
       where: {
@@ -90,6 +134,8 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+  })(req, res, next);
+
 });
 
 module.exports = router;
