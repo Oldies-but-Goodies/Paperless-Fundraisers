@@ -55,7 +55,7 @@ router.post('/',  async (req, res) => {
           zip_code: req.body.zip_code,
           phone_number: req.body.phone_number,
         },
-      }
+      
     );
 
     if (!updatedCustomer) {
