@@ -140,7 +140,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!updatedOrder) {
-      res.status(404).json({ message: "No Order_id found with this id" });
+      res.status(404).json({ message: "No Order found with this id" });
       return;
     }
     res.json(updatedOrder);
@@ -160,7 +160,30 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!orderData) {
-      res.status(404).json({ message: "No order found with this id!" });
+      res.status(404).json({ message: "No Order found with this id!" });
+      return;
+    }
+
+    res.status(200).json(orderData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// DELETE an order by orderId
+// TODO add with auth
+router.delete("/:orderId", async (req, res) => {
+  console.log(req);
+  try {
+    const orderData = await Order.destroy({
+      where: {
+       
+        orderId: req.params.id,
+      },
+    });
+
+    if (!orderData) {
+      res.status(404).json({ message: "No order_id found with this id!" });
       return;
     }
 
