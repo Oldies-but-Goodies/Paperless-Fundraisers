@@ -1,15 +1,21 @@
-const router = require("express").Router();
-const { User, Order, Customer, Order_Details, Fundraiser } = require("../../models");
+const router = require('express').Router();
+const {
+  User,
+  Order,
+  Customer,
+  Order_Details,
+  Fundraiser,
+} = require('../../models');
 
 // GET all orders
-router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
+router.get('/fundraiser/all/:fundraiserId', async (req, res) => {
   try {
     const orderData = await Order.findAll({
       where: {
         fundraiserId: req.params.fundraiserId,
         // active: true
       },
-      include: [{ model: User }]
+      include: [{ model: User }],
     });
     res.status(200).json(orderData);
   } catch (err) {
@@ -26,7 +32,7 @@ router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
 //         product_id: req.body.product_id,
 //         product_qty: req.body.product_qty,
 //         line_total: req.body.line_total,
-        
+
 //       },
 //       {
 //         where: {
@@ -40,9 +46,31 @@ router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
 //   }
 // });
 
+//
+// get all order for a given userid
+//
+router.get('/allorderforuser/:id', async (req, res) => {
+  console.log(req);
+
+  try {
+    const orderData = await Order.findAll({
+      where: {
+        //
+        // TODO -- needs to where by the current fundraiserId
+        //
+        // fundraiserId: req.params.fundraiserId,
+        userId: req.params.id,
+      },
+      // include: [{ model: User }],
+    });
+    res.status(200).json(orderData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // GET a single order
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const orderData = await Order.findByPk(req.params.id, {
       // JOIN with Order, using the Order_Details through table
@@ -50,7 +78,7 @@ router.get("/:id", async (req, res) => {
     });
 
     if (!orderData) {
-      res.status(404).json({ message: "No order found with this id!" });
+      res.status(404).json({ message: 'No order found with this id!' });
       return;
     }
 
@@ -62,9 +90,9 @@ router.get("/:id", async (req, res) => {
 
 // CREATE an order
 // TODO add with auth
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    // we need, customer details, products and quanitiy, fundraiser id, 
+    // we need, customer details, products and quanitiy, fundraiser id,
     // req.body = {
     //   orderObj: {
     //     // order details
@@ -78,7 +106,7 @@ router.post("/", async (req, res) => {
     //   },
     //   FundraiserId: ""
     // }
-    const { orderObj, customer, productsObj } = req.body
+    const { orderObj, customer, productsObj } = req.body;
 
     // create a new customer
 
@@ -91,7 +119,7 @@ router.post("/", async (req, res) => {
       ...orderObj,
       UserId: req.user.id,
       CustomerId: customerData.dataValues.id,
-    }
+    };
 
     const orderData = await Order.create(orderObjNew);
 
@@ -103,18 +131,22 @@ router.post("/", async (req, res) => {
     for (const productId in productsObj) {
       let product = {
         ProductId: productId,
-        product_qty: productsObj[productId]
-      }
+        product_qty: productsObj[productId],
+      };
 
       productsArr.push(product);
     }
 
-    let orderDetailsData = await Promise.all(productsArr.map(val => Order_Details.create({
-        ...val,
-        OrderId: orderData.dataValues.id
-      })))
+    let orderDetailsData = await Promise.all(
+      productsArr.map((val) =>
+        Order_Details.create({
+          ...val,
+          OrderId: orderData.dataValues.id,
+        })
+      )
+    );
 
-      console.log(orderDetailsData);
+    console.log(orderDetailsData);
 
     res.status(200).json([customerData, orderData, orderDetailsData]);
   } catch (err) {
@@ -124,7 +156,7 @@ router.post("/", async (req, res) => {
 
 //   UPDATE an order
 // TODO add with auth
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedOrder = await Order.update(
       {
@@ -142,7 +174,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!updatedOrder) {
-      res.status(404).json({ message: "No Order_id found with this id" });
+      res.status(404).json({ message: 'No Order_id found with this id' });
       return;
     }
     res.json(updatedOrder);
@@ -153,7 +185,7 @@ router.put("/:id", async (req, res) => {
 
 // DELETE an order
 // TODO add with auth
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
     const orderData = await Order.destroy({
       where: {
@@ -162,7 +194,7 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!orderData) {
-      res.status(404).json({ message: "No order found with this id!" });
+      res.status(404).json({ message: 'No order found with this id!' });
       return;
     }
 
