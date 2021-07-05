@@ -19,8 +19,8 @@ router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
 //
 // get all order for a given userid
 //
-router.get('/allorderforuser/:id', async (req, res) => {
-  console.log(req);
+router.get('/allOrdersforUser/:id', async (req, res) => {
+  // console.log(req);
   try {
     const orderData = await Order.findAll({
       where: {

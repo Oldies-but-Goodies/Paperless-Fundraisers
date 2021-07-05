@@ -11,6 +11,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+// get all order details for a given order id
+//
+router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
+  // console.log(req);
+  try {
+    const orderDetails = await Order_Details.findAll({
+      where: {
+       
+        orderId: req.params.id,
+      },
+      // include: [{ model: User }],
+    });
+    res.status(200).json(orderDetails);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // GET a single order detail
 router.get("/:id", async (req, res) => {
   try {
