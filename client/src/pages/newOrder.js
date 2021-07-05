@@ -30,10 +30,23 @@ const NewOrder = (props) => {
     setProducts(productData.data);
   };
   
-  const handleChange = (productId) => (event) => {
+  const handleQuantityChange = (productId) => (event) => {
     const { name, value } = event.target;
 
     setQuantities({ ...quanities, [productId]: value });
+    // setFormData({...formData, [name]: value});
+    // setGrandTotal:({...grandTotal, [quanities]: value})
+    // setProductTotal({ [name]: (this.state.quantity.value * this.product.price.value) })
+    // setGrandTotal({[name]: this.state.productTotal && this.state.productValue.reduce((a,v) => a + v.value, 0) })
+
+    // const productTotal = () =>
+    // this.state.quantity.reduce((sum, quantity) =>
+    // sum + quantity * this.state.product.price, 0);
+  };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    // setQuantities({ ...quanities, [productId]: value });
     setFormData({...formData, [name]: value});
     // setGrandTotal:({...grandTotal, [quanities]: value})
     // setProductTotal({ [name]: (this.state.quantity.value * this.product.price.value) })
@@ -62,6 +75,8 @@ const NewOrder = (props) => {
       productsObj: quanities,
       orderObj: {
         FundraiserId: state.currentFundraiser,
+        CustomerId: 1,
+        UserId: 1,
         order_total: 10,
         customer_remit: formData.customer_remit,
         seller_remit: null,
@@ -107,7 +122,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='first_name'
-              value={formData.first_name}
+              value=''
               required
               placeholder='First Name'
               onChange={handleChange}
@@ -119,7 +134,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='last_name'
-              value={formData.last_name}
+              value=''
               required
               placeholder='Last Name'
               onChange={handleChange}
@@ -132,7 +147,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='address_line1'
-              value={formData.address_line1}
+              value=''
               required
               placeholder='Address'
               onChange={handleChange}
@@ -143,7 +158,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='address_line2'
-              value={formData.address_line2}
+              value=''
               required
               placeholder='Address 2'
               onChange={handleChange}
@@ -154,7 +169,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='city'
-              value={formData.city}
+              value=''
               required
               placeholder='City'
               onChange={handleChange}
@@ -165,7 +180,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='state'
-              value={formData.state}
+              value=''
               required
               placeholder='State'
               onChange={handleChange}
@@ -176,7 +191,7 @@ const NewOrder = (props) => {
               type='integer'
               className='form-control'
               name='zip_code'
-              value={formData.zip_code}
+              value=''
               required
               placeholder='Zip Code'
               onChange={handleChange}
@@ -187,7 +202,7 @@ const NewOrder = (props) => {
               type='string'
               className='form-control'
               name='phone_number'
-              value={formData.phone_number}
+              value=''
               required
               placeholder='Phone Number'
               onChange={handleChange}
@@ -198,7 +213,7 @@ const NewOrder = (props) => {
               type='email'
               className='form-control'
               name='email'
-              value={formData.email}
+              value=''
               required
               placeholder='Email'
               onChange={handleChange}
@@ -231,7 +246,7 @@ const NewOrder = (props) => {
                   className='form-control'
                   name='quantity'
                   value={quanities[product.id] || null}
-                  onChange={handleChange(product.id)}
+                  onChange={handleQuantityChange(product.id)}
                 />
               </td>
               <td className='d-flex justify-content-center'>
