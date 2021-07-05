@@ -22,6 +22,7 @@ router.get('/fundraiser/all/:fundraiserId', async (req, res) => {
     res.status(500).json(err);
   }
 });
+<<<<<<< HEAD
 // GET all orders by fundraiser
 // router.get("/", async (req, res) => {
 //   try {
@@ -45,6 +46,29 @@ router.get('/fundraiser/all/:fundraiserId', async (req, res) => {
 //     res.status(400).json(err);
 //   }
 // });
+=======
+//
+// get all order for a given userid
+//
+router.get('/allorderforuser/:id', async (req, res) => {
+  console.log(req);
+  try {
+    const orderData = await Order.findAll({
+      where: {
+        //
+        // TODO -- needs to where by the current fundraiserId
+        //
+        // fundraiserId: req.params.fundraiserId,
+        userId: req.params.id,
+      },
+      // include: [{ model: User }],
+    });
+    res.status(200).json(orderData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+>>>>>>> 17d8085c8da564c22f3c6d74f9bcbe07bdf0fffc
 
 //
 // get all order for a given userid
