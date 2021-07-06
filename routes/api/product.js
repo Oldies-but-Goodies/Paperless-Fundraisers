@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Product } = require('../../models');
+const { Product, Fundraiser, userFundraiser } = require('../../models');
 
 // GET all products for a given fundraiser Id
 router.get('/fundraiser/all/:fundraiserId', async (req, res) => {
@@ -56,6 +56,23 @@ router.get('/:id', async (req, res) => {
 // TODO add with auth
 router.post('/', async (req, res) => {
   try {
+    const { FundraiserId } = req.body;
+    console.log(FundraiserId);
+
+    const userFundraiserData = await userFundraiser.findOne({
+      where: {
+        UserId: req.user.id,
+        FundraiserId: FundraiserId,
+        admin_level: 'admin',
+      },
+    });
+    console.log(userFundraiserData);
+    if (!userFundraiserData)
+      return res.json({
+        status: 'error',
+        message: 'user is not admin',
+      });
+
     const productData = await Product.create(req.body);
     res.status(200).json(productData);
   } catch (err) {

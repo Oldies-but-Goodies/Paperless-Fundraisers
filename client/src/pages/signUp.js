@@ -1,7 +1,9 @@
 import axios from "axios";
 import { sign } from "crypto";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { Dropdown, DropdownButton, InputGroup } from "react-bootstrap";
+import API from '../lib/API';
 
 const SignUp = () => {
   const history = useHistory();
@@ -13,11 +15,30 @@ const SignUp = () => {
     last_name: "",
   });
 
+  const [fundraisers, setFundraisers] = useState([])
+  const [dropdownTitle, setDropdownTitle] = useState([])
+
+  const getFundraiserData = async () => {
+    const fundraiserData = await API.Fundraisers.getFundraisers()
+    setFundraisers(fundraiserData.data)
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     setSignUpCreds({ ...signUpCreds, [name]: value });
   };
+
+  // const onSelect = (event, eventKey) => {
+  //   event.preventDefault();
+  //   const{ name, eventKey } = event.target;
+
+  //   setDropdownTitle({ [name]: eventKey});
+    
+    // const dropdownTitle = this.state.dropdownTitle;
+    // dropdownTitle.dropdownTitle.value = eventKey
+    
+  // }
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -46,12 +67,16 @@ const SignUp = () => {
         setErrorMsg(error.message);
       });
   };
+  useEffect(() => {
+    getFundraiserData()
+  }, [])
 
   return (
     <div className='text-center'>
       <h4>Sign Up</h4>
       {errorMsg ? <p>{errorMsg}</p> : null}
       <form className='form-signin'>
+        <div>
         <label htmlFor='inputFirst' className='sr-only'>
           First Name
         </label>
@@ -64,7 +89,9 @@ const SignUp = () => {
           value={signUpCreds.first_name}
           onChange={handleChange}
         />
-        <label htmlFor='inputLast' className='sr-only'>
+        </div>
+        <div className='mt-1'>
+        <label htmlFor='inputLast' className='sr-only mt-1'>
           Email address
         </label>
         <input
@@ -76,6 +103,8 @@ const SignUp = () => {
           value={signUpCreds.last_name}
           onChange={handleChange}
         />
+        </div>
+        <div className='mt-1'>
         <label htmlFor='inputEmail' className='sr-only'>
           Email address
         </label>
@@ -88,6 +117,8 @@ const SignUp = () => {
           value={signUpCreds.email}
           onChange={handleChange}
         />
+        </div>
+        <div className='mt-1'>
         <label htmlFor='inputPassword' className='sr-only'>
           Password
         </label>
@@ -100,6 +131,25 @@ const SignUp = () => {
           value={signUpCreds.password}
           onChange={handleChange}
         />
+        </div>
+        <div className='mt-1 mb-3'>
+        <DropdownButton
+        as={InputGroup.Prepend}
+        variant="outline-secondary"
+        title="Select Fundraiser"
+        id="input-group-dropdown-1"
+        >
+          {fundraisers.map(fundraiser => (
+            <div>
+              <Dropdown.Item eventKey="{fundraiser.name}" 
+              // onClick={onSelect}
+              >
+                {fundraiser.name}
+                </Dropdown.Item>
+            </div>
+            ))}
+        </DropdownButton>
+        </div>
         <button
           className='btn btn-lg btn-primary btn-block'
           type='submit'

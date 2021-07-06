@@ -7,16 +7,24 @@ import { useStoreContext } from "../store/store";
 const Home = (props) => {
   const [state, dispatch] = useStoreContext();
 
-  const [fundraiser, setFundraiser] = useState([])
+  const [fundraiser, setFundraiser] = useState([]);
+  const [orders, setOrders] = useState([])
 
 const getCurrentundraiser = async () => {
   const fundraiserData = await API.Fundraisers.getCurrentFundraiser(state.currentFundraiser)
-  console.log(fundraiserData);
+  // console.log(fundraiserData);
   setFundraiser(fundraiserData.data);
+};
+
+const myOrders = async () => {
+  const myOrderData = await API.Orders.loggedInOrders(state.user.id);
+  console.log(myOrderData);
+  setOrders(myOrderData.data)
 }
 
 useEffect(() => {
-  getCurrentundraiser()
+  getCurrentundraiser();
+  myOrders()
 }, [])
   
   return (
@@ -44,20 +52,29 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
+          {orders.map((order) => (
+            <tr>
+              <td>{order.Customer.first_name + " " + order.Customer.last_name}</td>
+              <td>{order.CustomerId}</td>
+              <td>${order.order_total}</td>
+              <td>{order.customer_remit}</td>
+              <td>{order.seller_remit}</td>
+          </tr>
+          ))}
+          
+            {/* <td>1</td>
             <td>Stefan</td>
             <td>$50</td>
             <td>Yes</td>
             <td>Yes</td>
-          </tr>
+          
           <tr>
             <td>2</td>
             <td>Tammy </td>
             <td>$40</td>
             <td>Yes</td>
             <td>No</td>
-          </tr>
+          </tr> */}
           </tbody>
       </Table>
     
