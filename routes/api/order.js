@@ -3,6 +3,9 @@ const { User, Order, Customer, Order_Details, Fundraiser } = require("../../mode
 
 // GET all orders
 router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderData = await Order.findAll({
       where: {
@@ -21,6 +24,9 @@ router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
 //
 router.get('/allOrdersforUser/:id', async (req, res) => {
   // console.log(req);
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderData = await Order.findAll({
       where: {
@@ -38,9 +44,11 @@ router.get('/allOrdersforUser/:id', async (req, res) => {
   }
 });
 
-
 // GET a single order
 router.get("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderData = await Order.findByPk(req.params.id, {
       // JOIN with Order, using the Order_Details through table
@@ -61,6 +69,9 @@ router.get("/:id", async (req, res) => {
 // CREATE an order
 // TODO add with auth
 router.post("/", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     // we need, customer details, products and quanitiy, fundraiser id, 
     // req.body = {
@@ -123,6 +134,9 @@ router.post("/", async (req, res) => {
 //   UPDATE an order
 // TODO add with auth
 router.put("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const updatedOrder = await Order.update(
       {
@@ -152,6 +166,9 @@ router.put("/:id", async (req, res) => {
 // DELETE an order
 // TODO add with auth
 router.delete("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderData = await Order.destroy({
       where: {
@@ -173,6 +190,9 @@ router.delete("/:id", async (req, res) => {
 // DELETE an order by orderId
 // TODO add with auth
 router.delete("/:orderId", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   console.log(req);
   try {
     const orderData = await Order.destroy({
