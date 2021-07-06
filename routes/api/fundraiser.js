@@ -14,9 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:fundraiserId', async (req, res) => {
   try {
-    const fundraiserData = await Fundraiser.findByPk(
-        req.params.fundraiserId
-    );
+    const fundraiserData = await Fundraiser.findByPk(req.params.fundraiserId);
 
     if (!fundraiserData) {
       res.status(404).json({ message: 'No fundraiser found with this id!' });
@@ -39,7 +37,7 @@ router.post('/', async (req, res) => {
 });
 // UPDATE a fundraiser
 // TODO add with auth
-router.put('/:id',  async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
     const updatedFundraiser = await Fundraiser.update(
       {
@@ -47,7 +45,7 @@ router.put('/:id',  async (req, res) => {
         start: req.body.start,
         end: req.body.end,
         description: req.body.description,
-        goal: req.body.goal
+        goal: req.body.goal,
       },
       {
         where: {
@@ -70,8 +68,8 @@ router.delete('/:id', async (req, res) => {
   try {
     const fundraiserData = await Fundraiser.destroy({
       where: {
-        id: req.params.id
-      }
+        id: req.params.id,
+      },
     });
     if (!fundraiserData) {
       res.status(404).json({ message: 'No fundraiser found with this id!' });

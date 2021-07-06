@@ -113,7 +113,6 @@ const Products2Tab = () => {
 
     try {
       const productData = await API.Products.updateOne(productObj, row.id);
-      // setToggleRender(!toggleRender);
       setErrorMsg('Product Updated');
 
       setTimeout(() => {
@@ -164,7 +163,7 @@ const Products2Tab = () => {
         // filter={filterFactory()}
         striped
         hover
-        condensed
+        // condensed
         bootstrap4
         blurToSave
       />

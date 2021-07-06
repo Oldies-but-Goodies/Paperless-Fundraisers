@@ -1,19 +1,29 @@
 const router = require('express').Router();
 const { Customer, Order } = require('../../models');
-
+const passport = require('../../passport');
 
 // GET all customers
-router.get('/', async (req, res) => {
+router.get('/', async (req, res, next) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
   try {
     const customerData = await Customer.findAll();
     res.status(200).json(customerData);
   } catch (err) {
     res.status(500).json(err);
   }
+  })(req, res, next);
+
 });
 
 // GET a single customer
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
   passport.authenticate('local', async function (err, user, info) {
     if (err) {
       return next(err);
@@ -42,19 +52,35 @@ router.get('/:id', async (req, res) => {
 });
 
 // CREATE a customer
-// TODO add with auth
-router.post('/',  async (req, res) => {
+router.post('/',  async (req, res, next) => {
+  passport.authenticate('local', async function (err, user, info) {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.json({ status: 'error', message: info.message });
+    }
     try {
       const customerData = await Customer.create(req.body);
       res.status(200).json(customerData);
     } catch (err) {
       res.status(400).json(err);
     }
+    })(req, res, next);
+
   });
 
 //   UPDATE a customer
-// TODO add with auth
-  router.put('/:id',  async (req, res) => {
+  router.put('/:id',  async (req, res, next) => {
+    passport.authenticate('local', async function (err, user, info) {
+      if (err) {
+        return next(err);
+      }
+  
+      if (!user) {
+        return res.json({ status: 'error', message: info.message });
+      }
     try {
       const updatedCustomer = await Customer.update(
         {
@@ -83,10 +109,19 @@ router.post('/',  async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
+  })(req, res, next);
+
   });
   // DELETE a customer
-  // TODO add with auth
-  router.delete('/:id',  async (req, res) => {
+  router.delete('/:id',  async (req, res, next) => {
+    passport.authenticate('local', async function (err, user, info) {
+      if (err) {
+        return next(err);
+      }
+  
+      if (!user) {
+        return res.json({ status: 'error', message: info.message });
+      }
     try {
       const customerData = await Customer.destroy({
         where: {
@@ -103,7 +138,8 @@ router.post('/',  async (req, res) => {
     } catch (err) {
       res.status(500).json(err);
     }
-  
+    })(req, res, next);
+
   });
 
 module.exports = router;
