@@ -52,5 +52,8 @@ export default {
     createOrder: function (obj) {
       return axios.post('/api/order/', obj);
     },
+    loggedInOrders: function (userId) {
+      return axios.get('api/order/allOrdersforUser/' + userId)
+    }
   },
 };

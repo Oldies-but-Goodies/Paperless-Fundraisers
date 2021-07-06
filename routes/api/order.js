@@ -30,7 +30,7 @@ router.get('/allOrdersforUser/:id', async (req, res) => {
         // fundraiserId: req.params.fundraiserId,
         userId: req.params.id,
       },
-      // include: [{ model: User }],
+      include: [{ model: Customer }],
     });
     res.status(200).json(orderData);
   } catch (err) {
