@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Fundraiser, User, Product } = require('../../models');
 // GET all fundraisers
+<<<<<<< Updated upstream
 router.get('/', async (req, res) => {
   try {
     const fundraiserData = await Fundraiser.findAll();
@@ -11,6 +12,32 @@ router.get('/', async (req, res) => {
 });
 
 // GET a single fundraiser
+=======
+router.get('/', async (req, res, next) => {
+  console.log('inside');
+  console.log(req.user.id);
+  console.log(req.user.email);
+
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+  try {
+    const fundraiserData = await Fundraiser.findAll();
+      res.status(200).json(fundraiserData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
+
+// GET a single fundraiser
+// CC Example
+router.get('/:fundraiserId', async (req, res, next) => {
+  console.log('user -------------', req.user);
+
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+>>>>>>> Stashed changes
 
 router.get('/:fundraiserId', async (req, res) => {
   try {
@@ -26,6 +53,7 @@ router.get('/:fundraiserId', async (req, res) => {
   }
 });
 // CREATE a fundraiser
+<<<<<<< Updated upstream
 // TODO add with auth
 router.post('/', async (req, res) => {
   try {
@@ -34,8 +62,22 @@ router.post('/', async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
+=======
+router.post('/', async (req, res, next) => {
+    if (!req.user) {
+      return res.json({ status: 'error', message: 'not logged in' });
+    }
+    try {
+      console.log(req.body);
+      const fundraiserData = await Fundraiser.create(req.body);
+      res.status(200).json(fundraiserData);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+>>>>>>> Stashed changes
 });
 // UPDATE a fundraiser
+<<<<<<< Updated upstream
 // TODO add with auth
 router.put('/:id', async (req, res) => {
   try {
@@ -50,6 +92,20 @@ router.put('/:id', async (req, res) => {
       {
         where: {
           id: req.params.id,
+=======
+router.put('/:id', async (req, res, next) => {
+    if (!req.user) {
+      return res.json({ status: 'error', message: 'not logged in' });
+    }
+    try {
+      const updatedFundraiser = await Fundraiser.update(
+        {
+          name: req.body.name,
+          start: req.body.start,
+          end: req.body.end,
+          description: req.body.description,
+          goal: req.body.goal,
+>>>>>>> Stashed changes
         },
       }
     );
@@ -57,12 +113,16 @@ router.put('/:id', async (req, res) => {
       res.status(404).json({ message: 'No Fundraiser_id found with this id' });
       return;
     }
+<<<<<<< Updated upstream
     res.json(updatedFundraiser);
   } catch (err) {
     res.status(500).json(err);
   }
+=======
+>>>>>>> Stashed changes
 });
 // DELETE a fundraiser
+<<<<<<< Updated upstream
 // TODO add with auth
 router.delete('/:id', async (req, res) => {
   try {
@@ -79,6 +139,28 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
+=======
+router.delete('/:id', async (req, res, next) => {
+    if (!req.user) {
+      return res.json({ status: 'error', message: 'not logged in' });
+    }
+    try {
+      const fundraiserData = await Fundraiser.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+
+      if (!fundraiserData) {
+        res.status(404).json({ message: 'No fundraiser found with this id!' });
+        return;
+      }
+
+      res.status(200).json(fundraiserData);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+>>>>>>> Stashed changes
 });
 module.exports = router;
 
