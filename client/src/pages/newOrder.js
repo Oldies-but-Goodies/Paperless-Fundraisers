@@ -76,11 +76,10 @@ const NewOrder = (props) => {
       orderObj: {
         FundraiserId: state.currentFundraiser,
         CustomerId: 1,
-        UserId: 1,
+        UserId: state.user.id,
         order_total: 10,
-        customer_remit: formData.customer_remit,
-        seller_remit: null,
-        order_status: null,
+        customer_remit: formData.customer_remit
+        
       }
      
     }).then((response) => {
@@ -97,7 +96,7 @@ const NewOrder = (props) => {
       setErrorMsg(error);
     });
     // return orderData
-    console.log(orderData);
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -122,7 +121,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='first_name'
-              value=''
+              value={formData.first_name}
               required
               placeholder='First Name'
               onChange={handleChange}
@@ -134,7 +133,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='last_name'
-              value=''
+              value={formData.last_name}
               required
               placeholder='Last Name'
               onChange={handleChange}
@@ -147,7 +146,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='address_line1'
-              value=''
+              value={formData.address_line1}
               required
               placeholder='Address'
               onChange={handleChange}
@@ -158,7 +157,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='address_line2'
-              value=''
+              value={formData.address_line2}
               required
               placeholder='Address 2'
               onChange={handleChange}
@@ -169,7 +168,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='city'
-              value=''
+              value={formData.city}
               required
               placeholder='City'
               onChange={handleChange}
@@ -180,7 +179,7 @@ const NewOrder = (props) => {
               type='text'
               className='form-control'
               name='state'
-              value=''
+              value={formData.state}
               required
               placeholder='State'
               onChange={handleChange}
@@ -191,7 +190,7 @@ const NewOrder = (props) => {
               type='integer'
               className='form-control'
               name='zip_code'
-              value=''
+              value={formData.zip_code}
               required
               placeholder='Zip Code'
               onChange={handleChange}
@@ -202,7 +201,7 @@ const NewOrder = (props) => {
               type='string'
               className='form-control'
               name='phone_number'
-              value=''
+              value={formData.phone_number}
               required
               placeholder='Phone Number'
               onChange={handleChange}
@@ -213,7 +212,7 @@ const NewOrder = (props) => {
               type='email'
               className='form-control'
               name='email'
-              value=''
+              value={formData.email}
               required
               placeholder='Email'
               onChange={handleChange}
