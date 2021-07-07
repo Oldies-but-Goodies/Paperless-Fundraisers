@@ -8,12 +8,13 @@ const AddPersonModal = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
+
   const handleShow = () => setShow(true);
 
    const [orderDetails, setOrderDetails] = useState([])
 
     const getOrderDetails = async () => {
-        const orderDetailsData = await API.OrderDetails.orderDetails('4')
+        const orderDetailsData = await API.OrderDetails.orderDetails(1)
         setOrderDetails(orderDetailsData.data)
     }
     useEffect(() => {
@@ -48,7 +49,7 @@ const AddPersonModal = () => {
           {orderDetails.map(orderDetail => (
 
           <tr>
-            {/* <td>{orderDetail.OrderId}</td> */}
+            <td>{orderDetail.OrderId}</td>
             <td>{new Date (orderDetail.createdAt).toLocaleDateString()}</td>
             {/* <td>{orderDetail.Product.name + " x " + orderDetail.product_qty}</td>
             <td>${orderDetail.Order.Customer.first_name + " " + orderDetail.Order.Customer.last_name}</td>
