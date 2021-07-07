@@ -5,6 +5,8 @@ import { Container, Table, Button, Form } from 'react-bootstrap';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 
+// let rowSubTotal = document.getElementById("row-subtotal")
+
 const NewOrder = (props) => {
   const [state, dispatch] = useStoreContext();
 
@@ -116,7 +118,7 @@ const NewOrder = (props) => {
   }, []);
 
   return (
-    <Container className='text-center'>
+    <div className='new-form-div text-center'>
       <h1>New Order</h1>
       <div className='border border-dark py-4'>
         <div className='form-group row'>
@@ -238,7 +240,7 @@ const NewOrder = (props) => {
         <tbody>
           {products.map((product) => (
             <tr>
-              <td>{product.name}</td>
+              <td id>{product.name}</td>
               <td>${product.price}</td>
               <td>
                 <label htmlFor='inputQuantity' className='sr-only'>
@@ -290,7 +292,7 @@ const NewOrder = (props) => {
       >
         Place Order
       </Button>
-    </Container>
+    </div>
   );
 };
 

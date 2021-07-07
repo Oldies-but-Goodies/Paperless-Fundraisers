@@ -1,6 +1,10 @@
-/* :root {
+:root {
   background-color: burlywood;
-} */
+}
+
+.appContainer {
+  background-color: burlywood;
+}
 
 body {
   margin: 0;
@@ -33,4 +37,13 @@ code {
   max-width: 70%;
   margin-top: 20px;
   background-color: lightblue;
+}
+
+.new-form-div {
+  max-width: 80%;
+  margin: auto;
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 25px;
 }
