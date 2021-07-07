@@ -58,7 +58,7 @@ export default {
   },
   OrderDetails: {
     orderDetails: function(orderId) {
-      return axios.get('api/order/allOrderDetailsForOrder/' + orderId)
+      return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId)
     }
 
   }
