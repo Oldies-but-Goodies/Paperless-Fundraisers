@@ -54,6 +54,12 @@ export default {
     },
     loggedInOrders: function (userId) {
       return axios.get('api/order/allOrdersforUser/' + userId)
-    }
+    },
   },
+  OrderDetails: {
+    orderDetails: function(orderId) {
+      return axios.get('api/order/allOrderDetailsForOrder/' + orderId)
+    }
+
+  }
 };

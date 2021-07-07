@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { User, Order, Customer, Order_Details, Fundraiser } = require("../../models");
+const { User, Order, Customer, Order_Details, Fundraiser, Product } = require("../../models");
 
 // GET all order details
 router.get("/", async (req, res) => {
@@ -19,9 +19,9 @@ router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
     const orderDetails = await Order_Details.findAll({
       where: {
        
-        orderId: req.params.id,
+        OrderId: req.params.id,
       },
-      // include: [{ model: User }],
+      // include: [{ model: Customer, Order, Product }],
     });
     res.status(200).json(orderDetails);
   } catch (err) {
