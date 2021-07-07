@@ -5,6 +5,8 @@ import { Container, Table, Button, Form } from "react-bootstrap";
 import API from "../lib/API";
 import { useStoreContext } from "../store/store";
 
+// let rowSubTotal = document.getElementById("row-subtotal")
+
 const NewOrder = (props) => {
   const [state, dispatch] = useStoreContext();
 
@@ -16,9 +18,9 @@ const NewOrder = (props) => {
 
   const [formData, setFormData] = useState({});
 
-  const [grandTotal, setGrandTotal] = useState({
-    grandTotal: [],
-  })
+  // const [grandTotal, setGrandTotal] = useState({
+  //   grandTotal: [],
+  // })
   
 
     const getProductData = async () => {
@@ -37,11 +39,15 @@ const NewOrder = (props) => {
     // setFormData({...formData, [name]: value});
     // setGrandTotal:({...grandTotal, [quanities]: value})
     // setProductTotal({ [name]: (this.state.quantity.value * this.product.price.value) })
-    // setGrandTotal({[name]: this.state.productTotal && this.state.productValue.reduce((a,v) => a + v.value, 0) })
+    // setGrandTotal({[name]: this.state.quanities && this.state.quanitiesValue.reduce((a,v) => a + v.value, 0) })
 
-    // const productTotal = () =>
-    // this.state.quantity.reduce((sum, quantity) =>
-    // sum + quantity * this.state.product.price, 0);
+    // let grandTotal = 0;
+
+    // const rowSubTotal = this.state.
+    // if(rowSubTotal.length > 0) {
+    //   grandTotal = rowSubTotal.reduce((acc, val) => acc + val)
+    // }
+    
   };
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -111,7 +117,7 @@ const NewOrder = (props) => {
 
 
   return (
-    <Container className='text-center'>
+    <div className='new-form-div text-center'>
       <h1>New Order</h1>
       <div className='border border-dark py-4'>
         <div className='form-group row'>
@@ -233,7 +239,7 @@ const NewOrder = (props) => {
         <tbody>
           {products.map((product) => (
             <tr>
-              <td>{product.name}</td>
+              <td id>{product.name}</td>
               <td>${product.price}</td>
               <td>
                 <label htmlFor='inputQuantity' className='sr-only'>
@@ -249,7 +255,7 @@ const NewOrder = (props) => {
                 />
               </td>
               <td className='d-flex justify-content-center'>
-                {<div className='col-3 font-weight-bold'> {quanities[product.id]
+                {<div className='col-3 font-weight-bold' > {quanities[product.id]
                   ? quanities[product.id] * product.price
                   : 0}
                   </div>
@@ -268,7 +274,7 @@ const NewOrder = (props) => {
         value={formData.customer_remit}
         onChange={handleChange}
         />
-        <div className='col-3 font-weight-bold'> Grand Total: $$</div>
+        <div className='col-3 font-weight-bold'> Grand Total: $$ </div>
       </div>
 
       <Button
@@ -278,7 +284,7 @@ const NewOrder = (props) => {
       >
         Place Order
       </Button>
-    </Container>
+    </div>
   );
 };
 

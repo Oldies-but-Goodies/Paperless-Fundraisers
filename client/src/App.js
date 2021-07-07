@@ -33,9 +33,9 @@ const App = () => {
 
   return (
     <div>
-      <Container>
+      {/* <Container> */}
       {state.user ? (
-        <div>
+        <div className="appContainer">
           <Navigation />
           <Switch>
             <Route exact path='/' component={Home} />
@@ -60,7 +60,7 @@ const App = () => {
           </Switch>
         </div>
       )}
-      </Container>
+      {/* </Container> */}
     </div>
   );
 };
