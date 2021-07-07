@@ -39,8 +39,8 @@ const AddPersonModal = () => {
             <th>Order Number</th>
             <th>Date of Sale</th>
             <th>Product</th>
-            {/* <th>Customer</th>
-            <th>Address</th> */}
+            <th>Customer</th>
+            <th>Address</th>
             <th>Customer Paid</th>
             <th>Admin Paid</th>
           </tr>
@@ -56,8 +56,8 @@ const AddPersonModal = () => {
             <td>{orderDetail.Order.Customer.address_line1 + " " + orderDetail.Order.Customer.address2 + " " 
                 + orderDetail.Order.Customer.city + " , " + orderDetail.Order.Customer.state + " "
                 + orderDetail.Order.Customer.zip_code}</td>
-                <td>{orderDetails.Order.customer_remit}</td>
-            <td>{orderDetails.Order.seller_remit}</td> */}
+                <td>{orderDetail.Order.customer_remit}</td>
+            <td>{orderDetail.Order.seller_remit}</td> */}
           </tr>
           ))}
           
