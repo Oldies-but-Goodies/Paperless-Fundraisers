@@ -1,34 +1,22 @@
 const router = require('express').Router();
 const { Fundraiser, User, Product } = require('../../models');
 // GET all fundraisers
-router.get('/', async (req, res, next) => {
-  console.log('inside');
-  console.log(req.user.id);
-  console.log(req.user.email);
-
-  if (!req.user) {
-    return res.json({ status: 'error', message: 'not logged in' });
-  }
+router.get('/', async (req, res) => {
   try {
     const fundraiserData = await Fundraiser.findAll();
-      res.status(200).json(fundraiserData);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+    res.status(200).json(fundraiserData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
 // GET a single fundraiser
-// CC Example
-router.get('/:fundraiserId', async (req, res, next) => {
-  console.log('user -------------', req.user);
 
-  if (!req.user) {
-    return res.json({ status: 'error', message: 'not logged in' });
-  }
- try {
+router.get('/:fundraiserId', async (req, res) => {
+  try {
     const fundraiserData = await Fundraiser.findByPk(req.params.fundraiserId);
 
-  if (!fundraiserData) {
+    if (!fundraiserData) {
       res.status(404).json({ message: 'No fundraiser found with this id!' });
       return;
     }
@@ -38,35 +26,29 @@ router.get('/:fundraiserId', async (req, res, next) => {
   }
 });
 // CREATE a fundraiser
-router.post('/', async (req, res, next) => {
-  console.log(req.body);
-  if (!req.user) {
-      return res.json({ status: 'error', message: 'not logged in' });
-    }
+// TODO add with auth
+router.post('/', async (req, res) => {
   try {
-  const fundraiserData = await Fundraiser.create(req.body);
-  
-      res.status(200).json(fundraiserData);
-    } catch (err) {
-      res.status(400).json(err);
-    }
+    const fundraiserData = await Fundraiser.create(req.body);
+    res.status(200).json(fundraiserData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 });
 // UPDATE a fundraiser
-router.put('/:id', async (req, res, next) => {
-    if (!req.user) {
-      return res.json({ status: 'error', message: 'not logged in' });
-    }
-    try {
-      const updatedFundraiser = await Fundraiser.update(
-        {
-          name: req.body.name,
-          start: req.body.start,
-          end: req.body.end,
-          description: req.body.description,
-          goal: req.body.goal,
-        },
-        {   
-          where: {
+// TODO add with auth
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedFundraiser = await Fundraiser.update(
+      {
+        name: req.body.name,
+        start: req.body.start,
+        end: req.body.end,
+        description: req.body.description,
+        goal: req.body.goal,
+      },
+      {
+        where: {
           id: req.params.id,
         },
       }
@@ -83,9 +65,6 @@ router.put('/:id', async (req, res, next) => {
 // DELETE a fundraiser
 // TODO add with auth
 router.delete('/:id', async (req, res) => {
-  if (!req.user) {
-    return res.json({ status: 'error', message: 'not logged in' });
-  }
   try {
     const fundraiserData = await Fundraiser.destroy({
       where: {
@@ -100,7 +79,6 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-   
 });
 module.exports = router;
 

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Table, Button, Form } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Table, Button, Form } from 'react-bootstrap';
 // import { Container, Table } from "react-bootstrap"
-import API from "../lib/API";
-import { useStoreContext } from "../store/store";
+import API from '../lib/API';
+import { useStoreContext } from '../store/store';
 
 // let rowSubTotal = document.getElementById("row-subtotal")
 
@@ -13,17 +13,17 @@ const NewOrder = (props) => {
   const [errorMsg, setErrorMsg] = useState(null);
 
   const [quanities, setQuantities] = useState({});
+  const [runningTotal, setRunningTotal] = useState(0);
 
   const [products, setProducts] = useState([]);
 
   const [formData, setFormData] = useState({});
 
-  // const [grandTotal, setGrandTotal] = useState({
-  //   grandTotal: [],
-  // })
-  
+  const [grandTotal, setGrandTotal] = useState({
+    grandTotal: [],
+  });
 
-    const getProductData = async () => {
+  const getProductData = async () => {
     console.log(state.currentFundraiser);
     const productData = await API.Products.getAllForFundraiser(
       state.currentFundraiser
@@ -31,29 +31,36 @@ const NewOrder = (props) => {
     console.log(productData);
     setProducts(productData.data);
   };
-  
+
   const handleQuantityChange = (productId) => (event) => {
     const { name, value } = event.target;
 
-    setQuantities({ ...quanities, [productId]: value });
-    // setFormData({...formData, [name]: value});
-    // setGrandTotal:({...grandTotal, [quanities]: value})
-    // setProductTotal({ [name]: (this.state.quantity.value * this.product.price.value) })
-    // setGrandTotal({[name]: this.state.quanities && this.state.quanitiesValue.reduce((a,v) => a + v.value, 0) })
+    const newQ = {
+      ...quanities,
+      [productId]: value,
+    };
 
-    // let grandTotal = 0;
+    setQuantities(newQ);
 
-    // const rowSubTotal = this.state.
-    // if(rowSubTotal.length > 0) {
-    //   grandTotal = rowSubTotal.reduce((acc, val) => acc + val)
-    // }
-    
+    let newTotal = 0;
+
+    for (const productId in newQ) {
+      const filterProducts = products.filter((product) => {
+        return product.id === parseInt(productId);
+      });
+      const priceForProducts = filterProducts[0].price * newQ[productId];
+
+      newTotal += priceForProducts;
+    }
+
+    setRunningTotal(newTotal);
   };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
     // setQuantities({ ...quanities, [productId]: value });
-    setFormData({...formData, [name]: value});
+    setFormData({ ...formData, [name]: value });
     // setGrandTotal:({...grandTotal, [quanities]: value})
     // setProductTotal({ [name]: (this.state.quantity.value * this.product.price.value) })
     // setGrandTotal({[name]: this.state.productTotal && this.state.productValue.reduce((a,v) => a + v.value, 0) })
@@ -64,8 +71,6 @@ const NewOrder = (props) => {
   };
 
   const handleSubmit = async () => {
-    
-
     const orderData = await API.Orders.createOrder({
       customer: {
         first_name: formData.first_name,
@@ -76,7 +81,7 @@ const NewOrder = (props) => {
         city: formData.city,
         state: formData.state,
         zip_code: formData.zip_code,
-        phone_number: formData.phone_number
+        phone_number: formData.phone_number,
       },
       productsObj: quanities,
       orderObj: {
@@ -84,37 +89,33 @@ const NewOrder = (props) => {
         CustomerId: 1,
         UserId: state.user.id,
         order_total: 10,
-        customer_remit: formData.customer_remit
-        
-      }
-     
-    }).then((response) => {
-      console.log("RESPONSE", response);
-      if (response.data.status === "error") {
-        setErrorMsg(response.data.message);
-        return;
-      }
-      setErrorMsg(null);
-      // history.replace("/admin");
+        customer_remit: formData.customer_remit,
+      },
     })
-    .catch((error) => {
-      console.log("ERROR", error);
-      setErrorMsg(error);
-    });
+      .then((response) => {
+        console.log('RESPONSE', response);
+        if (response.data.status === 'error') {
+          setErrorMsg(response.data.message);
+          return;
+        }
+        setErrorMsg(null);
+        // history.replace("/admin");
+      })
+      .catch((error) => {
+        console.log('ERROR', error);
+        setErrorMsg(error);
+      });
     // return orderData
     window.location.reload();
   };
 
-  useEffect(() => {
-    console.log(quanities);
-  }, [quanities]);
+  // useEffect(() => {
+  //   console.log(quanities);
+  // }, [quanities]);
 
   useEffect(() => {
     getProductData();
   }, []);
-
-
-
 
   return (
     <div className='new-form-div text-center'>
@@ -255,11 +256,14 @@ const NewOrder = (props) => {
                 />
               </td>
               <td className='d-flex justify-content-center'>
-                {<div className='col-3 font-weight-bold' > {quanities[product.id]
-                  ? quanities[product.id] * product.price
-                  : 0}
+                {
+                  <div className='col-3 font-weight-bold'>
+                    {' '}
+                    {quanities[product.id]
+                      ? quanities[product.id] * product.price
+                      : 0}
                   </div>
-                  }
+                }
               </td>
             </tr>
           ))}
@@ -267,20 +271,24 @@ const NewOrder = (props) => {
       </Table>
 
       <div className='row justify-content-end'>
-        <Form.Check className='mt-2' 
-        type='checkbox' 
-        label='Customer Paid' 
-        name='customer_remit' 
-        value={formData.customer_remit}
-        onChange={handleChange}
+        <Form.Check
+          className='mt-2'
+          type='checkbox'
+          label='Customer Paid'
+          name='customer_remit'
+          value={formData.customer_remit}
+          onChange={handleChange}
         />
-        <div className='col-3 font-weight-bold'> Grand Total: $$ </div>
+        <div className='col-3 font-weight-bold'>
+          {' '}
+          Grand Total: ${runningTotal}
+        </div>
       </div>
 
       <Button
         className='btn btn-primary float-right my-3'
         type='submit'
-             onClick={handleSubmit}
+        onClick={handleSubmit}
       >
         Place Order
       </Button>
