@@ -1,8 +1,11 @@
 const router = require("express").Router();
-const { User, Order, Customer, Order_Details, Fundraiser } = require("../../models");
+const { User, Order, Customer, Order_Details, Fundraiser, Product } = require("../../models");
 
 // GET all order details
 router.get("/", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderDetails = await Order_Details.findAll();
     res.status(200).json(orderDetails);
@@ -14,14 +17,17 @@ router.get("/", async (req, res) => {
 // get all order details for a given order id
 //
 router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   // console.log(req);
   try {
     const orderDetails = await Order_Details.findAll({
       where: {
        
-        orderId: req.params.id,
+        OrderId: req.params.id,
       },
-      // include: [{ model: User }],
+      // include: [{ model: Customer, Order, Product }],
     });
     res.status(200).json(orderDetails);
   } catch (err) {
@@ -31,6 +37,9 @@ router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
 
 // GET a single order detail
 router.get("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderDetails = await Order_Details.findByPk(req.params.id, {
       
@@ -51,6 +60,9 @@ router.get("/:id", async (req, res) => {
 // CREATE  order detail
 // TODO add with auth
 router.post("/", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderDetails = await Order_Details.create(
       {
@@ -75,6 +87,9 @@ router.post("/", async (req, res) => {
 //   UPDATE an order detail
 // TODO add with auth
 router.put("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const updatedOrderDetails = await Order_Details.update(
       {
@@ -104,6 +119,9 @@ router.put("/:id", async (req, res) => {
 // DELETE an order details
 // TODO add with auth
 router.delete("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderDetails = await Order_Details.destroy({
       where: {

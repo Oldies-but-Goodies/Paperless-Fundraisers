@@ -3,12 +3,12 @@ const { Fundraiser, User, Product } = require('../../models');
 // GET all fundraisers
 router.get('/', async (req, res, next) => {
   console.log('inside');
-  console.log(req.user.id);
-  console.log(req.user.email);
+  // console.log(req.user.id);
+  // console.log(req.user.email);
 
-  if (!req.user) {
-    return res.json({ status: 'error', message: 'not logged in' });
-  }
+  // if (!req.user) {
+  //   return res.json({ status: 'error', message: 'not logged in' });
+  // }
   try {
     const fundraiserData = await Fundraiser.findAll();
       res.status(200).json(fundraiserData);

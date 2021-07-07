@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import { Container, Table } from "react-bootstrap"
 import API from '../lib/API';
 import { useStoreContext } from "../store/store";
+import OrderDetailModal from "../components/orderDetailModal"
 
 const Home = (props) => {
   const [state, dispatch] = useStoreContext();
@@ -54,11 +55,16 @@ useEffect(() => {
         <tbody>
           {orders.map((order) => (
             <tr>
+
+              <td>{order.id}</td>
               <td>{order.Customer.first_name + " " + order.Customer.last_name}</td>
-              <td>{order.CustomerId}</td>
               <td>${order.order_total}</td>
               <td>{order.customer_remit}</td>
               <td>{order.seller_remit}</td>
+              <td>
+                <OrderDetailModal>
+              </OrderDetailModal>
+                </td>
           </tr>
           ))}
           

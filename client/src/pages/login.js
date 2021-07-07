@@ -86,6 +86,7 @@ const Login = () => {
       </form>
       <h5>Not yet a user, click <Link
       to="/signUp">here </Link> to signup</h5>
+    <div>Icons made by <a href="https://www.flaticon.com/authors/smalllikeart" title="smalllikeart">smalllikeart</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     </div>
   );
 };
