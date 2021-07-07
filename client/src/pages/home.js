@@ -56,14 +56,14 @@ useEffect(() => {
           {orders.map((order) => (
             <tr>
 
-              <td>{order.CustomerId}</td>
+              <td>{order.id}</td>
               <td>{order.Customer.first_name + " " + order.Customer.last_name}</td>
               <td>${order.order_total}</td>
               <td>{order.customer_remit}</td>
               <td>{order.seller_remit}</td>
               <td>
-                {/* <OrderDetailModal>
-              </OrderDetailModal> */}
+                <OrderDetailModal>
+              </OrderDetailModal>
                 </td>
           </tr>
           ))}
