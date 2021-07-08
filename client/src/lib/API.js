@@ -55,6 +55,9 @@ export default {
     loggedInOrders: function (userId) {
       return axios.get('api/order/allOrdersforUser/' + userId);
     },
+    updateOrder: function(orderId, updateBodyObj) {
+      return axios.put("/api/order/" + orderId, updateBodyObj)
+    }
   },
   OrderDetails: {
     orderDetails: function (orderId) {

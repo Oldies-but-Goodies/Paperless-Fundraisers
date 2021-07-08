@@ -62,8 +62,9 @@ useEffect(() => {
               <td>{order.customer_remit}</td>
               <td>{order.seller_remit}</td>
               <td>
-                <OrderDetailModal>
-              </OrderDetailModal>
+                <OrderDetailModal
+                  orderId={order.id}
+                />
                 </td>
           </tr>
           ))}
