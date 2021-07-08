@@ -53,13 +53,18 @@ export default {
       return axios.post('/api/order/', obj);
     },
     loggedInOrders: function (userId) {
-      return axios.get('api/order/allOrdersforUser/' + userId)
+      return axios.get('api/order/allOrdersforUser/' + userId);
     },
   },
   OrderDetails: {
-    orderDetails: function(orderId) {
-      return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId)
-    }
-
-  }
+    orderDetails: function (orderId) {
+      return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId);
+    },
+  },
+  InviteEmail: {
+    sendEmail: function (emailObj) {
+      console.log(emailObj);
+      return axios.post('api/emailRoutes/', emailObj);
+    },
+  },
 };
