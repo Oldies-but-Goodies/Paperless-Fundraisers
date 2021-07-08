@@ -1,0 +1,10 @@
+DB_HOST=pk1l4ihepirw9fob.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+DB_PORT=3306
+DB_USER=sg5ypohdws1fuxpi
+DB_PASS=e39o2jfzmj4eij4q
+DB_DB=zdehjv9n6flt9a28
+DB_CHECK_EXP_INTERVAL=900000
+DB_EXPIRATION=86400000
+DB_SECRET=keyboard_cat
+SENDGRID_APIKEY=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
+SENDING_EMAIL_ADDRESS=jason@paperlessfundraisers.com 

@@ -1,14 +1,14 @@
-import React from "react";
-import { Table, Container, Button} from "react-bootstrap";
-import AddPersonModal from "./addPersonModal";
-import ViewOrdersModal from "./viewOrdersModal";
+import React from 'react';
+import { Table, Container, Button } from 'react-bootstrap';
+import AddPersonModal from './addPersonModal';
+import InvitePersonModal from './invitePersonModal';
+import ViewOrdersModal from './viewOrdersModal';
 
 const SalesPersonTab = () => {
   return (
     <Container>
-      <AddPersonModal>
-
-      </AddPersonModal>
+      <AddPersonModal></AddPersonModal>
+      <InvitePersonModal></InvitePersonModal>
 
       {/* <Dropdown className="my-2 float-right">
         <Dropdown.Toggle variant="primary" id="dropdown-basic">
@@ -33,9 +33,9 @@ const SalesPersonTab = () => {
           <tr>
             <td>Jim</td>
             <td>$200</td>
-            <td><ViewOrdersModal>
-              </ViewOrdersModal></td>
-              
+            <td>
+              <ViewOrdersModal></ViewOrdersModal>
+            </td>
           </tr>
           <tr>
             <td>Dwight</td>
