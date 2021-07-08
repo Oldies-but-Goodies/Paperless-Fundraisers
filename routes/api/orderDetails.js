@@ -22,12 +22,17 @@ router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
   }
   // console.log(req);
   try {
-    const orderDetails = await Order_Details.findAll({
+    const orderDetails = await Order.findOne({
       where: {
-       
-        OrderId: req.params.id,
+        id: req.params.id
       },
-      // include: [{ model: Customer, Order, Product }],
+      include: [
+        { model: Customer },
+        { 
+          model: Order_Details,
+          include: [ { model: Product }] 
+        }
+      ],
     });
     res.status(200).json(orderDetails);
   } catch (err) {
