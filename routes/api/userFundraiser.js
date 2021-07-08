@@ -3,6 +3,9 @@ const { userFundraiser } = require("../../models");
 
 // GET all UFs
 router.get("/", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const userFundraiserData = await userFundraiser.findAll();
     res.status(200).json(userFundraiserData);

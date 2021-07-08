@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Table, Container } from "react-bootstrap";
-import AddFundraiserModal from "./addFundraiserModal";
+import React, { useState, useEffect } from 'react';
+import { Table, Container } from 'react-bootstrap';
+import AddFundraiserModal from './addFundraiserModal';
 import API from '../lib/API';
-import { useStoreContext } from "../store/store";
+import { useStoreContext } from '../store/store';
 
 const FundraisersTab = () => {
   const [state, dispatch] = useStoreContext();
 
-  const [fundraisers, setFundraisers] = useState([])
+  const [fundraisers, setFundraisers] = useState([]);
+  const [toggleRender, setToggleRender] = useState(false);
 
-const getFundraiserData = async () => {
-  const fundraiserData = await API.Fundraisers.getFundraisers()
-  setFundraisers(fundraiserData.data)
-}
+  const getFundraiserData = async () => {
+    const fundraiserData = await API.Fundraisers.getFundraisers();
+    setFundraisers(fundraiserData.data);
+  };
 
-useEffect(() => {
-  getFundraiserData()
-}, [])
+  useEffect(() => {
+    getFundraiserData();
+  }, [toggleRender]);
 
   return (
     <Container>
-      <AddFundraiserModal>
-
-      </AddFundraiserModal>
+      <AddFundraiserModal
+        toggleRender={toggleRender}
+        setToggleRender={setToggleRender}
+      ></AddFundraiserModal>
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -34,15 +36,14 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-          {fundraisers.map(fundraiser => (
-
-          <tr>
-            <td>{fundraiser.name}</td>
-            <td>{fundraiser.description}</td>
-            <td>${fundraiser.goal}</td>
-            <td>{new Date (fundraiser.start).toLocaleDateString()}</td>
-            <td>{new Date (fundraiser.end).toLocaleDateString()}</td>
-          </tr>
+          {fundraisers.map((fundraiser) => (
+            <tr>
+              <td>{fundraiser.name}</td>
+              <td>{fundraiser.description}</td>
+              <td>${fundraiser.goal}</td>
+              <td>{new Date(fundraiser.start).toLocaleDateString()}</td>
+              <td>{new Date(fundraiser.end).toLocaleDateString()}</td>
+            </tr>
           ))}
           {/* <tr>
             <td>Smoked Turkey</td>
