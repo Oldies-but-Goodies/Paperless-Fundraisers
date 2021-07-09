@@ -1,14 +1,14 @@
 const router = require('express').Router();
-const { Fundraiser, User, Product } = require('../../models');
+const {
+  Fundraiser,
+  User,
+  Product,
+  Order,
+  Order_Details,
+} = require('../../models');
 // GET all fundraisers
 router.get('/', async (req, res, next) => {
   console.log('inside');
-  // console.log(req.user.id);
-  // console.log(req.user.email);
-
-  // if (!req.user) {
-  //   return res.json({ status: 'error', message: 'not logged in' });
-  // }
   try {
     const fundraiserData = await Fundraiser.findAll();
     res.status(200).json(fundraiserData);
@@ -16,28 +16,66 @@ router.get('/', async (req, res, next) => {
     res.status(500).json(err);
   }
 });
-
 // GET a single fundraiser
 // CC Example
 router.get('/:fundraiserId', async (req, res, next) => {
-  console.log('user -------------', req.user);
-
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
   try {
-    const fundraiserData = await Fundraiser.findByPk(req.params.fundraiserId);
+    const fundraiserData = await Fundraiser.findByPk(req.params.fundraiserId, {
+      include: [
+        {
+          model: Order,
+          include: [
+            {
+              model: Order_Details,
+              include: [
+                {
+                  model: Product,
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
 
     if (!fundraiserData) {
       res.status(404).json({ message: 'No fundraiser found with this id!' });
       return;
     }
-    res.status(200).json(fundraiserData);
+
+    //  console.log(fundraiserData.dataValues.Orders)
+
+    const totalFundraiserSales = fundraiserData.dataValues.Orders.reduce(
+      (total, current) => {
+        const addition = current.dataValues.Order_Details.reduce(
+          (totalForDetails, currentDetail) => {
+            // console.log("currentDetails", currentDetail);
+            const qty = currentDetail.dataValues.product_qty;
+            const price = parseInt(
+              currentDetail.dataValues.Product.dataValues.price
+            );
+            const newTotal = qty * price + totalForDetails;
+            return newTotal;
+          },
+          0
+        );
+        // console.log( "addition", addition)
+        return addition + total;
+      },
+      0
+    );
+
+    res.status(200).json({ fundraiserData, totalFundraiserSales });
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
 // CREATE a fundraiser
+// TODO add with auth for admin only
 router.post('/', async (req, res, next) => {
   console.log(req.body);
   if (!req.user) {
@@ -52,6 +90,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 // UPDATE a fundraiser
+// TODO add with auth for admin only
 router.put('/:id', async (req, res, next) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -81,7 +120,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 // DELETE a fundraiser
-// TODO add with auth
+// TODO add with auth for admin
 router.delete('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -101,142 +140,5 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 module.exports = router;
-
-// const passport = require('../../passport');
-// const router = require('express').Router();
-// const { Fundraiser, User, Product } = require('../../models');
-
-// // GET all fundraisers
-// router.get('/', async (req, res) => {
-//   passport.authenticate('local', async function (err, user, info) {
-//     if (err) {
-//       return next(err);
-//     }
-
-//     if (!user) {
-//       return res.json({ status: 'error', message: info.message });
-//     }
-//     try {
-//       const fundraiserData = await Fundraiser.findAll();
-//       res.status(200).json(fundraiserData);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   })(req, res, next);
-// });
-
-// // GET a single fundraiser
-// router.get('/:fundraiserId', async (req, res, next) => {
-//   passport.authenticate('local', async function (err, user, info) {
-//     if (err) {
-//       return next(err);
-//     }
-
-//     if (!user) {
-//       return res.json({ status: 'error', message: info.message });
-//     }
-//     try {
-//       const fundraiserData = await Fundraiser.findByPk(req.params.fundraiserId);
-
-//       if (!fundraiserData) {
-//         res.status(404).json({ message: 'No fundraiser found with this id!' });
-//         return;
-//       }
-
-//       res.status(200).json(fundraiserData);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   })(req, res, next);
-// });
-
-// // CREATE a fundraiser
-// router.post('/', async (req, res, next) => {
-//   passport.authenticate('local', async function (err, user, info) {
-//     if (err) {
-//       return next(err);
-//     }
-
-//     if (!user) {
-//       return res.json({ status: 'error', message: info.message });
-//     }
-//     try {
-//       console.log(req.body);
-//       const fundraiserData = await Fundraiser.create(req.body);
-//       res.status(200).json(fundraiserData);
-//     } catch (err) {
-//       res.status(400).json(err);
-//     }
-//   })(req, res, next);
-// });
-
-// // UPDATE a fundraiser
-// router.put('/:id', async (req, res, next) => {
-//   passport.authenticate('local', async function (err, user, info) {
-//     if (err) {
-//       return next(err);
-//     }
-
-//     if (!user) {
-//       return res.json({ status: 'error', message: info.message });
-//     }
-//     try {
-//       const updatedFundraiser = await Fundraiser.update(
-//         {
-//           name: req.body.name,
-//           start: req.body.start,
-//           end: req.body.end,
-//           description: req.body.description,
-//           goal: req.body.goal,
-//         },
-//         {
-//           where: {
-//             id: req.params.id,
-//           },
-//         }
-//       );
-
-//       if (!updatedFundraiser) {
-//         res
-//           .status(404)
-//           .json({ message: 'No Fundraiser_id found with this id' });
-//         return;
-//       }
-//       res.json(updatedFundraiser);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   })(req, res, next);
-// });
-
-// // DELETE a fundraiser
-// router.delete('/:id', async (req, res, next) => {
-//   passport.authenticate('local', async function (err, user, info) {
-//     if (err) {
-//       return next(err);
-//     }
-
-//     if (!user) {
-//       return res.json({ status: 'error', message: info.message });
-//     }
-//     try {
-//       const fundraiserData = await Fundraiser.destroy({
-//         where: {
-//           id: req.params.id,
-//         },
-//       });
-
-//       if (!fundraiserData) {
-//         res.status(404).json({ message: 'No fundraiser found with this id!' });
-//         return;
-//       }
-
-//       res.status(200).json(fundraiserData);
-//     } catch (err) {
-//       res.status(500).json(err);
-//     }
-//   })(req, res, next);
-// });
-
-// module.exports = router;
