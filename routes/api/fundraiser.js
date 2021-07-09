@@ -3,12 +3,6 @@ const { Fundraiser, User, Product, Order, Order_Details } = require('../../model
 // GET all fundraisers
 router.get('/', async (req, res, next) => {
   console.log('inside');
-  // console.log(req.user.id);
-  // console.log(req.user.email);
-
-  // if (!req.user) {
-  //   return res.json({ status: 'error', message: 'not logged in' });
-  // }
   try {
     const fundraiserData = await Fundraiser.findAll();
       res.status(200).json(fundraiserData);
@@ -16,7 +10,6 @@ router.get('/', async (req, res, next) => {
       res.status(500).json(err);
     }
 });
-
 // GET a single fundraiser
 // CC Example
 router.get('/:fundraiserId', async (req, res, next) => {
@@ -67,6 +60,7 @@ router.get('/:fundraiserId', async (req, res, next) => {
 
 
 // CREATE a fundraiser
+// TODO add with auth for admin only
 router.post('/', async (req, res, next) => {
   console.log(req.body);
   if (!req.user) {
@@ -81,6 +75,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 // UPDATE a fundraiser
+// TODO add with auth for admin only
 router.put('/:id', async (req, res, next) => {
     if (!req.user) {
       return res.json({ status: 'error', message: 'not logged in' });
@@ -110,7 +105,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 // DELETE a fundraiser
-// TODO add with auth
+// TODO add with auth for admin
 router.delete('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -133,3 +128,4 @@ router.delete('/:id', async (req, res) => {
 });
 
 module.exports = router;
+
