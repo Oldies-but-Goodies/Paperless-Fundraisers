@@ -43,6 +43,10 @@ export default {
     addFundraiser: function (obj) {
       return axios.post('/api/fundraiser', obj);
     },
+    updateFundraiser: function (obj) {
+      console.log(obj);
+      return axios.put('/api/fundraiser/' + obj.id, obj);
+    },
   },
 
   Orders: {
@@ -55,9 +59,9 @@ export default {
     loggedInOrders: function (userId) {
       return axios.get('api/order/allOrdersforUser/' + userId);
     },
-    updateOrder: function(orderId, updateBodyObj) {
-      return axios.put("/api/order/" + orderId, updateBodyObj)
-    }
+    updateOrder: function (orderId, updateBodyObj) {
+      return axios.put('/api/order/' + orderId, updateBodyObj);
+    },
   },
   OrderDetails: {
     orderDetails: function (orderId) {

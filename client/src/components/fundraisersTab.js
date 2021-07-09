@@ -3,12 +3,86 @@ import { Table, Container } from 'react-bootstrap';
 import AddFundraiserModal from './addFundraiserModal';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
+import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 
 const FundraisersTab = () => {
   const [state, dispatch] = useStoreContext();
 
   const [fundraisers, setFundraisers] = useState([]);
   const [toggleRender, setToggleRender] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  // react-bootstrap-table-next - lets setup our columns here
+
+  const columns = [
+    {
+      dataField: 'id',
+      text: 'Fundraiser ID',
+      sort: true,
+      type: 'number',
+    },
+    {
+      dataField: 'name',
+      text: 'Fundraiser Name',
+      sort: true,
+    },
+    {
+      dataField: 'description',
+      text: 'Description',
+      sort: true,
+    },
+    {
+      dataField: 'goal',
+      text: 'Goal',
+      sort: true,
+      type: Number,
+    },
+    {
+      dataField: 'start',
+      text: 'Start Date',
+      sort: true,
+      type: 'date',
+      formatter: (cell) => {
+        let dateObj = cell;
+        if (typeof cell !== 'object') {
+          dateObj = new Date(cell);
+        }
+        return `${('0' + dateObj.getUTCDate()).slice(-2)}/${(
+          '0' +
+          (dateObj.getUTCMonth() + 1)
+        ).slice(-2)}/${dateObj.getUTCFullYear()}`;
+      },
+      editor: {
+        type: Type.DATE,
+      },
+    },
+    {
+      dataField: 'end',
+      text: 'End Date',
+      sort: true,
+      formatter: (cell) => {
+        let dateObj = cell;
+        if (typeof cell !== 'object') {
+          dateObj = new Date(cell);
+        }
+        return `${('0' + dateObj.getUTCDate()).slice(-2)}/${(
+          '0' +
+          (dateObj.getUTCMonth() + 1)
+        ).slice(-2)}/${dateObj.getUTCFullYear()}`;
+      },
+      editor: {
+        type: Type.DATE,
+      },
+    },
+  ];
+
+  const defaultSorted = [
+    {
+      dataField: 'name',
+      order: 'desc',
+    },
+  ];
 
   const getFundraiserData = async () => {
     const fundraiserData = await API.Fundraisers.getFundraisers();
@@ -19,52 +93,55 @@ const FundraisersTab = () => {
     getFundraiserData();
   }, [toggleRender]);
 
+  const handleCellEdit = async (oldValue, newValue, row, column) => {
+    const fundraiserObj = {
+      id: row.id,
+      name: row.name,
+      description: row.description,
+      goal: row.goal,
+      start: row.start,
+      end: row.end,
+    };
+    setErrorMsg(null);
+
+    try {
+      const productData = await API.Fundraisers.updateFundraiser(fundraiserObj);
+      setErrorMsg('Fundraiser Updated');
+
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 3000);
+    } catch (err) {
+      setErrorMsg(err.message);
+    }
+  };
+
+  // setToggleRender(!toggleRender);
+
   return (
     <Container>
       <AddFundraiserModal
         toggleRender={toggleRender}
         setToggleRender={setToggleRender}
       ></AddFundraiserModal>
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Fundraiser</th>
-            <th>Description</th>
-            <th>Goal</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fundraisers.map((fundraiser) => (
-            <tr>
-              <td>{fundraiser.name}</td>
-              <td>{fundraiser.description}</td>
-              <td>${fundraiser.goal}</td>
-              <td>{new Date(fundraiser.start).toLocaleDateString()}</td>
-              <td>{new Date(fundraiser.end).toLocaleDateString()}</td>
-            </tr>
-          ))}
-          {/* <tr>
-            <td>Smoked Turkey</td>
-            <td>$30</td>
-            <td>sliced turkey breast</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Baked Beans</td>
-            <td>$5</td>
-            <td>family size container of baked beans</td>
-            <td>Yes</td>
-          </tr>
-          <tr>
-            <td>Sweet Tea</td>
-            <td>$7</td>
-            <td>1 gallon of sweet tea</td>
-            <td>No</td>
-          </tr> */}
-        </tbody>
-      </Table>
+
+      <BootstrapTable
+        keyField='id'
+        data={fundraisers}
+        columns={columns}
+        defaultSorted={defaultSorted}
+        noDataIndication='No Fundraisers Found'
+        cellEdit={cellEditFactory({
+          mode: 'click',
+          afterSaveCell: (oldValue, newValue, row, column) => {
+            handleCellEdit(oldValue, newValue, row, column);
+          },
+        })}
+        striped
+        hover
+        bootstrap4
+        condensed
+      />
     </Container>
   );
 };
