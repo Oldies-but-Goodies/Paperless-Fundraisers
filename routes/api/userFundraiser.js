@@ -25,13 +25,15 @@ router.get('/:fundraiserId/users/:userId', async (req, res, next) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
+  console.log('req.user.id', req.user.id);
   try {
     const fundraiserData = await Fundraiser.findByPk(req.params.fundraiserId, {
       include: [
         {
           model: Order,
           where: {
-            UserId: req.params.userId,
+            // UserId: req.params.userId,
+            userId: req.user.id,
           },
           include: [
             {

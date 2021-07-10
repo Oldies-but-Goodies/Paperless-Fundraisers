@@ -37,6 +37,9 @@ export default {
     getFundraisers: function () {
       return axios.get('/api/fundraiser/');
     },
+    getMyFundraisers: function () {
+      return axios.get('/api/fundraiser/my');
+    },
     getCurrentFundraiser: function (fundraiserId) {
       return axios.get('/api/fundraiser/' + fundraiserId);
     },
@@ -60,7 +63,10 @@ export default {
       return axios.get('api/order/allOrdersforUser/' + userId);
     },
     userOrderTotalSales: function (fundraiserId, userId) {
-      return axios.get('api/userFundraiser/' + fundraiserId + '/users/' + userId);
+      console.log('in API.js', fundraiserId, userId);
+      return axios.get(
+        'api/userFundraiser/' + fundraiserId + '/users/' + userId
+      );
     },
     updateOrder: function (orderId, updateBodyObj) {
       return axios.put('/api/order/' + orderId, updateBodyObj);

@@ -5,6 +5,7 @@ const {
   Product,
   Order,
   Order_Details,
+  userFundraiser,
 } = require('../../models');
 // GET all fundraisers
 router.get('/', async (req, res, next) => {
@@ -16,6 +17,30 @@ router.get('/', async (req, res, next) => {
     res.status(500).json(err);
   }
 });
+
+router.get('/my', async (req, res, next) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+  console.log('inside');
+  console.log('req.user.id is ', req.user.id);
+  try {
+    const fundraiserData = await User.findOne({
+      where: {
+        id: req.user.id,
+      },
+      include: [
+        {
+          model: Fundraiser,
+        },
+      ],
+    });
+    res.status(200).json(fundraiserData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // GET a single fundraiser
 // CC Example
 router.get('/:fundraiserId', async (req, res, next) => {
