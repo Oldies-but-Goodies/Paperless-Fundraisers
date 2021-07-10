@@ -39,6 +39,12 @@ code {
   background-color: lightsteelblue;
 }
 
+.loginContainer {
+  max-width: 90%;
+  margin-top: 20px;
+  background-color: lightsteelblue;
+}
+
 .new-form-div {
   /* max-width: 80%; */
   margin: auto;

@@ -62,8 +62,13 @@ const Home = (props) => {
 
   const subColumns = [
     {
-      dataField: 'createdAt',
-      text: 'Date of Sale',
+      dataField: 'Customer.first_name',
+      text: 'Customer First Name',
+      sort: true
+    },
+    {
+      dataField: 'Customer.last_name',
+      text: 'Customer Last Name',
       sort: true
     },
     // {
@@ -105,12 +110,11 @@ const handleRowClick = async (i) => {
 
 const expandRow = {
   renderer: row => (
-    
-    // <BootstrapTable 
-    // keyField='id'
-    // data={order}
-    // columns={subColumns}
-    // />
+    <BootstrapTable 
+    keyField='id'
+    data={orders}
+    columns={subColumns}
+    />
 
   )
 };
