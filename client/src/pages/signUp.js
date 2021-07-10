@@ -2,7 +2,7 @@ import axios from "axios";
 import { sign } from "crypto";
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { Dropdown, DropdownButton, InputGroup, Jumbotron } from "react-bootstrap";
+import { Dropdown, DropdownButton, InputGroup, Jumbotron, Container } from "react-bootstrap";
 import API from '../lib/API';
 
 const SignUp = () => {
@@ -76,6 +76,7 @@ const SignUp = () => {
       <Jumbotron className="text-center jumbo">
       <div> Paperless Fundraisers</div>
     </Jumbotron>
+    <Container fluid className="loginContainer">
     <div className='text-center'>
       <h4>Sign Up</h4>
       {errorMsg ? <p>{errorMsg}</p> : null}
@@ -165,6 +166,7 @@ const SignUp = () => {
       <h5>Already a user, click <Link
       to="/login">here </Link> to Login</h5>
     </div>
+    </Container>
     </div>
   );
 };

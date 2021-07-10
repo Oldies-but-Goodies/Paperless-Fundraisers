@@ -4,13 +4,7 @@ import { Modal, Button, Table, Form, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import API from "../lib/API";
 
-const AddPersonModal = ({ orderId }) => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-
-  const handleShow = () => setShow(true);
-
+const OrderDetailModal = ({ orderId, show, onClose }) => {
   const [order, setOrder] = useState(null);
 
   const getOrderDetails = async () => {
@@ -20,16 +14,12 @@ const AddPersonModal = ({ orderId }) => {
   };
 
   useEffect(() => {
-    getOrderDetails();
-  }, []);
+    if (orderId) getOrderDetails();
+  }, [orderId]);
 
   return (
     <>
-      <Button variant='primary' className='my-2' onClick={handleShow}>
-        View Orders
-      </Button>
-
-      <Modal size='lg' show={show} onHide={handleClose}>
+      <Modal size='lg' show={show} onHide={onClose}>
         <Modal.Header
           style={{ background: `linear-gradient(${"#007bff"}, ${"#002853"})` }}
         >
@@ -37,7 +27,7 @@ const AddPersonModal = ({ orderId }) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <div className="text-center font-weight-bold">Customer Info </div>
+            <div className='text-center font-weight-bold'>Customer Info </div>
             <Form.Group as={Row} controlId='formPlaintextEmail'>
               {/* <Form.Label column sm='2'>
                 Customer
@@ -46,7 +36,10 @@ const AddPersonModal = ({ orderId }) => {
                 <Form.Control
                   plaintext
                   readOnly
-                  defaultValue={order && order.Customer.first_name + " " + order.Customer.last_name}
+                  defaultValue={
+                    order &&
+                    order.Customer.first_name + " " + order.Customer.last_name
+                  }
                 />
               </Col>
               {/* <Form.Label column sm='2'>
@@ -65,7 +58,7 @@ const AddPersonModal = ({ orderId }) => {
                   readOnly
                   defaultValue={order && order.Customer.phone_number}
                 />
-                </Col>
+              </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId='formPlaintextPassword'>
@@ -73,14 +66,28 @@ const AddPersonModal = ({ orderId }) => {
                 Password
               </Form.Label> */}
               <Col sm='5'>
-                <Form.Control 
-                plaintext
-                readOnly
-                defaultValue={order && order.Customer.address_line1 + " " + order.Customer.address_line2} />
-                <Form.Control 
-                plaintext
-                readOnly
-                defaultValue={order && order.Customer.city + ", " + order.Customer.state + " " + order.Customer.zip_code} />
+                <Form.Control
+                  plaintext
+                  readOnly
+                  defaultValue={
+                    order &&
+                    order.Customer.address_line1 +
+                      " " +
+                      order.Customer.address_line2
+                  }
+                />
+                <Form.Control
+                  plaintext
+                  readOnly
+                  defaultValue={
+                    order &&
+                    order.Customer.city +
+                      ", " +
+                      order.Customer.state +
+                      " " +
+                      order.Customer.zip_code
+                  }
+                />
               </Col>
               <Form.Label column sm='2'>
                 Order Total
@@ -129,7 +136,7 @@ const AddPersonModal = ({ orderId }) => {
           </Table>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button variant='secondary' onClick={onClose}>
             Close
           </Button>
           {/* <Button variant='primary' onClick={handleSubmit}>
@@ -140,4 +147,4 @@ const AddPersonModal = ({ orderId }) => {
     </>
   );
 };
-export default AddPersonModal;
+export default OrderDetailModal;
