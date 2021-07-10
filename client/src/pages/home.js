@@ -105,11 +105,12 @@ const handleRowClick = async (i) => {
 
 const expandRow = {
   renderer: row => (
-    <BootstrapTable 
-    keyField='id'
-    data={order}
-    columns={subColumns}
-    />
+    
+    // <BootstrapTable 
+    // keyField='id'
+    // data={order}
+    // columns={subColumns}
+    // />
 
   )
 };
