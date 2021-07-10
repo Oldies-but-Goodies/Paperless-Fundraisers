@@ -31,22 +31,33 @@ const Home = (props) => {
       text: 'Order ID',
       sort: true,
       type: 'number',
+      editable: false,
+    },
+    {
+      dataField: 'id',
+      text: 'Order ID',
+      sort: true,
+      type: 'number',
+      editable: false,
     },
     {
       dataField: 'Customer.first_name',
       text: 'Customer First Name',
       sort: true,
+      editable: false,
     },
     {
       dataField: 'Customer.last_name',
       text: 'Customer Last Name',
       sort: true,
+      editable: false,
     },
     {
       dataField: 'order_total',
       text: 'Total Sale',
       sort: true,
       type: 'number',
+      editable: false,
     },
     {
       dataField: 'customer_remit',
@@ -57,6 +68,7 @@ const Home = (props) => {
       dataField: 'seller_remit',
       text: 'Admin Paid',
       sort: true,
+      editable: false,
     },
   ];
 
@@ -78,13 +90,11 @@ const Home = (props) => {
     // },
   ];
 
-  const getCurrentFundraiser = async () => {
+  const getCurrentundraiser = async () => {
     const fundraiserData = await API.Fundraisers.getCurrentFundraiser(
       state.currentFundraiser
     );
-    console.log('what is state.currentFundraiser ' + state.currentFundraiser);
-    console.log('this is fundraiserData');
-    console.log(fundraiserData);
+    // console.log(fundraiserData);
     setFundraiser(fundraiserData.data.fundraiserData);
     setTotalFundraiserSales(fundraiserData.data.totalFundraiserSales);
   };
@@ -95,29 +105,73 @@ const Home = (props) => {
     setOrders(myOrderData.data);
   };
 
+  // let orderId = state.id;
+
+  const handleCellEdit = async (oldValue, newValue, row, column) => {
+    const updateBodyObj = {
+      id: row.id,
+      first_name: row.Customer.first_name,
+      last_name: row.Customer.last_name,
+      order_total: row.order_total,
+      customer_remit: row.customer_remit,
+      seller_remit: row.seller_remit,
+    };
+    setErrorMsg(null);
+
+    try {
+      // const updateOrders = async () => {
+
+      const myOrderData = await API.Orders.updateOrder(
+        updateBodyObj.id,
+        updateBodyObj
+      );
+      console.log(updateBodyObj);
+      // setOrders(myOrderData.data)
+      // }
+      setErrorMsg('Order Updated');
+
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 3000);
+    } catch (err) {
+      setErrorMsg(err.message);
+    }
+  };
+
   const getOrderDetails = async () => {
-    const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
-    let orderId = order.id;
+    const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
+    // let orderId=order.id
     setOrder(orderDetailsData.data);
     console.log(orderDetailsData.data);
   };
 
   useEffect(() => {
-    getCurrentFundraiser();
+    getCurrentundraiser();
     myOrders();
   }, []);
-
   const handleRowClick = async (i) => {
     setShowEdit(true);
     setOrderIndex(i);
     // <OrderDetailModal />
   };
 
-  const expandRow = {
-    renderer: (row) => (
-      <BootstrapTable keyField='id' data={orders} columns={subColumns} />
-    ),
-  };
+  // const rowEvents = {
+  //   onClick: (e, row, ) => {
+  //     <OrderDetailModal
+  //                   orderId={order.id}
+  //                 />;
+  //   },
+
+  // const expandRow = {
+  //   renderer: row => (
+  //     <BootstrapTable
+  //     keyField='id'
+  //     data={orders}
+  //     columns={subColumns}
+  //     />
+
+  //   )
+  // };
 
   return (
     <Container fluid className='homeContainer'>
@@ -134,30 +188,25 @@ const Home = (props) => {
         </h5>
       </div>
 
-      {/* <OrderDetailModal
-       product={orders[orderIndex]}
-       showEdit={showEdit}
-       setShowEdit={setShowEdit}
-     /> */}
-
       <BootstrapTable
         keyField='id'
         data={orders}
         columns={columns}
-        expandRow={expandRow}
+        // expandRow={ expandRow }
+        // rowEvents={ rowEvents}
         // defaultSorted={defaultSorted}
         noDataIndication='No products defined'
-        // cellEdit={cellEditFactory({
-        //   mode: 'click',
-        //   afterSaveCell: (oldValue, newValue, row, column) => {
-        //     handleCellEdit(oldValue, newValue, row, column);
-        //   },
-        // })}
+        cellEdit={cellEditFactory({
+          mode: 'click',
+          afterSaveCell: (oldValue, newValue, row, column) => {
+            handleCellEdit(oldValue, newValue, row, column);
+          },
+        })}
         // afterSaveCell={cellEdit.afterSaveCell()}
         // filter={filterFactory()}
         striped
         hover
-        // condensed
+        condensed
         bootstrap4
         blurToSave
       />
