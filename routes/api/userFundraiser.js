@@ -1,8 +1,8 @@
-const router = require("express").Router();
-const { userFundraiser } = require("../../models");
+const router = require('express').Router();
+const { userFundraiser } = require('../../models');
 
 // GET all UFs
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
@@ -14,11 +14,33 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET all fundraisers for a given user
+router.get('/myfundraisers', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+  try {
+    const userFundraiserData = await userFundraiser.findAll({
+      where: { userId: req.user.id },
+    });
+    if (userFundraiserData.length === 0) {
+      res.status(404).json({
+        status: 'error',
+        message: 'user not mapped to a fundraiser',
+      });
+    }
+    res.status(200).json(userFundraiserData);
+    // if userFundraiserData is empty, return 404
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // // GET a single UF
 // router.get("/:id", async (req, res) => {
 //   try {
 //     const userFundraiserData = await userFundraiser.findByPk(req.params.id, {
-      
+
 //       //   include: [{ model: userFundraiser, through: ' }]
 //     });
 
@@ -52,7 +74,7 @@ router.get("/", async (req, res) => {
 //       {
 //         name: req.body.name,
 //         price: req.body.price,
-        
+
 //       },
 //       {
 //         where: {

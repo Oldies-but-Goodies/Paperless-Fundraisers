@@ -1,9 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from 'react';
 // import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Table } from "react-bootstrap"
+import { Container, Table } from 'react-bootstrap';
 import API from '../lib/API';
-import { useStoreContext } from "../store/store";
-import OrderDetailModal from "../components/orderDetailModal"
+import { useStoreContext } from '../store/store';
+import OrderDetailModal from '../components/orderDetailModal';
 
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
@@ -13,7 +13,7 @@ const Home = (props) => {
 
   const [fundraiser, setFundraiser] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [totalFundraiserSales, setTotalFundraiserSales] = useState("$xx.xx")
+  const [totalFundraiserSales, setTotalFundraiserSales] = useState('$xx.xx');
 
   const [order, setOrder] = useState(null);
 
@@ -31,14 +31,14 @@ const Home = (props) => {
       text: 'Order ID',
       sort: true,
       type: 'number',
-      editable: false
+      editable: false,
     },
     {
       dataField: 'id',
       text: 'Order ID',
       sort: true,
       type: 'number',
-      editable: false
+      editable: false,
     },
     {
       dataField: 'Customer.first_name',
@@ -50,138 +50,144 @@ const Home = (props) => {
       dataField: 'Customer.last_name',
       text: 'Customer Last Name',
       sort: true,
-      editable: false
+      editable: false,
     },
     {
       dataField: 'order_total',
       text: 'Total Sale',
       sort: true,
       type: 'number',
-      editable: false
+      editable: false,
     },
     {
       dataField: 'customer_remit',
       text: 'Customer Paid',
-      sort: true
+      sort: true,
     },
     {
       dataField: 'seller_remit',
       text: 'Admin Paid',
       sort: true,
-      editable: false
+      editable: false,
     },
-  ]
+  ];
 
   const subColumns = [
     {
       dataField: 'Customer.first_name',
       text: 'Customer First Name',
-      sort: true
+      sort: true,
     },
     {
       dataField: 'Customer.last_name',
       text: 'Customer Last Name',
-      sort: true
+      sort: true,
     },
     // {
     //   dataField: 'Order_Details.Product.name',
     //   text: 'Product',
     //   sort: true
     // },
-  ]
+  ];
 
-const getCurrentundraiser = async () => {
-  const fundraiserData = await API.Fundraisers.getCurrentFundraiser(state.currentFundraiser)
-  // console.log(fundraiserData);
-  setFundraiser(fundraiserData.data.fundraiserData);
-  setTotalFundraiserSales(fundraiserData.data.totalFundraiserSales)
-};
-
-const myOrders = async () => {
-  const myOrderData = await API.Orders.loggedInOrders(state.user.id);
-  console.log(myOrderData);
-  setOrders(myOrderData.data)
-}
-
-// let orderId = state.id;
-
-const handleCellEdit = async (oldValue, newValue, row, column) => {
-  const updateBodyObj = {
-    id: row.id,
-    first_name: row.Customer.first_name,
-    last_name: row.Customer.last_name,
-    order_total: row.order_total,
-    customer_remit: row.customer_remit,
-    seller_remit: row.seller_remit,
+  const getCurrentundraiser = async () => {
+    const fundraiserData = await API.Fundraisers.getCurrentFundraiser(
+      state.currentFundraiser
+    );
+    // console.log(fundraiserData);
+    setFundraiser(fundraiserData.data.fundraiserData);
+    setTotalFundraiserSales(fundraiserData.data.totalFundraiserSales);
   };
-  setErrorMsg(null);
 
-  try {
-    // const updateOrders = async () => {
-      
-      const myOrderData = await API.Orders.updateOrder(updateBodyObj.id, updateBodyObj);
+  const myOrders = async () => {
+    const myOrderData = await API.Orders.loggedInOrders(state.user.id);
+    console.log(myOrderData);
+    setOrders(myOrderData.data);
+  };
+
+  // let orderId = state.id;
+
+  const handleCellEdit = async (oldValue, newValue, row, column) => {
+    const updateBodyObj = {
+      id: row.id,
+      first_name: row.Customer.first_name,
+      last_name: row.Customer.last_name,
+      order_total: row.order_total,
+      customer_remit: row.customer_remit,
+      seller_remit: row.seller_remit,
+    };
+    setErrorMsg(null);
+
+    try {
+      // const updateOrders = async () => {
+
+      const myOrderData = await API.Orders.updateOrder(
+        updateBodyObj.id,
+        updateBodyObj
+      );
       console.log(updateBodyObj);
       // setOrders(myOrderData.data)
-    // }
-    setErrorMsg('Order Updated');
+      // }
+      setErrorMsg('Order Updated');
 
-    setTimeout(() => {
-      setErrorMsg(null);
-    }, 3000);
-  } catch (err) {
-    setErrorMsg(err.message);
-  }
-};
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 3000);
+    } catch (err) {
+      setErrorMsg(err.message);
+    }
+  };
 
+  const getOrderDetails = async () => {
+    const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
+    // let orderId=order.id
+    setOrder(orderDetailsData.data);
+    console.log(orderDetailsData.data);
+  };
 
-const getOrderDetails = async () => {
-  const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
-  // let orderId=order.id
-  setOrder(orderDetailsData.data);
-  console.log(orderDetailsData.data);
-};
+  useEffect(() => {
+    getCurrentundraiser();
+    myOrders();
+  }, []);
+  const handleRowClick = async (i) => {
+    setShowEdit(true);
+    setOrderIndex(i);
+    // <OrderDetailModal />
+  };
 
-useEffect(() => {
-  getCurrentundraiser();
-  myOrders()
-}, [])
-const handleRowClick = async (i) => {
-  setShowEdit(true);
-  setOrderIndex(i);
-  // <OrderDetailModal />
-};
+  // const rowEvents = {
+  //   onClick: (e, row, ) => {
+  //     <OrderDetailModal
+  //                   orderId={order.id}
+  //                 />;
+  //   },
 
-// const rowEvents = {
-//   onClick: (e, row, ) => {
-//     <OrderDetailModal
-//                   orderId={order.id}
-//                 />;
-//   },
+  // const expandRow = {
+  //   renderer: row => (
+  //     <BootstrapTable
+  //     keyField='id'
+  //     data={orders}
+  //     columns={subColumns}
+  //     />
 
-// const expandRow = {
-//   renderer: row => (
-//     <BootstrapTable 
-//     keyField='id'
-//     data={orders}
-//     columns={subColumns}
-//     />
-
-//   )
-// };
+  //   )
+  // };
 
   return (
-    <Container fluid className="homeContainer">
-   
-      <div className="row my-2  text-center">
-      <h2 className="col">Welcome to {fundraiser.name} Fundraiser </h2>
+    <Container fluid className='homeContainer'>
+      <div className='row my-2  text-center'>
+        <h2 className='col'>Welcome to {fundraiser.name} Fundraiser </h2>
       </div>
-      <div className="row my-2 text-center">
-      <p className="col">{fundraiser.description} </p>
+      <div className='row my-2 text-center'>
+        <p className='col'>{fundraiser.description} </p>
       </div>
-      <div className="row my-2 text-center">
-      <h5 className="col">Our goal is to raise ${fundraiser.goal} and so far we've raised ${totalFundraiserSales}</h5>
+      <div className='row my-2 text-center'>
+        <h5 className='col'>
+          Our goal is to raise ${fundraiser.goal} and so far we've raised $
+          {totalFundraiserSales}
+        </h5>
       </div>
-    
+
       <BootstrapTable
         keyField='id'
         data={orders}
@@ -204,8 +210,8 @@ const handleRowClick = async (i) => {
         bootstrap4
         blurToSave
       />
-   
-{/* table only shows if user is non-Admin */}
+
+      {/* table only shows if user is non-Admin */}
       {/* <Table striped bordered hover>
         <thead>
           <tr>
@@ -236,7 +242,6 @@ const handleRowClick = async (i) => {
            
           </tbody>
       </Table> */}
-    
     </Container>
   );
 };
