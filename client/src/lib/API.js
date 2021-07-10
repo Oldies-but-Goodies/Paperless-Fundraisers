@@ -59,6 +59,9 @@ export default {
     loggedInOrders: function (userId) {
       return axios.get('api/order/allOrdersforUser/' + userId);
     },
+    userOrderTotalSales: function (fundraiserId, userId) {
+      return axios.get('api/userFundraiser/' + fundraiserId + '/users/' + userId);
+    },
     updateOrder: function (orderId, updateBodyObj) {
       return axios.put('/api/order/' + orderId, updateBodyObj);
     },
