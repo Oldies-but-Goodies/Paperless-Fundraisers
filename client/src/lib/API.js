@@ -66,15 +66,24 @@ export default {
       return axios.put('/api/order/' + orderId, updateBodyObj);
     },
   },
+
   OrderDetails: {
     orderDetails: function (orderId) {
       return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId);
     },
   },
+
   InviteEmail: {
     sendEmail: function (emailObj) {
       console.log(emailObj);
       return axios.post('api/emailRoutes/', emailObj);
+    },
+  },
+
+  UserFundraiser: {
+    // return all fundraisers for the currently logged in user
+    getPossibleFundraisers: function (obj) {
+      return axios.get('api/userFundraiser/myfundraisers/');
     },
   },
 };
