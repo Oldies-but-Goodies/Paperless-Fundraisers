@@ -5,6 +5,12 @@
 .appContainer {
   background-color: rgb(207, 227, 250);
 }
+.jumbo {
+  background-color: navy;
+  color: white;
+  font-size: 3.5rem;
+  font-family: cursive;
+}
 
 body {
   margin: 0;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { Container, Carousel } from 'react-bootstrap';
+import { Container, Carousel, Jumbotron } from 'react-bootstrap';
 import { LOADING, SET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
 
@@ -52,6 +52,10 @@ const Login = () => {
   };
 
   return (
+    <div>
+    <Jumbotron className="text-center jumbo">
+      <div> Paperless Fundraisers</div>
+    </Jumbotron>
     <Container fluid className="loginContainer">
     <div className="row align-items-center">
     <Carousel fade className="col-6 my-3">
@@ -126,6 +130,7 @@ const Login = () => {
     </div>
     <div className="text-right">Icons made by <a href="https://www.flaticon.com/authors/smalllikeart" title="smalllikeart">smalllikeart</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
     </Container>
+    </div>
   );
 };
 
