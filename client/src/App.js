@@ -1,19 +1,19 @@
-import axios from "axios";
-//lodash isNIl was removed
-import React, { useEffect } from "react";
-import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import Navigation from "./components/navbar";
-import Home from "./pages/home";
-import Login from "./pages/login";
-import Signup from "./pages/signUp";
-import Admin from "./pages/admin";
-import NewOrder from "./pages/newOrder";
-import Profile from "./pages/profile";
-import { LOADING, SET_USER, UNSET_USER } from "./store/actions";
-import { useStoreContext } from "./store/store";
-import "bootstrap/dist/css/bootstrap.min.css";
-import Splash from "./pages/splash";
-import Container from "react-bootstrap/Container";
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import Navigation from './components/navbar';
+import Home from './pages/home';
+import Login from './pages/login';
+import Signup from './pages/signUp';
+import Admin from './pages/admin';
+import NewOrder from './pages/newOrder';
+import Profile from './pages/profile';
+import ChangeFundraiser from './pages/changeFundraiser';
+import { LOADING, SET_USER, UNSET_USER } from './store/actions';
+import { useStoreContext } from './store/store';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Splash from './pages/splash';
+import Container from 'react-bootstrap/Container';
 
 const App = () => {
   const history = useHistory();
@@ -22,7 +22,7 @@ const App = () => {
   useEffect(() => {
     dispatch({ type: LOADING });
 
-    axios.get("/api/users").then((response) => {
+    axios.get('/api/users').then((response) => {
       if (response.data.user) {
         dispatch({ type: SET_USER, user: response.data.user });
       } else {
@@ -35,7 +35,7 @@ const App = () => {
     <div>
       {/* <Container> */}
       {state.user ? (
-        <div className="appContainer">
+        <div className='appContainer'>
           <Navigation />
           <Switch>
             <Route exact path='/' component={Home} />
@@ -48,15 +48,23 @@ const App = () => {
             <Route exact path='/profile'>
               <Profile />
             </Route>
+            <Route exact path='/changeFundraiser'>
+              <ChangeFundraiser />
+            </Route>
           </Switch>
         </div>
       ) : (
-        <div className="appContainer">
+        <div className='appContainer'>
           {/* <Splash></Splash> */}
           <Switch>
             <Route exact path='/' component={Login} />
             <Route exact path='/login' component={Login} />
             <Route exact path='/signup' component={Signup} />
+            <Route
+              exact
+              path='/changeFundraiser'
+              component={ChangeFundraiser}
+            />
           </Switch>
         </div>
       )}
