@@ -5,8 +5,8 @@ import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 import OrderDetailModal from '../components/orderDetailModal';
 
-import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory from 'react-bootstrap-table2-editor';
+import BootstrapTable from "react-bootstrap-table-next";
+import cellEditFactory from "react-bootstrap-table2-editor";
 
 const Home = (props) => {
   const [state, dispatch] = useStoreContext();
@@ -27,34 +27,34 @@ const Home = (props) => {
 
   const columns = [
     {
-      dataField: 'id',
-      text: 'Order ID',
+      dataField: "id",
+      text: "Order ID",
       sort: true,
       type: 'number',
       editable: false,
     },
     {
-      dataField: 'id',
-      text: 'Order ID',
+      dataField: "id",
+      text: "Order ID",
       sort: true,
       type: 'number',
       editable: false,
     },
     {
-      dataField: 'Customer.first_name',
-      text: 'Customer First Name',
+      dataField: "Customer.first_name",
+      text: "Customer First Name",
       sort: true,
       editable: false,
     },
     {
-      dataField: 'Customer.last_name',
-      text: 'Customer Last Name',
+      dataField: "Customer.last_name",
+      text: "Customer Last Name",
       sort: true,
       editable: false,
     },
     {
-      dataField: 'order_total',
-      text: 'Total Sale',
+      dataField: "order_total",
+      text: "Total Sale",
       sort: true,
       type: 'number',
       editable: false,
@@ -65,29 +65,16 @@ const Home = (props) => {
       sort: true,
     },
     {
-      dataField: 'seller_remit',
-      text: 'Admin Paid',
+      dataField: "customer_remit",
+      text: "Customer Paid",
+      sort: true,
+    },
+    {
+      dataField: "seller_remit",
+      text: "Admin Paid",
       sort: true,
       editable: false,
     },
-  ];
-
-  const subColumns = [
-    {
-      dataField: 'Customer.first_name',
-      text: 'Customer First Name',
-      sort: true,
-    },
-    {
-      dataField: 'Customer.last_name',
-      text: 'Customer Last Name',
-      sort: true,
-    },
-    // {
-    //   dataField: 'Order_Details.Product.name',
-    //   text: 'Product',
-    //   sort: true
-    // },
   ];
 
   const getCurrentundraiser = async () => {
@@ -105,8 +92,6 @@ const Home = (props) => {
     setOrders(myOrderData.data);
   };
 
-  // let orderId = state.id;
-
   const handleCellEdit = async (oldValue, newValue, row, column) => {
     const updateBodyObj = {
       id: row.id,
@@ -119,16 +104,12 @@ const Home = (props) => {
     setErrorMsg(null);
 
     try {
-      // const updateOrders = async () => {
-
       const myOrderData = await API.Orders.updateOrder(
         updateBodyObj.id,
         updateBodyObj
       );
-      console.log(updateBodyObj);
-      // setOrders(myOrderData.data)
-      // }
-      setErrorMsg('Order Updated');
+
+      setErrorMsg("Order Updated");
 
       setTimeout(() => {
         setErrorMsg(null);
@@ -138,43 +119,34 @@ const Home = (props) => {
     }
   };
 
-  const getOrderDetails = async () => {
-    const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
-    // let orderId=order.id
-    setOrder(orderDetailsData.data);
-    console.log(orderDetailsData.data);
-  };
+  // const getOrderDetails = async () => {
+  //   const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
+  //   // let orderId=order.id
+  //   setOrder(orderDetailsData.data);
+  //   console.log(orderDetailsData.data);
+  // };
 
   useEffect(() => {
     getCurrentundraiser();
     myOrders();
   }, []);
-  const handleRowClick = async (i) => {
-    setShowEdit(true);
-    setOrderIndex(i);
-    // <OrderDetailModal />
+
+  const rowEvents = {
+    onClick: (e, row, rowIndex) => {
+      console.log(row, rowIndex);
+      setOrder(row);
+      setShowEdit(true);
+    },
   };
-
-  // const rowEvents = {
-  //   onClick: (e, row, ) => {
-  //     <OrderDetailModal
-  //                   orderId={order.id}
-  //                 />;
-  //   },
-
-  // const expandRow = {
-  //   renderer: row => (
-  //     <BootstrapTable
-  //     keyField='id'
-  //     data={orders}
-  //     columns={subColumns}
-  //     />
-
-  //   )
-  // };
 
   return (
     <Container fluid className='homeContainer'>
+      <OrderDetailModal
+        orderId={order ? order.id : ""}
+        show={showEdit}
+        onClose={() => setShowEdit(false)}
+      />
+      
       <div className='row my-2  text-center'>
         <h2 className='col'>Welcome to {fundraiser.name} Fundraiser </h2>
       </div>
@@ -187,17 +159,16 @@ const Home = (props) => {
           {totalFundraiserSales}
         </h5>
       </div>
-
       <BootstrapTable
         keyField='id'
         data={orders}
         columns={columns}
         // expandRow={ expandRow }
-        // rowEvents={ rowEvents}
+        rowEvents={rowEvents}
         // defaultSorted={defaultSorted}
         noDataIndication='No products defined'
         cellEdit={cellEditFactory({
-          mode: 'click',
+          mode: "click",
           afterSaveCell: (oldValue, newValue, row, column) => {
             handleCellEdit(oldValue, newValue, row, column);
           },
@@ -210,7 +181,6 @@ const Home = (props) => {
         bootstrap4
         blurToSave
       />
-
       {/* table only shows if user is non-Admin */}
       {/* <Table striped bordered hover>
         <thead>
