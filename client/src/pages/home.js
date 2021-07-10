@@ -12,7 +12,8 @@ const Home = (props) => {
   const [state, dispatch] = useStoreContext();
 
   const [fundraiser, setFundraiser] = useState([]);
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState([]);
+  const [totalFundraiserSales, setTotalFundraiserSales] = useState("$xx.xx")
 
   const [order, setOrder] = useState(null);
 
@@ -75,7 +76,8 @@ const Home = (props) => {
 const getCurrentundraiser = async () => {
   const fundraiserData = await API.Fundraisers.getCurrentFundraiser(state.currentFundraiser)
   // console.log(fundraiserData);
-  setFundraiser(fundraiserData.data);
+  setFundraiser(fundraiserData.data.fundraiserData);
+  setTotalFundraiserSales(fundraiserData.data.totalFundraiserSales)
 };
 
 const myOrders = async () => {
@@ -122,7 +124,7 @@ const expandRow = {
       <p className="col">{fundraiser.description} </p>
       </div>
       <div className="row my-2 text-center">
-      <h5 className="col">Our goal is to raise ${fundraiser.goal} and so far we've raised $XXXX</h5>
+      <h5 className="col">Our goal is to raise ${fundraiser.goal} and so far we've raised ${totalFundraiserSales}</h5>
       </div>
 
       {/* <OrderDetailModal
