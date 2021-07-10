@@ -2,7 +2,7 @@ import axios from "axios";
 import { sign } from "crypto";
 import React, { useState, useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { Dropdown, DropdownButton, InputGroup } from "react-bootstrap";
+import { Dropdown, DropdownButton, InputGroup, Jumbotron } from "react-bootstrap";
 import API from '../lib/API';
 
 const SignUp = () => {
@@ -72,6 +72,10 @@ const SignUp = () => {
   }, [])
 
   return (
+    <div>
+      <Jumbotron className="text-center jumbo">
+      <div> Paperless Fundraisers</div>
+    </Jumbotron>
     <div className='text-center'>
       <h4>Sign Up</h4>
       {errorMsg ? <p>{errorMsg}</p> : null}
@@ -160,6 +164,7 @@ const SignUp = () => {
       </form>
       <h5>Already a user, click <Link
       to="/login">here </Link> to Login</h5>
+    </div>
     </div>
   );
 };

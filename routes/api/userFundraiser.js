@@ -9,7 +9,7 @@ const {
 } = require("../../models");
 
 // GET all UFs
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   if (!req.user) {
     return res.json({ status: "error", message: "not logged in" });
   }
