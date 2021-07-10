@@ -53,7 +53,7 @@ const InvitePersonModal = () => {
 
   return (
     <>
-      <Button variant='primary' className='my-2' onClick={handleShow}>
+      <Button variant='primary' className='ml-2' onClick={handleShow}>
         Invite Person
       </Button>
 

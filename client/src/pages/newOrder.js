@@ -19,6 +19,8 @@ const NewOrder = (props) => {
 
   const [formData, setFormData] = useState({});
 
+  const [customer_remit, setcustomer_remit] = useState(false);
+
   const [grandTotal, setGrandTotal] = useState({
     grandTotal: [],
   });
@@ -61,13 +63,9 @@ const NewOrder = (props) => {
 
     // setQuantities({ ...quanities, [productId]: value });
     setFormData({ ...formData, [name]: value });
-    // setGrandTotal:({...grandTotal, [quanities]: value})
-    // setProductTotal({ [name]: (this.state.quantity.value * this.product.price.value) })
-    // setGrandTotal({[name]: this.state.productTotal && this.state.productValue.reduce((a,v) => a + v.value, 0) })
 
-    // const productTotal = () =>
-    // this.state.quantity.reduce((sum, quantity) =>
-    // sum + quantity * this.state.product.price, 0);
+    setcustomer_remit()
+    
   };
 
   const handleSubmit = async () => {
@@ -89,7 +87,7 @@ const NewOrder = (props) => {
         CustomerId: 1,
         UserId: state.user.id,
         order_total: 10,
-        customer_remit: formData.customer_remit,
+        customer_remit,
       },
     })
       .then((response) => {
@@ -277,7 +275,7 @@ const NewOrder = (props) => {
           label='Customer Paid'
           name='customer_remit'
           value={formData.customer_remit}
-          onChange={handleChange}
+          onChange={(e) => setcustomer_remit(e.target.checked)}
         />
         <div className='col-3 font-weight-bold'>
           {' '}
@@ -286,7 +284,7 @@ const NewOrder = (props) => {
       </div>
 
       <Button
-        className='btn btn-primary float-right my-3'
+        className='btn btn-primary my-3'
         type='submit'
         onClick={handleSubmit}
       >

@@ -51,8 +51,8 @@ const App = () => {
           </Switch>
         </div>
       ) : (
-        <div>
-          <Splash></Splash>
+        <div className="appContainer">
+          {/* <Splash></Splash> */}
           <Switch>
             <Route exact path='/' component={Login} />
             <Route exact path='/login' component={Login} />
