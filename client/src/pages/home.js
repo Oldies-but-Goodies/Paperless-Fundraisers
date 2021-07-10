@@ -5,12 +5,78 @@ import API from '../lib/API';
 import { useStoreContext } from "../store/store";
 import OrderDetailModal from "../components/orderDetailModal"
 
+import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory from 'react-bootstrap-table2-editor';
+
 const Home = (props) => {
   const [state, dispatch] = useStoreContext();
 
   const [fundraiser, setFundraiser] = useState([]);
   const [orders, setOrders] = useState([]);
   const [totalFundraiserSales, setTotalFundraiserSales] = useState("$xx.xx")
+
+  const [order, setOrder] = useState(null);
+
+  const [showEdit, setShowEdit] = useState(false);
+  const [showAdd, setShowAdd] = useState(false);
+  const [toggleRender, setToggleRender] = useState(false);
+
+  const [orderIndex, setOrderIndex] = useState(0);
+
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const columns = [
+    {
+      dataField: 'id',
+      text: 'Order ID',
+      sort: true,
+      type: 'number'
+    },
+    {
+      dataField: 'Customer.first_name',
+      text: 'Customer First Name',
+      sort: true
+    },
+    {
+      dataField: 'Customer.last_name',
+      text: 'Customer Last Name',
+      sort: true
+    },
+    {
+      dataField: 'order_total',
+      text: 'Total Sale',
+      sort: true,
+      type: 'number'
+    },
+    {
+      dataField: 'customer_remit',
+      text: 'Customer Paid',
+      sort: true
+    },
+    {
+      dataField: 'seller_remit',
+      text: 'Admin Paid',
+      sort: true
+    },
+  ]
+
+  const subColumns = [
+    {
+      dataField: 'Customer.first_name',
+      text: 'Customer First Name',
+      sort: true
+    },
+    {
+      dataField: 'Customer.last_name',
+      text: 'Customer Last Name',
+      sort: true
+    },
+    // {
+    //   dataField: 'Order_Details.Product.name',
+    //   text: 'Product',
+    //   sort: true
+    // },
+  ]
 
 const getCurrentundraiser = async () => {
   const fundraiserData = await API.Fundraisers.getCurrentFundraiser(state.currentFundraiser)
@@ -25,11 +91,34 @@ const myOrders = async () => {
   setOrders(myOrderData.data)
 }
 
+const getOrderDetails = async () => {
+  const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
+  let orderId=order.id
+  setOrder(orderDetailsData.data);
+  console.log(orderDetailsData.data);
+};
+
 useEffect(() => {
   getCurrentundraiser();
   myOrders()
 }, [])
-  
+const handleRowClick = async (i) => {
+  setShowEdit(true);
+  setOrderIndex(i);
+  // <OrderDetailModal />
+};
+
+const expandRow = {
+  renderer: row => (
+    <BootstrapTable 
+    keyField='id'
+    data={orders}
+    columns={subColumns}
+    />
+
+  )
+};
+
   return (
     <Container fluid className="homeContainer">
    
@@ -42,9 +131,37 @@ useEffect(() => {
       <div className="row my-2 text-center">
       <h5 className="col">Our goal is to raise ${fundraiser.goal} and so far we've raised ${totalFundraiserSales}</h5>
       </div>
+
+      {/* <OrderDetailModal
+       product={orders[orderIndex]}
+       showEdit={showEdit}
+       setShowEdit={setShowEdit}
+     /> */}
+    
+      <BootstrapTable
+        keyField='id'
+        data={orders}
+        columns={columns}
+        expandRow={ expandRow }
+        // defaultSorted={defaultSorted}
+        noDataIndication='No products defined'
+        // cellEdit={cellEditFactory({
+        //   mode: 'click',
+        //   afterSaveCell: (oldValue, newValue, row, column) => {
+        //     handleCellEdit(oldValue, newValue, row, column);
+        //   },
+        // })}
+        // afterSaveCell={cellEdit.afterSaveCell()}
+        // filter={filterFactory()}
+        striped
+        hover
+        // condensed
+        bootstrap4
+        blurToSave
+      />
    
 {/* table only shows if user is non-Admin */}
-      <Table striped bordered hover>
+      {/* <Table striped bordered hover>
         <thead>
           <tr>
             <th>Order Number</th>
@@ -71,21 +188,9 @@ useEffect(() => {
           </tr>
           ))}
           
-            {/* <td>1</td>
-            <td>Stefan</td>
-            <td>$50</td>
-            <td>Yes</td>
-            <td>Yes</td>
-          
-          <tr>
-            <td>2</td>
-            <td>Tammy </td>
-            <td>$40</td>
-            <td>Yes</td>
-            <td>No</td>
-          </tr> */}
+           
           </tbody>
-      </Table>
+      </Table> */}
     
     </Container>
   );
