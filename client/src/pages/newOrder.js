@@ -26,7 +26,6 @@ const NewOrder = (props) => {
   });
 
   const getProductData = async () => {
-    console.log(state.currentFundraiser);
     const productData = await API.Products.getAllForFundraiser(
       state.currentFundraiser
     );
@@ -64,8 +63,7 @@ const NewOrder = (props) => {
     // setQuantities({ ...quanities, [productId]: value });
     setFormData({ ...formData, [name]: value });
 
-    setcustomer_remit()
-    
+    setcustomer_remit();
   };
 
   const handleSubmit = async () => {

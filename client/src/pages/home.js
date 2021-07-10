@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 // import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Table } from "react-bootstrap";
-import API from "../lib/API";
-import { useStoreContext } from "../store/store";
-import OrderDetailModal from "../components/orderDetailModal";
+import { Container, Table } from 'react-bootstrap';
+import API from '../lib/API';
+import { useStoreContext } from '../store/store';
+import OrderDetailModal from '../components/orderDetailModal';
 
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
@@ -13,7 +13,7 @@ const Home = (props) => {
 
   const [fundraiser, setFundraiser] = useState([]);
   const [orders, setOrders] = useState([]);
-  const [totalFundraiserSales, setTotalFundraiserSales] = useState("$xx.xx");
+  const [totalFundraiserSales, setTotalFundraiserSales] = useState('$xx.xx');
 
   const [order, setOrder] = useState(null);
 
@@ -30,14 +30,14 @@ const Home = (props) => {
       dataField: "id",
       text: "Order ID",
       sort: true,
-      type: "number",
+      type: 'number',
       editable: false,
     },
     {
       dataField: "id",
       text: "Order ID",
       sort: true,
-      type: "number",
+      type: 'number',
       editable: false,
     },
     {
@@ -56,8 +56,13 @@ const Home = (props) => {
       dataField: "order_total",
       text: "Total Sale",
       sort: true,
-      type: "number",
+      type: 'number',
       editable: false,
+    },
+    {
+      dataField: 'customer_remit',
+      text: 'Customer Paid',
+      sort: true,
     },
     {
       dataField: "customer_remit",

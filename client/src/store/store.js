@@ -20,10 +20,19 @@ const reducer = (state, action) => {
       };
 
     case SET_USER:
-      let currentFundraiserId = null;
-      if (action.user.Fundraisers.length > 0) {
-        currentFundraiserId = action.user.Fundraisers[0].id;
+      let currentFundraiserId = state.currentFundraiser;
+
+      // check to see if the currentFundraiser is not set
+
+      if (!state.currentFundraiser) {
+        // if it is not set, then set it to the first one in the
+        // list only if there are fundraisers associated with this user
+
+        if (action.user.Fundraisers.length > 0) {
+          currentFundraiserId = action.user.Fundraisers[0].id;
+        }
       }
+
       return {
         ...state,
         user: action.user,
@@ -34,7 +43,7 @@ const reducer = (state, action) => {
     case SET_FUNDRAISERS:
       return {
         ...state,
-        currentFundraiserId: action.fundraiser,
+        currentFundraiser: action.fundraiser,
       };
 
     case UNSET_USER:
