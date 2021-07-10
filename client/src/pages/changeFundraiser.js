@@ -92,6 +92,11 @@ const ChangeFundraiser = () => {
     setFundraisers(fundraiserData.data);
   };
 
+  const getMyFundraiserData = async () => {
+    const fundraiserData = await API.Fundraisers.getMyFundraisers();
+    setFundraisers(fundraiserData.data);
+  };
+
   useEffect(() => {
     getFundraiserData();
   }, [toggleRender]);
@@ -106,31 +111,6 @@ const ChangeFundraiser = () => {
       //   state.currentFundraiser
     },
   };
-
-  const handleCellEdit = async (oldValue, newValue, row, column) => {
-    const fundraiserObj = {
-      id: row.id,
-      name: row.name,
-      description: row.description,
-      goal: row.goal,
-      start: row.start,
-      end: row.end,
-    };
-    setErrorMsg(null);
-
-    try {
-      const productData = await API.Fundraisers.updateFundraiser(fundraiserObj);
-      setErrorMsg('Fundraiser Updated');
-
-      setTimeout(() => {
-        setErrorMsg(null);
-      }, 3000);
-    } catch (err) {
-      setErrorMsg(err.message);
-    }
-  };
-
-  //
 
   // setToggleRender(!toggleRender);
 
