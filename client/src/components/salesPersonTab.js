@@ -6,23 +6,11 @@ import ViewOrdersModal from './viewOrdersModal';
 
 const SalesPersonTab = () => {
   return (
-    <Container>
+    <Container fluid className="new-form-div">
       <AddPersonModal></AddPersonModal>
       <InvitePersonModal></InvitePersonModal>
 
-      {/* <Dropdown className="my-2 float-right">
-        <Dropdown.Toggle variant="primary" id="dropdown-basic">
-          Select Salesperson
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Jim</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Dwight</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Phyllis</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Stanley</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown> */}
-      <Table striped bordered hover>
+      <Table className="new-form-div" striped bordered hover>
         <thead>
           <tr>
             <th>Salesperson</th>
