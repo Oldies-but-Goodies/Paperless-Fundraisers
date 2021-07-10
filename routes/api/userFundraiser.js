@@ -1,10 +1,17 @@
-const router = require('express').Router();
-const { userFundraiser } = require('../../models');
+const router = require("express").Router();
+const {
+  userFundraiser,
+  User,
+  Fundraiser,
+  Product,
+  Order,
+  Order_Details,
+} = require("../../models");
 
 // GET all UFs
 router.get('/', async (req, res) => {
   if (!req.user) {
-    return res.json({ status: 'error', message: 'not logged in' });
+    return res.json({ status: "error", message: "not logged in" });
   }
   try {
     const userFundraiserData = await userFundraiser.findAll();
@@ -14,23 +21,60 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET all fundraisers for a given user
-router.get('/myfundraisers', async (req, res) => {
+router.get("/:fundraiserId/users/:userId", async (req, res, next) => {
   if (!req.user) {
-    return res.json({ status: 'error', message: 'not logged in' });
+    return res.json({ status: "error", message: "not logged in" });
   }
   try {
-    const userFundraiserData = await userFundraiser.findAll({
-      where: { userId: req.user.id },
+    const fundraiserData = await Fundraiser.findByPk(req.params.fundraiserId, {
+      include: [
+        {
+          model: Order,
+          where: {
+            UserId: req.params.userId,
+          },
+          include: [
+            {
+              model: Order_Details,
+              include: [
+                {
+                  model: Product,
+                },
+              ],
+            },
+          ],
+        },
+      ],
     });
-    if (userFundraiserData.length === 0) {
-      res.status(404).json({
-        status: 'error',
-        message: 'user not mapped to a fundraiser',
-      });
+
+    if (!fundraiserData) {
+      res.status(404).json({ message: "No orders associated with this user id!" });
+      return;
     }
-    res.status(200).json(userFundraiserData);
-    // if userFundraiserData is empty, return 404
+
+    //  console.log(fundraiserData.dataValues.Orders)
+
+    const totalUserSales = fundraiserData.dataValues.Orders.reduce(
+      (total, current) => {
+        const addition = current.dataValues.Order_Details.reduce(
+          (totalForDetails, currentDetail) => {
+            // console.log("currentDetails", currentDetail);
+            const qty = currentDetail.dataValues.product_qty;
+            const price = parseInt(
+              currentDetail.dataValues.Product.dataValues.price
+            );
+            const newTotal = qty * price + totalForDetails;
+            return newTotal;
+          },
+          0
+        );
+        // console.log( "addition", addition)
+        return addition + total;
+      },
+      0
+    );
+
+    res.status(200).json({ fundraiserData, totalUserSales });
   } catch (err) {
     res.status(500).json(err);
   }
