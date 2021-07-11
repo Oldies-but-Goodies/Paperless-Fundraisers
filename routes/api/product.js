@@ -62,7 +62,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // CREATE a product
-// TODO add with auth for admin only
+
 router.post('/', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -93,7 +93,7 @@ router.post('/', async (req, res) => {
 });
 
 //   UPDATE an product
-// TODO add with auth for admin only
+
 router.put('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -116,7 +116,7 @@ router.put('/:id', async (req, res) => {
 });
 
 // DELETE a product
-// TODO add with auth for admin only
+
 router.delete('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
