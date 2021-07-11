@@ -13,6 +13,7 @@ const { isValidEmail, isValidPassword } = require("../../utilities/authUtils");
 
 const router = express.Router();
 
+// find user
 router.get("/", async (req, res) => {
   if (req.user) {
     const user = await User.findOne({
@@ -37,6 +38,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// signup
 router.post("/signup", async function (req, res, next) {
   let user = {};
 
@@ -135,10 +137,7 @@ router.post("/login", function (req, res, next) {
 
 router.get("/logout", function (req, res) {
   console.log("logout");
-  // Not sure what / why this res.redirect is not working, but this combo
-  // of the req.logOut and then sending the status of 200 gets insomnia to work
-  // and also returns us to the home page from the website
-  // res.redirect('/');
+  
   req.logOut();
   res.sendStatus(200);
 });
@@ -175,7 +174,7 @@ router.put("/updatePassword", (req, res, next) => {
 });
 
 //   UPDATE a user (salesperson)
-// TODO add with auth
+
 router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await User.update(
@@ -202,28 +201,6 @@ router.put("/:id", async (req, res) => {
     res.status(500).json(err);
   }
 });
-
-//   CREATE a user (salesperson)
-// TODO add with auth
-// router.post('/', async (req, res) => {
-//   try {
-//     const createUser = await User.create({
-//       first_name: req.body.first_name,
-//       last_name: req.body.last_name,
-//       email: req.body.email,
-//       role: 'user',
-//       password: req.body.password,
-//     });
-
-//     if (!createUser) {
-//       res.status(404).json({ message: 'Could not create new user' });
-//       return;
-//     }
-//     res.json(createUser);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 
 
 

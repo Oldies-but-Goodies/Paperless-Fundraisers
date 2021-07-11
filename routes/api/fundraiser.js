@@ -7,6 +7,7 @@ const {
   Order_Details,
   userFundraiser,
 } = require('../../models');
+
 // GET all fundraisers
 router.get('/', async (req, res, next) => {
   console.log('inside');
@@ -42,7 +43,7 @@ router.get('/my', async (req, res, next) => {
 });
 
 // GET a single fundraiser
-// CC Example
+// update fundraiser total sales
 router.get('/:fundraiserId', async (req, res, next) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -71,13 +72,12 @@ router.get('/:fundraiserId', async (req, res, next) => {
       return;
     }
 
-    //  console.log(fundraiserData.dataValues.Orders)
 
     const totalFundraiserSales = fundraiserData.dataValues.Orders.reduce(
       (total, current) => {
         const addition = current.dataValues.Order_Details.reduce(
           (totalForDetails, currentDetail) => {
-            // console.log("currentDetails", currentDetail);
+          
             const qty = currentDetail.dataValues.product_qty;
             const price = parseInt(
               currentDetail.dataValues.Product.dataValues.price
@@ -87,7 +87,7 @@ router.get('/:fundraiserId', async (req, res, next) => {
           },
           0
         );
-        // console.log( "addition", addition)
+      
         return addition + total;
       },
       0
@@ -100,7 +100,7 @@ router.get('/:fundraiserId', async (req, res, next) => {
 });
 
 // CREATE a fundraiser
-// TODO add with auth for admin only
+
 router.post('/', async (req, res, next) => {
   console.log(req.body);
   if (!req.user) {
@@ -115,7 +115,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 // UPDATE a fundraiser
-// TODO add with auth for admin only
+
 router.put('/:id', async (req, res, next) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -145,7 +145,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 // DELETE a fundraiser
-// TODO add with auth for admin
+
 router.delete('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
