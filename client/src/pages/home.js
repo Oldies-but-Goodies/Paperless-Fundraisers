@@ -34,13 +34,6 @@ const Home = (props) => {
       editable: false,
     },
     {
-      dataField: "id",
-      text: "Order ID",
-      sort: true,
-      type: 'number',
-      editable: false,
-    },
-    {
       dataField: "Customer.first_name",
       text: "Customer First Name",
       sort: true,
@@ -62,11 +55,6 @@ const Home = (props) => {
     {
       dataField: 'customer_remit',
       text: 'Customer Paid',
-      sort: true,
-    },
-    {
-      dataField: "customer_remit",
-      text: "Customer Paid",
       sort: true,
     },
     {

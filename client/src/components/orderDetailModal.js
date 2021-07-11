@@ -3,8 +3,26 @@ import axios from "axios";
 import { Modal, Button, Table, Form, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import API from "../lib/API";
+import BootstrapTable from "react-bootstrap-table-next";
+import cellEditFactory from "react-bootstrap-table2-editor";
 
 const OrderDetailModal = ({ orderId, show, onClose }) => {
+
+  const columns = [
+    {
+      dataField: "id",
+      text: "Order ID",
+      type: "number",
+      editable: false,
+    },
+    {
+      dataField: "id",
+      text: "Order ID",
+      type: "number",
+      editable: false,
+    },
+
+]
   const [order, setOrder] = useState(null);
 
   const getOrderDetails = async () => {
