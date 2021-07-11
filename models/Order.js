@@ -7,8 +7,8 @@ class Order extends Model {}
 Order.init(
   {
     order_total: DataTypes.INTEGER,
-    customer_remit: DataTypes.STRING,
-    seller_remit: DataTypes.STRING,
+    customer_remit: DataTypes.BOOLEAN,
+    seller_remit: DataTypes.BOOLEAN,
     order_status: DataTypes.STRING,
   },
   {
@@ -17,6 +17,5 @@ Order.init(
     modelName: 'Order',
   }
 );
-
 
 module.exports = Order;

@@ -4,8 +4,8 @@
     "UserId": 1,
     "FundraiserId": 1000,
     "order_total": 35,
-    "customer_remit": "yes",
-    "seller_remit": "yes",
+    "customer_remit": true,
+    "seller_remit": true,
     "order_status": "delivered"
   },
   {
@@ -13,8 +13,8 @@
     "UserId": 1,
     "FundraiserId": 1000,
     "order_total": 30,
-    "customer_remit": "no",
-    "seller_remit": "no",
+    "customer_remit": false,
+    "seller_remit": false,
     "order_status": "open"
   },
   {
@@ -22,8 +22,8 @@
     "UserId": 1,
     "FundraiserId": 1000,
     "order_total": 50,
-    "customer_remit": "yes",
-    "seller_remit": "no",
+    "customer_remit": true,
+    "seller_remit": false,
     "order_status": "open"
   },
   {
@@ -31,8 +31,8 @@
     "UserId": 1,
     "FundraiserId": 1000,
     "order_total": 30,
-    "customer_remit": "yes",
-    "seller_remit": "yes",
+    "customer_remit": true,
+    "seller_remit": true,
     "order_status": "delivered"
   },
   {
@@ -40,8 +40,8 @@
     "UserId": 1,
     "FundraiserId": 1000,
     "order_total": 20,
-    "customer_remit": "yes",
-    "seller_remit": "no",
+    "customer_remit": true,
+    "seller_remit": false,
     "order_status": "open"
   },
   {
@@ -49,8 +49,8 @@
     "UserId": 1,
     "FundraiserId": 1000,
     "order_total": 100,
-    "customer_remit": "yes",
-    "seller_remit": "yes",
+    "customer_remit": true,
+    "seller_remit": true,
     "order_status": "delivered"
   }
 ]
