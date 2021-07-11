@@ -33,6 +33,7 @@ const Navigation = () => {
 
     axios.get('/api/users').then((response) => {
       if (response.data.user) {
+        console.log('navbar setUser');
         dispatch({ type: SET_USER, user: response.data.user });
       } else {
         dispatch({ type: UNSET_USER });
@@ -54,10 +55,10 @@ const Navigation = () => {
               defaultActiveKey='/home'
               className='container-fluid'
             >
-              <Nav.Link href='/admin' style={{ color: 'white' }}>
+              <Nav.Link as={Link} to='/admin' style={{ color: 'white' }}>
                 Admin
               </Nav.Link>
-              <Nav.Link href='/newOrder' style={{ color: 'white' }}>
+              <Nav.Link as={Link} to='/newOrder' style={{ color: 'white' }}>
                 New Order
               </Nav.Link>
               <NavDropdown
@@ -66,8 +67,10 @@ const Navigation = () => {
                 title={state.user.first_name}
                 id='basic-nav-dropdown'
               >
-                <NavDropdown.Item href='/profile'>Settings</NavDropdown.Item>
-                <NavDropdown.Item href='/changeFundraiser'>
+                <NavDropdown.Item as={Link} to='/profile'>
+                  Settings
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='/changeFundraiser'>
                   Change Fundraiser
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>

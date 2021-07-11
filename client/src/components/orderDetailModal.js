@@ -3,33 +3,77 @@ import axios from "axios";
 import { Modal, Button, Table, Form, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import API from "../lib/API";
+import BootstrapTable from "react-bootstrap-table-next";
+import cellEditFactory from "react-bootstrap-table2-editor";
 
-const AddPersonModal = ({ orderId }) => {
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-
-  const handleShow = () => setShow(true);
-
+const OrderDetailModal = ({ orderId, show, onClose }) => {
   const [order, setOrder] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const columns = [
+    {
+      dataField: "id",
+      text: "Order ID",
+      type: "number",
+      editable: false,
+    },
+    {
+      dataField: "createdAt",
+      text: "Date of Sale",
+      type: "date",
+      editable: false,
+    },
+    {
+      dataField: "Product.name",
+      text: "Product",
+      type: "string",
+      editable: false,
+    },
+    {
+      dataField: "product_qty",
+      text: "Quantity",
+      type: "number",
+      editable: true,
+    },
+  ];
 
   const getOrderDetails = async () => {
     const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
+    console.log(orderDetailsData.data)
     setOrder(orderDetailsData.data);
-    console.log(orderDetailsData.data);
+  };
+
+  const handleCellEdit = async (oldValue, newValue, row, column) => {
+    console.log(row)
+    const updateBodyObj = {
+      product_qty: row.product_qty
+    };
+    setErrorMsg(null);
+
+    try {
+      const myOrderData = await API.OrderDetails.updateOrderDetails(
+        row.id,
+        updateBodyObj
+      );
+
+      setErrorMsg("Order Updated");
+
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 3000);
+    } catch (err) {
+      setErrorMsg(err.message);
+    }
   };
 
   useEffect(() => {
-    getOrderDetails();
-  }, []);
+    if (orderId) getOrderDetails();
+  }, [orderId]);
 
   return (
     <>
-      <Button variant='primary' className='my-2' onClick={handleShow}>
-        View Orders
-      </Button>
-
-      <Modal size='lg' show={show} onHide={handleClose}>
+      <Modal size='lg' show={show} onHide={onClose}>
         <Modal.Header
           style={{ background: `linear-gradient(${"#007bff"}, ${"#002853"})` }}
         >
@@ -37,7 +81,7 @@ const AddPersonModal = ({ orderId }) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <div className="text-center font-weight-bold">Customer Info </div>
+            <div className='text-center font-weight-bold'>Customer Info </div>
             <Form.Group as={Row} controlId='formPlaintextEmail'>
               {/* <Form.Label column sm='2'>
                 Customer
@@ -46,7 +90,10 @@ const AddPersonModal = ({ orderId }) => {
                 <Form.Control
                   plaintext
                   readOnly
-                  defaultValue={order && order.Customer.first_name + " " + order.Customer.last_name}
+                  defaultValue={
+                    order &&
+                    order.Customer.first_name + " " + order.Customer.last_name
+                  }
                 />
               </Col>
               {/* <Form.Label column sm='2'>
@@ -65,7 +112,7 @@ const AddPersonModal = ({ orderId }) => {
                   readOnly
                   defaultValue={order && order.Customer.phone_number}
                 />
-                </Col>
+              </Col>
             </Form.Group>
 
             <Form.Group as={Row} controlId='formPlaintextPassword'>
@@ -73,14 +120,28 @@ const AddPersonModal = ({ orderId }) => {
                 Password
               </Form.Label> */}
               <Col sm='5'>
-                <Form.Control 
-                plaintext
-                readOnly
-                defaultValue={order && order.Customer.address_line1 + " " + order.Customer.address_line2} />
-                <Form.Control 
-                plaintext
-                readOnly
-                defaultValue={order && order.Customer.city + ", " + order.Customer.state + " " + order.Customer.zip_code} />
+                <Form.Control
+                  plaintext
+                  readOnly
+                  defaultValue={
+                    order &&
+                    order.Customer.address_line1 +
+                      " " +
+                      order.Customer.address_line2
+                  }
+                />
+                <Form.Control
+                  plaintext
+                  readOnly
+                  defaultValue={
+                    order &&
+                    order.Customer.city +
+                      ", " +
+                      order.Customer.state +
+                      " " +
+                      order.Customer.zip_code
+                  }
+                />
               </Col>
               <Form.Label column sm='2'>
                 Order Total
@@ -94,7 +155,32 @@ const AddPersonModal = ({ orderId }) => {
               </Col>
             </Form.Group>
           </Form>
-          <Table striped bordered hover>
+          {order &&
+            <BootstrapTable
+              keyField='id'
+              data={order.Order_Details}
+              columns={columns}
+              // expandRow={ expandRow }
+              // rowEvents={rowEvents}
+              // defaultSorted={defaultSorted}
+              noDataIndication='No products defined'
+              cellEdit={cellEditFactory({
+                mode: "click",
+                afterSaveCell: (oldValue, newValue, row, column) => {
+                  handleCellEdit(oldValue, newValue, row, column);
+                },
+              })}
+              // afterSaveCell={cellEdit.afterSaveCell()}
+              // filter={filterFactory()}
+              striped
+              hover
+              condensed
+              bootstrap4
+              blurToSave
+            />
+          }
+
+          {/* <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Order Number</th>
@@ -117,19 +203,16 @@ const AddPersonModal = ({ orderId }) => {
                         " x " +
                         orderDetail.product_qty}
                     </td>
-                    {/* <td>${orderDetail.Order.Customer.first_name + " " + orderDetail.Order.Customer.last_name}</td>
-            <td>{orderDetail.Order.Customer.address_line1 + " " + orderDetail.Order.Customer.address2 + " " 
-                + orderDetail.Order.Customer.city + " , " + orderDetail.Order.Customer.state + " "
-                + orderDetail.Order.Customer.zip_code}</td> */}
+                   
                     <td>{order.customer_remit}</td>
                     <td>{order.seller_remit}</td>
                   </tr>
                 ))}
             </tbody>
-          </Table>
+          </Table> */}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
+          <Button variant='secondary' onClick={onClose}>
             Close
           </Button>
           {/* <Button variant='primary' onClick={handleSubmit}>
@@ -140,4 +223,4 @@ const AddPersonModal = ({ orderId }) => {
     </>
   );
 };
-export default AddPersonModal;
+export default OrderDetailModal;

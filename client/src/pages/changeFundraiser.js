@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 // import AddFundraiserModal from './addFundraiserModal';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
@@ -9,6 +10,7 @@ import { SET_FUNDRAISERS } from '../store/actions';
 
 const ChangeFundraiser = () => {
   const [state, dispatch] = useStoreContext();
+  const history = useHistory();
 
   const [fundraisers, setFundraisers] = useState([]);
   const [toggleRender, setToggleRender] = useState(false);
@@ -16,7 +18,9 @@ const ChangeFundraiser = () => {
 
   // react-bootstrap-table-next - lets setup our columns here
 
-  console.log('the current selected fundraiser is ' + state.currentFundraiser);
+  console.log(
+    'the current selected fundraiser is ' + state.currentFundraiser.id
+  );
 
   const columns = [
     {
@@ -87,13 +91,13 @@ const ChangeFundraiser = () => {
     },
   ];
 
-  const getFundraiserData = async () => {
-    const fundraiserData = await API.Fundraisers.getFundraisers();
-    setFundraisers(fundraiserData.data);
+  const getMyFundraiserData = async () => {
+    const fundraiserData = await API.Fundraisers.getMyFundraisers();
+    setFundraisers(fundraiserData.data.Fundraisers);
   };
 
   useEffect(() => {
-    getFundraiserData();
+    getMyFundraiserData();
   }, [toggleRender]);
 
   const rowEvents = {
@@ -101,36 +105,17 @@ const ChangeFundraiser = () => {
       console.log(`clicked on row with index: ${rowIndex}`);
       console.table(row);
       console.log('switching to fundraiser ' + row.id);
-      dispatch({ type: SET_FUNDRAISERS, fundraiser: row.id });
+      const fundraiserObj = {
+        id: row.id,
+        adminLevel: row.userFundraiser.admin_level,
+      };
 
+      dispatch({ type: SET_FUNDRAISERS, fundraiser: fundraiserObj });
+      console.log(state.currentFundraiser);
+      history.push('/');
       //   state.currentFundraiser
     },
   };
-
-  const handleCellEdit = async (oldValue, newValue, row, column) => {
-    const fundraiserObj = {
-      id: row.id,
-      name: row.name,
-      description: row.description,
-      goal: row.goal,
-      start: row.start,
-      end: row.end,
-    };
-    setErrorMsg(null);
-
-    try {
-      const productData = await API.Fundraisers.updateFundraiser(fundraiserObj);
-      setErrorMsg('Fundraiser Updated');
-
-      setTimeout(() => {
-        setErrorMsg(null);
-      }, 3000);
-    } catch (err) {
-      setErrorMsg(err.message);
-    }
-  };
-
-  //
 
   // setToggleRender(!toggleRender);
 

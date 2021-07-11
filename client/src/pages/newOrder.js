@@ -27,7 +27,7 @@ const NewOrder = (props) => {
 
   const getProductData = async () => {
     const productData = await API.Products.getAllForFundraiser(
-      state.currentFundraiser
+      state.currentFundraiser.id
     );
     console.log(productData);
     setProducts(productData.data);
@@ -81,7 +81,7 @@ const NewOrder = (props) => {
       },
       productsObj: quanities,
       orderObj: {
-        FundraiserId: state.currentFundraiser,
+        FundraiserId: state.currentFundraiser.id,
         CustomerId: 1,
         UserId: state.user.id,
         order_total: 10,

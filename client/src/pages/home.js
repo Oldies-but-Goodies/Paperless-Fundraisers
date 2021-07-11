@@ -34,15 +34,8 @@ const Home = (props) => {
       editable: false,
     },
     {
-      dataField: 'id',
-      text: 'Order ID',
-      sort: true,
-      type: 'number',
-      editable: false,
-    },
-    {
-      dataField: 'Customer.first_name',
-      text: 'Customer First Name',
+      dataField: "Customer.first_name",
+      text: "Customer First Name",
       sort: true,
       editable: false,
     },
@@ -65,36 +58,18 @@ const Home = (props) => {
       sort: true,
     },
     {
-      dataField: 'seller_remit',
-      text: 'Admin Paid',
+      dataField: "seller_remit",
+      text: "Admin Paid",
       sort: true,
       editable: false,
     },
   ];
 
-  const subColumns = [
-    {
-      dataField: 'Customer.first_name',
-      text: 'Customer First Name',
-      sort: true,
-    },
-    {
-      dataField: 'Customer.last_name',
-      text: 'Customer Last Name',
-      sort: true,
-    },
-    // {
-    //   dataField: 'Order_Details.Product.name',
-    //   text: 'Product',
-    //   sort: true
-    // },
-  ];
-
-  const getCurrentundraiser = async () => {
+  const getCurrentFundraiser = async () => {
     const fundraiserData = await API.Fundraisers.getCurrentFundraiser(
-      state.currentFundraiser
+      state.currentFundraiser.id
     );
-    // console.log(fundraiserData);
+    console.log('fundraiserData XXXXX ', fundraiserData);
     setFundraiser(fundraiserData.data.fundraiserData);
     setTotalFundraiserSales(fundraiserData.data.totalFundraiserSales);
   };
@@ -104,8 +79,6 @@ const Home = (props) => {
     console.log(myOrderData);
     setOrders(myOrderData.data);
   };
-
-  // let orderId = state.id;
 
   const handleCellEdit = async (oldValue, newValue, row, column) => {
     const updateBodyObj = {
@@ -119,15 +92,11 @@ const Home = (props) => {
     setErrorMsg(null);
 
     try {
-      // const updateOrders = async () => {
-
       const myOrderData = await API.Orders.updateOrder(
         updateBodyObj.id,
         updateBodyObj
       );
-      console.log(updateBodyObj);
-      // setOrders(myOrderData.data)
-      // }
+
       setErrorMsg('Order Updated');
 
       setTimeout(() => {
@@ -138,43 +107,34 @@ const Home = (props) => {
     }
   };
 
-  const getOrderDetails = async () => {
-    const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
-    // let orderId=order.id
-    setOrder(orderDetailsData.data);
-    console.log(orderDetailsData.data);
-  };
+  // const getOrderDetails = async () => {
+  //   const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
+  //   // let orderId=order.id
+  //   setOrder(orderDetailsData.data);
+  //   console.log(orderDetailsData.data);
+  // };
 
   useEffect(() => {
-    getCurrentundraiser();
+    getCurrentFundraiser();
     myOrders();
   }, []);
-  const handleRowClick = async (i) => {
-    setShowEdit(true);
-    setOrderIndex(i);
-    // <OrderDetailModal />
+
+  const rowEvents = {
+    onClick: (e, row, rowIndex) => {
+      console.log(row, rowIndex);
+      setOrder(row);
+      setShowEdit(true);
+    },
   };
-
-  // const rowEvents = {
-  //   onClick: (e, row, ) => {
-  //     <OrderDetailModal
-  //                   orderId={order.id}
-  //                 />;
-  //   },
-
-  // const expandRow = {
-  //   renderer: row => (
-  //     <BootstrapTable
-  //     keyField='id'
-  //     data={orders}
-  //     columns={subColumns}
-  //     />
-
-  //   )
-  // };
 
   return (
     <Container fluid className='homeContainer'>
+      <OrderDetailModal
+        orderId={order ? order.id : null}
+        show={showEdit}
+        onClose={() => setShowEdit(false)}
+      />
+
       <div className='row my-2  text-center'>
         <h2 className='col'>Welcome to {fundraiser.name} Fundraiser </h2>
       </div>
@@ -187,13 +147,12 @@ const Home = (props) => {
           {totalFundraiserSales}
         </h5>
       </div>
-
       <BootstrapTable
         keyField='id'
         data={orders}
         columns={columns}
         // expandRow={ expandRow }
-        // rowEvents={ rowEvents}
+        rowEvents={rowEvents}
         // defaultSorted={defaultSorted}
         noDataIndication='No products defined'
         cellEdit={cellEditFactory({
@@ -210,38 +169,7 @@ const Home = (props) => {
         bootstrap4
         blurToSave
       />
-
-      {/* table only shows if user is non-Admin */}
-      {/* <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Customer Name </th>
-            <th>Total Sale </th>
-            <th>Customer Paid</th>
-            <th>Admin Paid</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr>
-
-              <td>{order.id}</td>
-              <td>{order.Customer.first_name + " " + order.Customer.last_name}</td>
-              <td>${order.order_total}</td>
-              <td>{order.customer_remit}</td>
-              <td>{order.seller_remit}</td>
-              <td>
-                <OrderDetailModal
-                  orderId={order.id}
-                />
-                </td>
-          </tr>
-          ))}
-          
-           
-          </tbody>
-      </Table> */}
+      
     </Container>
   );
 };

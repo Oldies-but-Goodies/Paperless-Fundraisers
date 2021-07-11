@@ -89,7 +89,7 @@ const Products2Tab = () => {
 
   const getProductData = async () => {
     const productData = await API.Products.getAdminAllForFundraiser(
-      state.currentFundraiser
+      state.currentFundraiser.id
     );
     setProducts(productData.data);
   };
@@ -109,7 +109,7 @@ const Products2Tab = () => {
       description: row.description,
       price: row.price,
       active: row.active,
-      FundraiserId: state.currentFundraiser,
+      FundraiserId: state.currentFundraiser.id,
     };
     setErrorMsg(null);
 

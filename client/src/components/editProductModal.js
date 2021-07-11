@@ -37,7 +37,7 @@ const EditProductModal = ({
       description,
       price,
       active,
-      FundraiserId: state.currentFundraiser,
+      FundraiserId: state.currentFundraiser.id,
     };
     setErrorMsg(null);
     console.log('here is the productObj');
