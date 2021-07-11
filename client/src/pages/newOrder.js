@@ -27,7 +27,7 @@ const NewOrder = (props) => {
 
   const getProductData = async () => {
     const productData = await API.Products.getAllForFundraiser(
-      state.currentFundraiser
+      state.currentFundraiser.id
     );
     console.log(productData);
     setProducts(productData.data);
