@@ -77,8 +77,8 @@ export default {
     orderDetails: function (orderId) {
       return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId);
     },
-    updateOrderDetails: function (orderId) {
-      return axios.put('/api.orderDetails/' + orderId)
+    updateOrderDetails: function (orderId, updateBodyObj) {
+      return axios.put('/api/orderDetails/' + orderId, updateBodyObj)
     }
   },
 

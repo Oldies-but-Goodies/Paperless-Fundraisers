@@ -10,7 +10,7 @@ import cellEditFactory from "react-bootstrap-table2-editor";
 const OrderDetailModal = ({ orderId, show, onClose }) => {
   const [order, setOrder] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  
+
   const columns = [
     {
       dataField: "id",
@@ -22,7 +22,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
       dataField: "createdAt",
       text: "Date of Sale",
       type: "date",
-      editable: true,
+      editable: false,
     },
     {
       dataField: "Product.name",
@@ -31,7 +31,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
       editable: false,
     },
     {
-      dataField: "Product.qty",
+      dataField: "product_qty",
       text: "Quantity",
       type: "number",
       editable: true,
@@ -40,24 +40,20 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
 
   const getOrderDetails = async () => {
     const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
+    console.log(orderDetailsData.data)
     setOrder(orderDetailsData.data);
-    console.log(orderDetailsData.data);
   };
 
   const handleCellEdit = async (oldValue, newValue, row, column) => {
+    console.log(row)
     const updateBodyObj = {
-      id: row.id,
-      createdAt: row.createdAt,
-      // last_name: row.Customer.last_name,
-      // order_total: row.order_total,
-      // customer_remit: row.customer_remit,
-      // seller_remit: row.seller_remit,
+      product_qty: row.product_qty
     };
     setErrorMsg(null);
 
     try {
       const myOrderData = await API.OrderDetails.updateOrderDetails(
-        updateBodyObj.id,
+        row.id,
         updateBodyObj
       );
 
@@ -159,28 +155,31 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
               </Col>
             </Form.Group>
           </Form>
-          <BootstrapTable
-            keyField='id'
-            data={order}
-            columns={columns}
-            // expandRow={ expandRow }
-            // rowEvents={rowEvents}
-            // defaultSorted={defaultSorted}
-            noDataIndication='No products defined'
-            cellEdit={cellEditFactory({
-              mode: "click",
-              afterSaveCell: (oldValue, newValue, row, column) => {
-                handleCellEdit(oldValue, newValue, row, column);
-              },
-            })}
-            // afterSaveCell={cellEdit.afterSaveCell()}
-            // filter={filterFactory()}
-            striped
-            hover
-            condensed
-            bootstrap4
-            blurToSave
-          />
+          {order &&
+            <BootstrapTable
+              keyField='id'
+              data={order.Order_Details}
+              columns={columns}
+              // expandRow={ expandRow }
+              // rowEvents={rowEvents}
+              // defaultSorted={defaultSorted}
+              noDataIndication='No products defined'
+              cellEdit={cellEditFactory({
+                mode: "click",
+                afterSaveCell: (oldValue, newValue, row, column) => {
+                  handleCellEdit(oldValue, newValue, row, column);
+                },
+              })}
+              // afterSaveCell={cellEdit.afterSaveCell()}
+              // filter={filterFactory()}
+              striped
+              hover
+              condensed
+              bootstrap4
+              blurToSave
+            />
+          }
+
           {/* <Table striped bordered hover>
             <thead>
               <tr>

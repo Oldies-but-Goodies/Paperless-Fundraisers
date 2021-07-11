@@ -130,7 +130,7 @@ const Home = (props) => {
   return (
     <Container fluid className='homeContainer'>
       <OrderDetailModal
-        orderId={order ? order.id : ""}
+        orderId={order ? order.id : null}
         show={showEdit}
         onClose={() => setShowEdit(false)}
       />

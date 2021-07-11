@@ -97,13 +97,7 @@ router.put("/:id", async (req, res) => {
   }
   try {
     const updatedOrderDetails = await Order_Details.update(
-      {
-        order_id: req.body.order_id,
-        product_id: req.body.product_id,
-        product_qty: req.body.product_qty,
-        line_total: req.body.line_total,
-        
-      },
+      req.body,
       {
         where: {
           id: req.params.id,
