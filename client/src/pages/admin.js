@@ -36,7 +36,7 @@ const Admin = (props) => {
         <p>
           As an admin for your fundraiser, you have the ability to make updates
           to your fundraiser products, orders, etc. Here is a list of a few
-          things you can do to make your fundraiser successfull.
+          things you can do to make your fundraiser successful.
           <ul>
             <li>Add New Sales People</li>
             <li>Add/Edit Fundraiser Products</li>

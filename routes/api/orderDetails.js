@@ -15,12 +15,11 @@ router.get("/", async (req, res) => {
 });
 
 // get all order details for a given order id
-//
 router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
-  // console.log(req);
+  
   try {
     const orderDetails = await Order.findOne({
       where: {
@@ -48,7 +47,6 @@ router.get("/:id", async (req, res) => {
   try {
     const orderDetails = await Order_Details.findByPk(req.params.id, {
       
-      //   include: [{ model: Order, through: Order_Details, as: 'order_details' }]
     });
 
     if (!orderDetails) {
@@ -63,7 +61,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // CREATE  order detail
-// TODO add with auth
+
 router.post("/", async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -90,7 +88,7 @@ router.post("/", async (req, res) => {
 });
 
 //   UPDATE an order detail
-// TODO add with auth
+
 router.put("/:id", async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -116,7 +114,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE an order details
-// TODO add with auth
+
 router.delete("/:id", async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });

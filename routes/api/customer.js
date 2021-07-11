@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
 });
 
 // CREATE a customer
-// TODO add with auth
+
 router.post('/',  async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
@@ -52,7 +52,7 @@ router.post('/',  async (req, res) => {
   });
 
 //   UPDATE a customer
-// TODO add with auth
+
   router.put('/:id',  async (req, res) => {
     if (!req.user) {
       return res.json({ status: 'error', message: 'not logged in' });
@@ -87,7 +87,7 @@ router.post('/',  async (req, res) => {
     }
   });
   // DELETE a customer
-  // TODO add with auth
+  
   router.delete('/:id',  async (req, res) => {
     if (!req.user) {
       return res.json({ status: 'error', message: 'not logged in' });

@@ -1,8 +1,7 @@
 const router = require('express').Router();
-// const withAuth = require("../../utilities/authUtils");
 const email = require('../../utilities/email');
 
-// TODO add withAuth
+
 router.post('/', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
