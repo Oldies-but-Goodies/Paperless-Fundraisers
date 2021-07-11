@@ -24,6 +24,7 @@ const App = () => {
 
     axios.get('/api/users').then((response) => {
       if (response.data.user) {
+        console.log('app setUser');
         dispatch({ type: SET_USER, user: response.data.user });
       } else {
         dispatch({ type: UNSET_USER });
@@ -39,9 +40,6 @@ const App = () => {
           <Navigation />
           <Switch>
             <Route exact path='/' component={Home} />
-            <Route exact path='/admin'>
-              <Admin />
-            </Route>
             <Route exact path='/newOrder'>
               <NewOrder />
             </Route>
@@ -50,6 +48,13 @@ const App = () => {
             </Route>
             <Route exact path='/changeFundraiser'>
               <ChangeFundraiser />
+            </Route>
+            <Route exact path='/admin'>
+              {state.currentFundraiser.adminLevel === 'admin' ? (
+                <Admin />
+              ) : (
+                <Home />
+              )}
             </Route>
           </Switch>
         </div>
