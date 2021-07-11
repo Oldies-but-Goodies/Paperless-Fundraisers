@@ -73,18 +73,20 @@ const Login = () => {
       alt="Second slide"
     />
   </Carousel.Item>
-  {/* <Carousel.Item>
+  <Carousel.Item className="img">
     <img
-      className="d-block w-100"
-      src="holder.js/800x400?text=Third slide&bg=20232a"
-      alt="Third slide"
+      className="d-block w-100 "
+      src="./images/image3.png"
+      alt="Second slide"
     />
-
-    <Carousel.Caption>
-      <h3>Third slide label</h3>
-      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-    </Carousel.Caption>
-  </Carousel.Item>  */}
+  </Carousel.Item>
+  <Carousel.Item className="img">
+    <img
+      className="d-block w-100 "
+      src="./images/image4.png"
+      alt="Second slide"
+    />
+  </Carousel.Item>
 </Carousel>
     
     <div className=" col text-center">

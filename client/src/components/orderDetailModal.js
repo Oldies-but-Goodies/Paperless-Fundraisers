@@ -4,7 +4,7 @@ import { Modal, Button, Table, Form, Col, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import API from "../lib/API";
 import BootstrapTable from "react-bootstrap-table-next";
-import cellEditFactory from "react-bootstrap-table2-editor";
+import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 
 
 const OrderDetailModal = ({ orderId, show, onClose }) => {
@@ -23,6 +23,19 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
       text: "Date of Sale",
       type: "date",
       editable: false,
+      formatter: (cell) => {
+        let dateObj = cell;
+        if (typeof cell !== 'object') {
+          dateObj = new Date(cell);
+        }
+        return `${('0' + dateObj.getUTCDate()).slice(-2)}/${(
+          '0' +
+          (dateObj.getUTCMonth() + 1)
+        ).slice(-2)}/${dateObj.getUTCFullYear()}`;
+      },
+      editor: {
+        type: Type.DATE,
+      },
     },
     {
       dataField: "Product.name",
@@ -83,9 +96,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
           <Form>
             <div className='text-center font-weight-bold'>Customer Info </div>
             <Form.Group as={Row} controlId='formPlaintextEmail'>
-              {/* <Form.Label column sm='2'>
-                Customer
-              </Form.Label> */}
+              
               <Col sm='3'>
                 <Form.Control
                   plaintext
@@ -96,9 +107,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
                   }
                 />
               </Col>
-              {/* <Form.Label column sm='2'>
-                Email
-              </Form.Label> */}
+              
               <Col sm='3'>
                 <Form.Control
                   plaintext
@@ -116,9 +125,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
             </Form.Group>
 
             <Form.Group as={Row} controlId='formPlaintextPassword'>
-              {/* <Form.Label column sm='2'>
-                Password
-              </Form.Label> */}
+              
               <Col sm='5'>
                 <Form.Control
                   plaintext
@@ -160,7 +167,6 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
               keyField='id'
               data={order.Order_Details}
               columns={columns}
-              // expandRow={ expandRow }
               // rowEvents={rowEvents}
               // defaultSorted={defaultSorted}
               noDataIndication='No products defined'
@@ -179,45 +185,11 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
               blurToSave
             />
           }
-
-          {/* <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Order Number</th>
-                <th>Date of Sale</th>
-                <th>Product</th>
-                <th>Customer Paid</th>
-                <th>Admin Paid</th>
-              </tr>
-            </thead>
-            <tbody>
-              {order &&
-                order.Order_Details.map((orderDetail) => (
-                  <tr>
-                    <td>{orderDetail.OrderId}</td>
-                    <td>
-                      {new Date(orderDetail.createdAt).toLocaleDateString()}
-                    </td>
-                    <td>
-                      {orderDetail.Product.name +
-                        " x " +
-                        orderDetail.product_qty}
-                    </td>
-                   
-                    <td>{order.customer_remit}</td>
-                    <td>{order.seller_remit}</td>
-                  </tr>
-                ))}
-            </tbody>
-          </Table> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={onClose}>
             Close
           </Button>
-          {/* <Button variant='primary' onClick={handleSubmit}>
-            Save Changes
-          </Button> */}
         </Modal.Footer>
       </Modal>
     </>

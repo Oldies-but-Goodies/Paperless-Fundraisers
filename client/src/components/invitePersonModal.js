@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import API from '../lib/API';
@@ -34,7 +33,6 @@ const InvitePersonModal = () => {
       emailBody: "you've been invited",
     })
       .then((response) => {
-        // setToggleRender(!toggleRender);
 
         console.log('RESPONSE', response);
         if (response.data.status === 'error') {
@@ -92,4 +90,3 @@ const InvitePersonModal = () => {
   );
 };
 export default InvitePersonModal;
-//   render(<addPersonModal/>);

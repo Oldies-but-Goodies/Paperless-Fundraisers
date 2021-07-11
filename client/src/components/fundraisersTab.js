@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container } from 'react-bootstrap';
+import {  Container } from 'react-bootstrap';
 import AddFundraiserModal from './addFundraiserModal';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
@@ -13,7 +13,6 @@ const FundraisersTab = () => {
   const [toggleRender, setToggleRender] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // react-bootstrap-table-next - lets setup our columns here
 
   const columns = [
     {
@@ -116,7 +115,7 @@ const FundraisersTab = () => {
     }
   };
 
-  // setToggleRender(!toggleRender);
+  
 
   return (
     <Container>

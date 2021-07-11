@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useStoreContext } from '../store/store';
 import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
 import { LOADING, SET_USER, UNSET_USER } from '../store/actions';
-import { isNil } from 'lodash';
+
 
 const Navigation = () => {
   const [state, dispatch] = useStoreContext();

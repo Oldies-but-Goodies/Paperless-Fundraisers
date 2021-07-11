@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Table, Button, Form } from 'react-bootstrap';
-// import { Container, Table } from "react-bootstrap"
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 
-// let rowSubTotal = document.getElementById("row-subtotal")
 
 const NewOrder = (props) => {
   const [state, dispatch] = useStoreContext();
@@ -60,7 +58,6 @@ const NewOrder = (props) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // setQuantities({ ...quanities, [productId]: value });
     setFormData({ ...formData, [name]: value });
 
     setcustomer_remit();
@@ -95,19 +92,13 @@ const NewOrder = (props) => {
           return;
         }
         setErrorMsg(null);
-        // history.replace("/admin");
       })
       .catch((error) => {
         console.log('ERROR', error);
         setErrorMsg(error);
       });
-    // return orderData
     window.location.reload();
   };
-
-  // useEffect(() => {
-  //   console.log(quanities);
-  // }, [quanities]);
 
   useEffect(() => {
     getProductData();
@@ -118,7 +109,6 @@ const NewOrder = (props) => {
       <h1>New Order</h1>
       <div className='border border-dark py-4'>
         <div className='form-group row'>
-          {/* <label htmlFor="first_name" className="col-sm-2 sr-only">First Name</label> */}
           <div className='col-sm-5 ml-2'>
             <input
               type='text'
@@ -130,7 +120,6 @@ const NewOrder = (props) => {
               onChange={handleChange}
             ></input>
           </div>
-          {/* <label for="product_name" className="col-sm-2 col-form-label">Last Name</label> */}
           <div className='col-sm-5 mr-2'>
             <input
               type='text'

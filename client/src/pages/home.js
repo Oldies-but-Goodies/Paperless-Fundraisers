@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import "bootstrap/dist/css/bootstrap.min.css";
-import { Container, Table } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 import OrderDetailModal from '../components/orderDetailModal';
@@ -18,11 +17,6 @@ const Home = (props) => {
   const [order, setOrder] = useState(null);
 
   const [showEdit, setShowEdit] = useState(false);
-  const [showAdd, setShowAdd] = useState(false);
-  const [toggleRender, setToggleRender] = useState(false);
-
-  const [orderIndex, setOrderIndex] = useState(0);
-
   const [errorMsg, setErrorMsg] = useState(null);
 
   const columns = [
@@ -107,20 +101,16 @@ const Home = (props) => {
     }
   };
 
-  // const getOrderDetails = async () => {
-  //   const orderDetailsData = await API.OrderDetails.orderDetails(state.id);
-  //   // let orderId=order.id
-  //   setOrder(orderDetailsData.data);
-  //   console.log(orderDetailsData.data);
-  // };
+  
 
   useEffect(() => {
     getCurrentFundraiser();
     myOrders();
   }, []);
 
+
   const rowEvents = {
-    onClick: (e, row, rowIndex) => {
+    onDoubleClick: (e, row, rowIndex) => {
       console.log(row, rowIndex);
       setOrder(row);
       setShowEdit(true);
@@ -151,7 +141,6 @@ const Home = (props) => {
         keyField='id'
         data={orders}
         columns={columns}
-        // expandRow={ expandRow }
         rowEvents={rowEvents}
         // defaultSorted={defaultSorted}
         noDataIndication='No products defined'

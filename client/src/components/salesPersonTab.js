@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Button } from 'react-bootstrap';
+import { Table, Container } from 'react-bootstrap';
 import API from '../lib/API';
 import AddPersonModal from './addPersonModal';
 import InvitePersonModal from './invitePersonModal';
