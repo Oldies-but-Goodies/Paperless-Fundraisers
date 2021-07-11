@@ -34,15 +34,8 @@ const Home = (props) => {
       editable: false,
     },
     {
-      dataField: 'id',
-      text: 'Order ID',
-      sort: true,
-      type: 'number',
-      editable: false,
-    },
-    {
-      dataField: 'Customer.first_name',
-      text: 'Customer First Name',
+      dataField: "Customer.first_name",
+      text: "Customer First Name",
       sort: true,
       editable: false,
     },
@@ -65,13 +58,8 @@ const Home = (props) => {
       sort: true,
     },
     {
-      dataField: 'customer_remit',
-      text: 'Customer Paid',
-      sort: true,
-    },
-    {
-      dataField: 'seller_remit',
-      text: 'Admin Paid',
+      dataField: "seller_remit",
+      text: "Admin Paid",
       sort: true,
       editable: false,
     },
@@ -142,7 +130,7 @@ const Home = (props) => {
   return (
     <Container fluid className='homeContainer'>
       <OrderDetailModal
-        orderId={order ? order.id : ''}
+        orderId={order ? order.id : null}
         show={showEdit}
         onClose={() => setShowEdit(false)}
       />
@@ -181,37 +169,7 @@ const Home = (props) => {
         bootstrap4
         blurToSave
       />
-      {/* table only shows if user is non-Admin */}
-      {/* <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Customer Name </th>
-            <th>Total Sale </th>
-            <th>Customer Paid</th>
-            <th>Admin Paid</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr>
-
-              <td>{order.id}</td>
-              <td>{order.Customer.first_name + " " + order.Customer.last_name}</td>
-              <td>${order.order_total}</td>
-              <td>{order.customer_remit}</td>
-              <td>{order.seller_remit}</td>
-              <td>
-                <OrderDetailModal
-                  orderId={order.id}
-                />
-                </td>
-          </tr>
-          ))}
-          
-           
-          </tbody>
-      </Table> */}
+      
     </Container>
   );
 };
