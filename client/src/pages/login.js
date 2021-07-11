@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { Container, Carousel, Jumbotron } from 'react-bootstrap';
 import { LOADING, SET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
+
 // import { Link } from 'react-router';
 const Login = () => {
   const [, /* state */ dispatch] = useStoreContext();
@@ -12,6 +14,8 @@ const Login = () => {
     email: '',
     password: '',
   });
+
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -48,7 +52,44 @@ const Login = () => {
   };
 
   return (
-    <div className="text-center">
+    <div>
+    <Jumbotron className="text-center jumbo">
+      <div> Paperless Fundraisers</div>
+    </Jumbotron>
+    <Container fluid className="loginContainer">
+    <div className="row align-items-center">
+    <Carousel fade className="col-6 my-3">
+  <Carousel.Item>
+    <img
+      className="img d-block w-100"
+      src="./images/image1.png"
+      alt="First slide"
+    />
+  </Carousel.Item>
+  <Carousel.Item className="img">
+    <img
+      className="d-block w-100 "
+      src="./images/image2.png"
+      alt="Second slide"
+    />
+  </Carousel.Item>
+  <Carousel.Item className="img">
+    <img
+      className="d-block w-100 "
+      src="./images/image3.png"
+      alt="Second slide"
+    />
+  </Carousel.Item>
+  <Carousel.Item className="img">
+    <img
+      className="d-block w-100 "
+      src="./images/image4.png"
+      alt="Second slide"
+    />
+  </Carousel.Item>
+</Carousel>
+    
+    <div className=" col text-center">
       <h4>Login</h4>
       {errorMsg ? 
       <p>
@@ -86,6 +127,11 @@ const Login = () => {
       </form>
       <h5>Not yet a user, click <Link
       to="/signUp">here </Link> to signup</h5>
+    
+    </div>
+    </div>
+    <div className="text-right">Icons made by <a href="https://www.flaticon.com/authors/smalllikeart" title="smalllikeart">smalllikeart</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+    </Container>
     </div>
   );
 };

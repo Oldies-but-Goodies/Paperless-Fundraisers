@@ -32,7 +32,7 @@ const AddProductModal = ({
       description,
       price,
       active,
-      FundraiserId: state.currentFundraiser,
+      FundraiserId: state.currentFundraiser.id,
     };
     setErrorMsg(null);
 
@@ -53,8 +53,6 @@ const AddProductModal = ({
       console.log(err);
       setErrorMsg(err.message);
     }
-
-    // setProducts(productData.data);
   };
 
   return (
@@ -73,7 +71,7 @@ const AddProductModal = ({
             </label>
             <input
               type='string'
-              id='inputProdcut'
+              id='inputProduct'
               className='form-control mt-1'
               name='product_name'
               placeholder='Product Name'
@@ -123,4 +121,4 @@ const AddProductModal = ({
   );
 };
 export default AddProductModal;
-//   render(<addPersonModal/>);
+

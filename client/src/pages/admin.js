@@ -1,10 +1,10 @@
-import React, { Component, useState } from 'react';
-// import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from 'react';
 import AdminNav from '../components/adminNav';
 import { Container } from 'react-bootstrap';
 import SalesPersonTab from '../components/salesPersonTab';
 import OrdersTab from '../components/ordersTab';
 import ProductsTab from '../components/productsTab';
+import Products2Tab from '../components/products2Tab';
 import FundraisersTab from '../components/fundraisersTab';
 
 const Admin = (props) => {
@@ -12,17 +12,20 @@ const Admin = (props) => {
 
   const renderActiveTab = () => {
     switch (activeTab) {
-      case "SALES_PERSON": 
-       return <SalesPersonTab></SalesPersonTab>;
-       break;
+      case 'SALES_PERSON':
+        return <SalesPersonTab></SalesPersonTab>;
+        break;
 
-      case "ORDERS":
+      case 'ORDERS':
         return <OrdersTab></OrdersTab>;
 
-      case "PRODUCTS":
+      case 'PRODUCTS':
         return <ProductsTab></ProductsTab>;
 
-      case "FUNDRAISERS":
+      case 'PRODUCTS2':
+        return <Products2Tab></Products2Tab>;
+
+      case 'FUNDRAISERS':
         return <FundraisersTab></FundraisersTab>;
     }
   };
@@ -43,29 +46,7 @@ const Admin = (props) => {
         </p>
       </div>
       <AdminNav activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div>
-        {renderActiveTab()}
-        {/* {activeTab === "SALES_PERSON" ?
-          <SalesPersonTab>
-            
-          </SalesPersonTab> : activeTab === "PRODUCTS" ?
-          <div>
-            <ProductsTab>
-              
-            </ProductsTab>
-          </div> :
-          <div>
-            <OrdersTab>
-
-            </OrdersTab>
-          </div> :
-          <div>
-            <FundraisersTab>
-
-            </FundraisersTab>
-          </div>
-        }  */} 
-      </div>
+      <div>{renderActiveTab()}</div>
     </Container>
   );
 };

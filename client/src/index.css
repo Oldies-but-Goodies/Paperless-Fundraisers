@@ -1,6 +1,16 @@
-/* :root {
-  background-color: burlywood;
-} */
+:root {
+  background-color: rgb(207, 227, 250);
+}
+
+.appContainer {
+  background-color: rgb(207, 227, 250);
+}
+.jumbo {
+  background-color: navy;
+  color: white;
+  font-size: 3.5rem;
+  font-family: cursive;
+}
 
 body {
   margin: 0;
@@ -22,7 +32,7 @@ code {
 } */
 
 .admin-nav {
-  background: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  background: linear-gradient(15deg, #0528f1ef 0%, #1D3557 100%);
 }
 
 .nav-style {
@@ -32,5 +42,22 @@ code {
 .homeContainer {
   max-width: 70%;
   margin-top: 20px;
-  background-color: lightblue;
+  background-color: lightsteelblue;
 }
+
+.loginContainer {
+  max-width: 90%;
+  margin-top: 20px;
+  background-color: lightsteelblue;
+}
+
+.new-form-div {
+  /* max-width: 80%; */
+  margin: auto;
+  background-color: lightsteelblue;
+  color: #1D3557;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: 25px;
+}
+

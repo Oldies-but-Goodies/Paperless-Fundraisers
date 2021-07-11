@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { Table, Container, Button } from "react-bootstrap";
+import React, { useState, useEffect } from 'react';
+import { Table, Container, Button } from 'react-bootstrap';
 import API from '../lib/API';
-import { useStoreContext } from "../store/store";
+import { useStoreContext } from '../store/store';
 
 const OrdersTab = () => {
   const [state, dispatch] = useStoreContext();
 
-  const [orders, setOrders] = useState([])
+  const [orders, setOrders] = useState([]);
 
-const getOrderData = async () => {
-  const orderData = await API.Orders.getAllOrders(state.currentFundraiser)
-  setOrders(orderData.data)
-}
+  const getOrderData = async () => {
+    const orderData = await API.Orders.getAllOrders(state.currentFundraiser.id);
+    setOrders(orderData.data);
+  };
 
-useEffect(() => {
-  getOrderData()
-}, [])
+  useEffect(() => {
+    getOrderData();
+  }, []);
 
   return (
     <Container>
@@ -33,17 +33,15 @@ useEffect(() => {
           </tr>
         </thead>
         <tbody>
-          {orders.map(order => (
-
-          <tr>
-            <td>{order.User.first_name + " " + order.User.last_name}</td>
-            <td>${order.order_total}</td>
-            <td>{new Date (order.createdAt).toLocaleDateString()}</td>
-            <td>{order.order_status}</td>
-            <td>{order.seller_remit}</td>
-          </tr>
+          {orders.map((order) => (
+            <tr>
+              <td>{order.User.first_name + ' ' + order.User.last_name}</td>
+              <td>${order.order_total}</td>
+              <td>{new Date(order.createdAt).toLocaleDateString()}</td>
+              <td>{order.order_status}</td>
+              <td>{order.seller_remit}</td>
+            </tr>
           ))}
-          
         </tbody>
       </Table>
     </Container>

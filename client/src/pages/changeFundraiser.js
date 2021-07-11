@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import {  Container } from 'react-bootstrap';
-import AddFundraiserModal from './addFundraiserModal';
+import { Container } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
+import { SET_FUNDRAISERS } from '../store/actions';
 
-const FundraisersTab = () => {
+const ChangeFundraiser = () => {
   const [state, dispatch] = useStoreContext();
+  const history = useHistory();
 
   const [fundraisers, setFundraisers] = useState([]);
   const [toggleRender, setToggleRender] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
+
+  console.log(
+    'the current selected fundraiser is ' + state.currentFundraiser.id
+  );
 
   const columns = [
     {
@@ -52,9 +57,7 @@ const FundraisersTab = () => {
           (dateObj.getUTCMonth() + 1)
         ).slice(-2)}/${dateObj.getUTCFullYear()}`;
       },
-      editor: {
-        type: Type.DATE,
-      },
+      
     },
     {
       dataField: 'end',
@@ -70,9 +73,7 @@ const FundraisersTab = () => {
           (dateObj.getUTCMonth() + 1)
         ).slice(-2)}/${dateObj.getUTCFullYear()}`;
       },
-      editor: {
-        type: Type.DATE,
-      },
+      
     },
   ];
 
@@ -83,59 +84,43 @@ const FundraisersTab = () => {
     },
   ];
 
-  const getFundraiserData = async () => {
-    const fundraiserData = await API.Fundraisers.getFundraisers();
-    setFundraisers(fundraiserData.data);
+  const getMyFundraiserData = async () => {
+    const fundraiserData = await API.Fundraisers.getMyFundraisers();
+    setFundraisers(fundraiserData.data.Fundraisers);
   };
 
   useEffect(() => {
-    getFundraiserData();
+    getMyFundraiserData();
   }, [toggleRender]);
 
-  const handleCellEdit = async (oldValue, newValue, row, column) => {
-    const fundraiserObj = {
-      id: row.id,
-      name: row.name,
-      description: row.description,
-      goal: row.goal,
-      start: row.start,
-      end: row.end,
-    };
-    setErrorMsg(null);
+  const rowEvents = {
+    onClick: (e, row, rowIndex) => {
+      console.log(`clicked on row with index: ${rowIndex}`);
+      console.table(row);
+      console.log('switching to fundraiser ' + row.id);
+      const fundraiserObj = {
+        id: row.id,
+        adminLevel: row.userFundraiser.admin_level,
+      };
 
-    try {
-      const productData = await API.Fundraisers.updateFundraiser(fundraiserObj);
-      setErrorMsg('Fundraiser Updated');
-
-      setTimeout(() => {
-        setErrorMsg(null);
-      }, 3000);
-    } catch (err) {
-      setErrorMsg(err.message);
-    }
+      dispatch({ type: SET_FUNDRAISERS, fundraiser: fundraiserObj });
+      console.log(state.currentFundraiser);
+      history.push('/');
+      
+    },
   };
 
-  
 
   return (
     <Container>
-      <AddFundraiserModal
-        toggleRender={toggleRender}
-        setToggleRender={setToggleRender}
-      ></AddFundraiserModal>
-
+     
       <BootstrapTable
         keyField='id'
         data={fundraisers}
         columns={columns}
+        rowEvents={rowEvents}
         defaultSorted={defaultSorted}
         noDataIndication='No Fundraisers Found'
-        cellEdit={cellEditFactory({
-          mode: 'click',
-          afterSaveCell: (oldValue, newValue, row, column) => {
-            handleCellEdit(oldValue, newValue, row, column);
-          },
-        })}
         striped
         hover
         bootstrap4
@@ -145,4 +130,4 @@ const FundraisersTab = () => {
   );
 };
 
-export default FundraisersTab;
+export default ChangeFundraiser;

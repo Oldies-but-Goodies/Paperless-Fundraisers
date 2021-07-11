@@ -3,6 +3,9 @@ const { User, Order, Customer, Order_Details, Fundraiser } = require("../../mode
 
 // GET all orders
 router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderData = await Order.findAll({
       where: {
@@ -16,33 +19,36 @@ router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
     res.status(500).json(err);
   }
 });
-// GET all orders by fundraiser
-// router.get("/", async (req, res) => {
-//   try {
-//     const orderDetails = await Order_Details.findAll(
-//       {
-//         fundraiser_id: req.body.fundraiser,
-//         order_id: req.body.order_id,
-//         product_id: req.body.product_id,
-//         product_qty: req.body.product_qty,
-//         line_total: req.body.line_total,
-        
-//       },
-//       {
-//         where: {
-//           id: req.params.id,
-//         },
-//       }
-//     );
-//     res.status(200).json(orderDetails);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
-
+//
+// get all order for a given userid
+//
+router.get('/allOrdersforUser/:id', async (req, res) => {
+  // console.log(req);
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+  try {
+    const orderData = await Order.findAll({
+      where: {
+        //
+        // TODO -- needs to where by the current fundraiserId
+        //
+        // fundraiserId: req.params.fundraiserId,
+        userId: req.params.id,
+      },
+      include: [{ model: Customer }],
+    });
+    res.status(200).json(orderData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // GET a single order
 router.get("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderData = await Order.findByPk(req.params.id, {
       // JOIN with Order, using the Order_Details through table
@@ -63,6 +69,9 @@ router.get("/:id", async (req, res) => {
 // CREATE an order
 // TODO add with auth
 router.post("/", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     // we need, customer details, products and quanitiy, fundraiser id, 
     // req.body = {
@@ -125,6 +134,9 @@ router.post("/", async (req, res) => {
 //   UPDATE an order
 // TODO add with auth
 router.put("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const updatedOrder = await Order.update(
       {
@@ -142,7 +154,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!updatedOrder) {
-      res.status(404).json({ message: "No Order_id found with this id" });
+      res.status(404).json({ message: "No Order found with this id" });
       return;
     }
     res.json(updatedOrder);
@@ -154,6 +166,9 @@ router.put("/:id", async (req, res) => {
 // DELETE an order
 // TODO add with auth
 router.delete("/:id", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const orderData = await Order.destroy({
       where: {
@@ -162,7 +177,33 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!orderData) {
-      res.status(404).json({ message: "No order found with this id!" });
+      res.status(404).json({ message: "No Order found with this id!" });
+      return;
+    }
+
+    res.status(200).json(orderData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// DELETE an order by orderId
+// TODO add with auth
+router.delete("/:orderId", async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+  console.log(req);
+  try {
+    const orderData = await Order.destroy({
+      where: {
+       
+        orderId: req.params.id,
+      },
+    });
+
+    if (!orderData) {
+      res.status(404).json({ message: "No order_id found with this id!" });
       return;
     }
 
