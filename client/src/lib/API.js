@@ -77,6 +77,9 @@ export default {
     orderDetails: function (orderId) {
       return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId);
     },
+    updateOrderDetails: function (orderId) {
+      return axios.put('/api.orderDetails/' + orderId)
+    }
   },
 
   InviteEmail: {

@@ -6,8 +6,11 @@ import API from "../lib/API";
 import BootstrapTable from "react-bootstrap-table-next";
 import cellEditFactory from "react-bootstrap-table2-editor";
 
-const OrderDetailModal = ({ orderId, show, onClose }) => {
 
+const OrderDetailModal = ({ orderId, show, onClose }) => {
+  const [order, setOrder] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  
   const columns = [
     {
       dataField: "id",
@@ -16,19 +19,56 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
       editable: false,
     },
     {
-      dataField: "id",
-      text: "Order ID",
-      type: "number",
+      dataField: "createdAt",
+      text: "Date of Sale",
+      type: "date",
+      editable: true,
+    },
+    {
+      dataField: "Product.name",
+      text: "Product",
+      type: "string",
       editable: false,
     },
-
-]
-  const [order, setOrder] = useState(null);
+    {
+      dataField: "Product.qty",
+      text: "Quantity",
+      type: "number",
+      editable: true,
+    },
+  ];
 
   const getOrderDetails = async () => {
     const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
     setOrder(orderDetailsData.data);
     console.log(orderDetailsData.data);
+  };
+
+  const handleCellEdit = async (oldValue, newValue, row, column) => {
+    const updateBodyObj = {
+      id: row.id,
+      createdAt: row.createdAt,
+      // last_name: row.Customer.last_name,
+      // order_total: row.order_total,
+      // customer_remit: row.customer_remit,
+      // seller_remit: row.seller_remit,
+    };
+    setErrorMsg(null);
+
+    try {
+      const myOrderData = await API.OrderDetails.updateOrderDetails(
+        updateBodyObj.id,
+        updateBodyObj
+      );
+
+      setErrorMsg("Order Updated");
+
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 3000);
+    } catch (err) {
+      setErrorMsg(err.message);
+    }
   };
 
   useEffect(() => {
@@ -119,7 +159,29 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
               </Col>
             </Form.Group>
           </Form>
-          <Table striped bordered hover>
+          <BootstrapTable
+            keyField='id'
+            data={order}
+            columns={columns}
+            // expandRow={ expandRow }
+            // rowEvents={rowEvents}
+            // defaultSorted={defaultSorted}
+            noDataIndication='No products defined'
+            cellEdit={cellEditFactory({
+              mode: "click",
+              afterSaveCell: (oldValue, newValue, row, column) => {
+                handleCellEdit(oldValue, newValue, row, column);
+              },
+            })}
+            // afterSaveCell={cellEdit.afterSaveCell()}
+            // filter={filterFactory()}
+            striped
+            hover
+            condensed
+            bootstrap4
+            blurToSave
+          />
+          {/* <Table striped bordered hover>
             <thead>
               <tr>
                 <th>Order Number</th>
@@ -142,16 +204,13 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
                         " x " +
                         orderDetail.product_qty}
                     </td>
-                    {/* <td>${orderDetail.Order.Customer.first_name + " " + orderDetail.Order.Customer.last_name}</td>
-            <td>{orderDetail.Order.Customer.address_line1 + " " + orderDetail.Order.Customer.address2 + " " 
-                + orderDetail.Order.Customer.city + " , " + orderDetail.Order.Customer.state + " "
-                + orderDetail.Order.Customer.zip_code}</td> */}
+                   
                     <td>{order.customer_remit}</td>
                     <td>{order.seller_remit}</td>
                   </tr>
                 ))}
             </tbody>
-          </Table>
+          </Table> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant='secondary' onClick={onClose}>

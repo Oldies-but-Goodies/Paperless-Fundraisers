@@ -169,37 +169,7 @@ const Home = (props) => {
         bootstrap4
         blurToSave
       />
-      {/* table only shows if user is non-Admin */}
-      {/* <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Order Number</th>
-            <th>Customer Name </th>
-            <th>Total Sale </th>
-            <th>Customer Paid</th>
-            <th>Admin Paid</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr>
-
-              <td>{order.id}</td>
-              <td>{order.Customer.first_name + " " + order.Customer.last_name}</td>
-              <td>${order.order_total}</td>
-              <td>{order.customer_remit}</td>
-              <td>{order.seller_remit}</td>
-              <td>
-                <OrderDetailModal
-                  orderId={order.id}
-                />
-                </td>
-          </tr>
-          ))}
-          
-           
-          </tbody>
-      </Table> */}
+      
     </Container>
   );
 };
