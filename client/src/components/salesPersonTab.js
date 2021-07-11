@@ -41,9 +41,9 @@ const SalesPersonTab = () => {
           <tr>
             <td>Jim</td>
             <td>$200</td>
-            <td>
+            {/* <td>
               <ViewOrdersModal></ViewOrdersModal>
-            </td>
+            </td> */}
           </tr>
           <tr>
             <td>Dwight</td>
