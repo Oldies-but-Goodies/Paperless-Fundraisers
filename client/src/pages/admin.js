@@ -1,5 +1,4 @@
-import React, { Component, useState } from 'react';
-// import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useState } from 'react';
 import AdminNav from '../components/adminNav';
 import { Container } from 'react-bootstrap';
 import SalesPersonTab from '../components/salesPersonTab';

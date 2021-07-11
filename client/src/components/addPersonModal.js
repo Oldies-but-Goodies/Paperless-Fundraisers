@@ -111,7 +111,7 @@ const AddPersonModal = () => {
               value={signUpCreds.password}
               onChange={handleChange}
             />
-            {/* <Checkbox style={{ marginLeft: '15px' }} >Admin User </Checkbox> */}
+           
             <Form.Check className='mt-2' type='checkbox' label='Admin User' />
           </form>
         </Modal.Body>
@@ -128,4 +128,4 @@ const AddPersonModal = () => {
   );
 };
 export default AddPersonModal;
-//   render(<addPersonModal/>);
+

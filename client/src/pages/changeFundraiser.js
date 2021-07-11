@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-// import AddFundraiserModal from './addFundraiserModal';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import { SET_FUNDRAISERS } from '../store/actions';
 
 const ChangeFundraiser = () => {
@@ -16,7 +14,6 @@ const ChangeFundraiser = () => {
   const [toggleRender, setToggleRender] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // react-bootstrap-table-next - lets setup our columns here
 
   console.log(
     'the current selected fundraiser is ' + state.currentFundraiser.id
@@ -60,9 +57,7 @@ const ChangeFundraiser = () => {
           (dateObj.getUTCMonth() + 1)
         ).slice(-2)}/${dateObj.getUTCFullYear()}`;
       },
-      editor: {
-        type: Type.DATE,
-      },
+      
     },
     {
       dataField: 'end',
@@ -78,9 +73,7 @@ const ChangeFundraiser = () => {
           (dateObj.getUTCMonth() + 1)
         ).slice(-2)}/${dateObj.getUTCFullYear()}`;
       },
-      editor: {
-        type: Type.DATE,
-      },
+      
     },
   ];
 
@@ -113,19 +106,14 @@ const ChangeFundraiser = () => {
       dispatch({ type: SET_FUNDRAISERS, fundraiser: fundraiserObj });
       console.log(state.currentFundraiser);
       history.push('/');
-      //   state.currentFundraiser
+      
     },
   };
 
-  // setToggleRender(!toggleRender);
 
   return (
     <Container>
-      {/* <AddFundraiserModal
-        toggleRender={toggleRender}
-        setToggleRender={setToggleRender}
-      ></AddFundraiserModal> */}
-
+     
       <BootstrapTable
         keyField='id'
         data={fundraisers}
@@ -133,12 +121,6 @@ const ChangeFundraiser = () => {
         rowEvents={rowEvents}
         defaultSorted={defaultSorted}
         noDataIndication='No Fundraisers Found'
-        // cellEdit={cellEditFactory({
-        //   mode: 'click',
-        //   afterSaveCell: (oldValue, newValue, row, column) => {
-        //     handleCellEdit(oldValue, newValue, row, column);
-        //   },
-        // })}
         striped
         hover
         bootstrap4

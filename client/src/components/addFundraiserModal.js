@@ -147,4 +147,3 @@ const AddFundraiserModal = ({ toggleRender, setToggleRender }) => {
   );
 };
 export default AddFundraiserModal;
-//   render(<addPersonModal/>);
