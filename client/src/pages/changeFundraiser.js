@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 // import AddFundraiserModal from './addFundraiserModal';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
@@ -9,6 +10,7 @@ import { SET_FUNDRAISERS } from '../store/actions';
 
 const ChangeFundraiser = () => {
   const [state, dispatch] = useStoreContext();
+  const history = useHistory();
 
   const [fundraisers, setFundraisers] = useState([]);
   const [toggleRender, setToggleRender] = useState(false);
@@ -87,18 +89,13 @@ const ChangeFundraiser = () => {
     },
   ];
 
-  const getFundraiserData = async () => {
-    const fundraiserData = await API.Fundraisers.getFundraisers();
-    setFundraisers(fundraiserData.data);
-  };
-
   const getMyFundraiserData = async () => {
     const fundraiserData = await API.Fundraisers.getMyFundraisers();
-    setFundraisers(fundraiserData.data);
+    setFundraisers(fundraiserData.data.Fundraisers);
   };
 
   useEffect(() => {
-    getFundraiserData();
+    getMyFundraiserData();
   }, [toggleRender]);
 
   const rowEvents = {
@@ -106,8 +103,13 @@ const ChangeFundraiser = () => {
       console.log(`clicked on row with index: ${rowIndex}`);
       console.table(row);
       console.log('switching to fundraiser ' + row.id);
-      dispatch({ type: SET_FUNDRAISERS, fundraiser: row.id });
+      const fundraiserObj = {
+        id: row.id,
+        adminLevel: row.userFundraiser.admin_level,
+      };
 
+      dispatch({ type: SET_FUNDRAISERS, fundraiser: fundraiserObj });
+      history.push('/');
       //   state.currentFundraiser
     },
   };
