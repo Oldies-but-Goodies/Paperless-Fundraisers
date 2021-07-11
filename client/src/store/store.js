@@ -23,8 +23,10 @@ const reducer = (state, action) => {
       let currentFundraiserId = state.currentFundraiser.id;
       let currentFundraiserAdminLevel = state.currentFundraiser.adminLevel;
       // check to see if the currentFundraiser is not set
+      console.log(state.currentFundraiser);
+      console.log(currentFundraiserId, currentFundraiserAdminLevel);
 
-      if (!state.currentFundraiser) {
+      if (!state.currentFundraiser.id) {
         // if it is not set, then set it to the first one in the
         // list only if there are fundraisers associated with this user
 

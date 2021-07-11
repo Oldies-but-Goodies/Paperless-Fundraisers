@@ -109,6 +109,7 @@ const ChangeFundraiser = () => {
       };
 
       dispatch({ type: SET_FUNDRAISERS, fundraiser: fundraiserObj });
+      console.log(state.currentFundraiser);
       history.push('/');
       //   state.currentFundraiser
     },
