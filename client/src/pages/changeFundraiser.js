@@ -18,7 +18,9 @@ const ChangeFundraiser = () => {
 
   // react-bootstrap-table-next - lets setup our columns here
 
-  console.log('the current selected fundraiser is ' + state.currentFundraiser);
+  console.log(
+    'the current selected fundraiser is ' + state.currentFundraiser.id
+  );
 
   const columns = [
     {
