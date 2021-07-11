@@ -20,8 +20,8 @@ const reducer = (state, action) => {
       };
 
     case SET_USER:
-      let currentFundraiserId = state.currentFundraiser;
-
+      let currentFundraiserId = state.currentFundraiser.id;
+      let currentFundraiserAdminLevel = state.currentFundraiser.adminLevel;
       // check to see if the currentFundraiser is not set
 
       if (!state.currentFundraiser) {
@@ -30,6 +30,8 @@ const reducer = (state, action) => {
 
         if (action.user.Fundraisers.length > 0) {
           currentFundraiserId = action.user.Fundraisers[0].id;
+          currentFundraiserAdminLevel =
+            action.user.Fundraisers[0].userFundraiser.admin_level;
         }
       }
 
@@ -37,7 +39,10 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
         loading: false,
-        currentFundraiser: currentFundraiserId,
+        currentFundraiser: {
+          id: currentFundraiserId,
+          adminLevel: currentFundraiserAdminLevel,
+        },
       };
 
     case SET_FUNDRAISERS:
@@ -62,7 +67,10 @@ const StoreProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
     user: null,
     loading: false,
-    currentFundraiser: null,
+    currentFundraiser: {
+      id: null,
+      adminLevel: null,
+    },
   });
 
   return <Provider value={[state, dispatch]} {...props} />;

@@ -109,7 +109,7 @@ const Products2Tab = () => {
       description: row.description,
       price: row.price,
       active: row.active,
-      FundraiserId: state.currentFundraiser,
+      FundraiserId: state.currentFundraiser.id,
     };
     setErrorMsg(null);
 
