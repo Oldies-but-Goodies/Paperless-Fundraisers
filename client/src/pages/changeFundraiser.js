@@ -112,7 +112,7 @@ const ChangeFundraiser = () => {
 
 
   return (
-    <Container>
+    <Container className='new-form-div'>
      
       <BootstrapTable
         keyField='id'

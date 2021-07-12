@@ -18,7 +18,7 @@ const OrdersTab = () => {
   }, []);
 
   return (
-    <Container>
+    <Container className='new-form-div'>
       <Button href='/newOrder' className='my-2'>
         New Order
       </Button>

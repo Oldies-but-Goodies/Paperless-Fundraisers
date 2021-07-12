@@ -117,7 +117,7 @@ const ProductsTab = () => {
   };
 
   return (
-    <Container>
+    <Container className='new-form-div' striped bordered hover>
       <Button
         variant='primary'
         className='my-2'
@@ -140,6 +140,7 @@ const ProductsTab = () => {
       {errorMsg && <p>{errorMsg}</p>}
 
       <BootstrapTable
+      className='new-form-div'
         keyField='id'
         data={products}
         columns={columns}

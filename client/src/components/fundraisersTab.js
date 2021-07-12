@@ -118,7 +118,7 @@ const FundraisersTab = () => {
   
 
   return (
-    <Container>
+    <Container className='new-form-div'>
       <AddFundraiserModal
         toggleRender={toggleRender}
         setToggleRender={setToggleRender}
