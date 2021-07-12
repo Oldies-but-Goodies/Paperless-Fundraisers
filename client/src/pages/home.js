@@ -40,11 +40,10 @@ const Home = (props) => {
       editable: false,
     },
     {
-      dataField: 'order_total',
-      text: 'Total Sale',
+      dataField: 'order_status',
+      text: 'Order Status',
       sort: true,
-      type: 'number',
-      editable: false,
+      editable: true,
     },
     {
       dataField: 'customer_remit',
@@ -79,7 +78,7 @@ const Home = (props) => {
       id: row.id,
       first_name: row.Customer.first_name,
       last_name: row.Customer.last_name,
-      order_total: row.order_total,
+      order_status: row.order_status,
       customer_remit: row.customer_remit,
       seller_remit: row.seller_remit,
     };
@@ -143,7 +142,7 @@ const Home = (props) => {
         columns={columns}
         rowEvents={rowEvents}
         // defaultSorted={defaultSorted}
-        noDataIndication='No products defined'
+        noDataIndication='No Orders Yet'
         cellEdit={cellEditFactory({
           mode: 'click',
           afterSaveCell: (oldValue, newValue, row, column) => {

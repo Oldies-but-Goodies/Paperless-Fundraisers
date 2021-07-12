@@ -7,9 +7,19 @@ class Order extends Model {}
 Order.init(
   {
     order_total: DataTypes.INTEGER,
-    customer_remit: DataTypes.BOOLEAN,
-    seller_remit: DataTypes.BOOLEAN,
-    order_status: DataTypes.STRING,
+    customer_remit: {
+      type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+    seller_remit: {
+      type: DataTypes.BOOLEAN,
+    defaultValue: false
+    },
+    order_status: {
+      type:  DataTypes.STRING,
+      defaultValue: "open"
+    }
+      
   },
   {
     sequelize,

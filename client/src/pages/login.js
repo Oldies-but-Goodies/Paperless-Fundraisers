@@ -4,7 +4,6 @@ import { useHistory, Link } from 'react-router-dom';
 import { Container, Carousel, Jumbotron } from 'react-bootstrap';
 import { LOADING, SET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
-
 // import { Link } from 'react-router';
 const Login = () => {
   const [, /* state */ dispatch] = useStoreContext();

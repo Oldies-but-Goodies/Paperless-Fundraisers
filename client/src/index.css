@@ -12,6 +12,21 @@
   font-family: cursive;
 }
 
+.jumbo {
+  background-color: navy;
+  color: white;
+  font-size: 3.5rem;
+  font-family: cursive;
+}
+
+.navLinks {
+  font-size: 1.5rem
+}
+
+.navBrand {
+  font-size: 1.75rem
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

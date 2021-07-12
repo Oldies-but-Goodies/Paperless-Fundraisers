@@ -27,7 +27,7 @@ const Navigation = () => {
         console.log('Logout error');
       });
   };
-
+console.log(state.currentFundraiser)
   useEffect(() => {
     dispatch({ type: LOADING });
 
@@ -45,7 +45,7 @@ const Navigation = () => {
     <div>
       <Navbar className='nav-style' expand='lg'>
         <Container className='mb-3'>
-          <Navbar.Brand as={Link} to='/' style={{ color: 'white' }}>
+          <Navbar.Brand className="navBrand" as={Link} to='/' style={{ color: 'white' }}>
             Paperless Fundraisers
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
@@ -55,12 +55,10 @@ const Navigation = () => {
               defaultActiveKey='/home'
               className='container-fluid'
             >
-              <Nav.Link as={Link} to='/admin' style={{ color: 'white' }}>
+              <Nav.Link className="navLinks" as={Link} to='/admin' style={{ color: 'white' }}>
                 Admin
               </Nav.Link>
-              <Nav.Link as={Link} to='/newOrder' style={{ color: 'white' }}>
-                New Order
-              </Nav.Link>
+              
               <NavDropdown
                 style={{ color: 'white' }}
                 className='ml-auto'
@@ -75,6 +73,9 @@ const Navigation = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
               </NavDropdown>
+              <Nav.Link as={Link} to='/newOrder' style={{ color: 'white' }}>
+               {"Fundraiser " + state.currentFundraiser.id}
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>

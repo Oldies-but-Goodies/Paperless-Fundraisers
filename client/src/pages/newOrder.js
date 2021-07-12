@@ -105,6 +105,7 @@ const NewOrder = (props) => {
   }, []);
 
   return (
+    <Container fluid className='homeContainer'>
     <div className='new-form-div text-center'>
       <h1>New Order</h1>
       <div className='border border-dark py-4'>
@@ -218,7 +219,7 @@ const NewOrder = (props) => {
           <tr>
             <th>Product</th>
             <th>Price </th>
-            <th>Quantity</th>
+            <th className="col-1">Quantity</th>
             <th>Total Product Price</th>
           </tr>
         </thead>
@@ -278,6 +279,7 @@ const NewOrder = (props) => {
         Place Order
       </Button>
     </div>
+    </Container>
   );
 };
 
