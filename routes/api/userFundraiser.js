@@ -32,7 +32,6 @@ router.get('/:fundraiserId/users/:userId', async (req, res, next) => {
         {
           model: Order,
           where: {
-        
             userId: req.user.id,
           },
           include: [
@@ -70,7 +69,7 @@ router.get('/:fundraiserId/users/:userId', async (req, res, next) => {
           },
           0
         );
-       
+
         return addition + total;
       },
       0
@@ -98,9 +97,25 @@ router.get('/myfundraisers', async (req, res) => {
       });
     }
     res.status(200).json(userFundraiserData);
-    
   } catch (err) {
     res.status(500).json(err);
+  }
+});
+
+// CREATE a product
+
+router.post('/addusertofundraiser', async (req, res) => {
+  if (!req.user) {
+    return res.status(401).json({ status: 'error', message: 'not logged in' });
+  }
+  try {
+    const { addUserToFundraiserObj } = req.body;
+    console.log(addUserToFundraiserObj);
+
+    const addUserToFundraiserData = await userFundraiser.create(req.body);
+    res.status(201).json(addUserToFundraiserData);
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
