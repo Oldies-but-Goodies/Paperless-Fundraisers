@@ -22,12 +22,13 @@ const SignUp = () => {
   });
 
   const [fundraisers, setFundraisers] = useState([]);
-  const [fundraiser, setFundraiser] = useState([]);
+  const [selectedFundraiser, setSelectedFundraiser] = useState(null);
 
   const [dropdownTitle, setDropdownTitle] = useState([]);
 
   const getFundraiserData = async () => {
     const fundraiserData = await API.Fundraisers.getFundraisers();
+    console.log(fundraiserData.data);
     setFundraisers(fundraiserData.data);
   };
 
@@ -35,18 +36,29 @@ const SignUp = () => {
     const { name, value } = event.target;
 
     setSignUpCreds({ ...signUpCreds, [name]: value });
+    console.table(signUpCreds);
+  };
+
+  // create a function that listens for a change to the DropdownButton and updates the selectedFundraiser
+  const handleDropdownChange = (e) => {
+    console.log(e);
+    console.log({ e });
+    console.log(typeof e);
+
+    const value = e;
+    setSelectedFundraiser(value);
+    console.log(selectedFundraiser);
   };
 
   // const onSelect = (event, eventKey) => {
   //   event.preventDefault();
-  //   const{ name, eventKey } = event.target;
+  //   const { name, eventKey } = event.target;
 
-  //   setDropdownTitle({ [name]: eventKey});
+  //   setDropdownTitle({ [name]: eventKey });
 
-  // const dropdownTitle = this.state.dropdownTitle;
-  // dropdownTitle.dropdownTitle.value = eventKey
-
-  // }
+  //   const dropdownTitle = this.state.dropdownTitle;
+  //   dropdownTitle.dropdownTitle.value = eventKey;
+  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -62,21 +74,42 @@ const SignUp = () => {
         last_name: signUpCreds.last_name,
       })
       .then((res) => {
+        console.log('*111111', res);
+
         if (res.data.status === 'error') {
           setErrorMsg(res.data.message);
           return;
         }
-        console.log('we have userId of ' + res.data.userId);
-
         setErrorMsg(null);
-        history.replace('/login');
+        return res;
+        // history.replace('/login');
       })
-      .catch((error) => {
-        console.log('ERROR', error);
-        setErrorMsg(error.message);
+      .then((res) => {
+        console.log('********', res);
+        const userFundraiserObj = {
+          FundraiserId: selectedFundraiser,
+          UserId: res.data.userId,
+          admin_level: 'user',
+        };
+        console.table(userFundraiserObj);
+        // api call to link user to fundraiser
+        axios
+          .post('/api/userFundraiser/addusertofundraiser/', userFundraiserObj)
+          .then((res) => {
+            if (res.data.status === 'error') {
+              setErrorMsg(res.data.message);
+              return;
+            }
+            setErrorMsg(null);
+            history.replace('/');
+          })
+          .catch((error) => {
+            console.log('ERROR', error);
+            setErrorMsg(error.message);
+          });
       });
-    // link the user to the fundraiser through the API
   };
+
   useEffect(() => {
     getFundraiserData();
   }, []);
@@ -152,19 +185,24 @@ const SignUp = () => {
                 as={InputGroup.Prepend}
                 variant='outline-secondary'
                 title='Select Fundraiser'
-                id='input-group-dropdown-1'
+                // id='input-group-dropdown-1'
+                onSelect={handleDropdownChange}
               >
                 {fundraisers.map((fundraiser) => (
                   <div>
-                    <Dropdown.Item
-                      eventKey='{fundraiser.name}'
-                      // onClick={onSelect}
-                    >
-                      {fundraiser.name}
+                    <Dropdown.Item eventKey={fundraiser.id}>
+                      {fundraiser.id} - {fundraiser.name}
                     </Dropdown.Item>
                   </div>
                 ))}
               </DropdownButton>
+              <h6>
+                {selectedFundraiser ? (
+                  <p>you have selected fundraiser {selectedFundraiser}</p>
+                ) : (
+                  <p>Don't forget to select your fundraiser</p>
+                )}
+              </h6>
             </div>
             <button
               className='btn btn-lg btn-primary btn-block'
