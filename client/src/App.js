@@ -59,11 +59,7 @@ const App = () => {
           </Switch>
         </div>
       ) : (
-<<<<<<< HEAD
-        <div>
-=======
         <div className='appContainer'>
->>>>>>> 8e02727dfdbe0ef16be9c8911394cd8f5c9d406d
           {/* <Splash></Splash> */}
           <Switch>
             <Route exact path='/' component={Login} />
