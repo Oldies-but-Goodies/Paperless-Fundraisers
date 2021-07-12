@@ -2,6 +2,13 @@
   background-color: burlywood;
 } */
 
+.jumbo {
+  background-color: navy;
+  color: white;
+  font-size: 3.5rem;
+  font-family: cursive;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -33,4 +40,14 @@ code {
   max-width: 70%;
   margin-top: 20px;
   background-color: lightblue;
+}
+
+.loginContainer {
+  max-width: 90%;
+  margin-top: 20px;
+  background-color: lightsteelblue;
+}
+.new-form-div {
+  /* max-width: 80%; */
+  margin: auto;
 }

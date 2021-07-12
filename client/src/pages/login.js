@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { LOADING, SET_USER } from '../store/actions';
 import { useStoreContext } from '../store/store';
+import { Container, Carousel, Jumbotron } from 'react-bootstrap';
 // import { Link } from 'react-router';
 const Login = () => {
   const [, /* state */ dispatch] = useStoreContext();
@@ -48,7 +49,44 @@ const Login = () => {
   };
 
   return (
-    <div className="text-center">
+    <div>
+    <Jumbotron className="text-center jumbo">
+      <div> Paperless Fundraisers</div>
+    </Jumbotron>
+    <Container fluid className="loginContainer">
+
+    <div className="row align-items-center">
+    <Carousel fade className="col-6 my-3">
+  <Carousel.Item>
+    <img
+      className="img d-block w-100"
+      src="./images/image1.png"
+      alt="First slide"
+    />
+  </Carousel.Item>
+  <Carousel.Item className="img">
+    <img
+      className="d-block w-100 "
+      src="./images/image2.png"
+      alt="Second slide"
+    />
+  </Carousel.Item>
+  <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="./images/image3.png"
+      alt="Third slide"
+    />
+     </Carousel.Item> 
+     <Carousel.Item>
+    <img
+      className="d-block w-100"
+      src="./images/image4.png"
+      alt="Third slide"
+    />
+     </Carousel.Item> 
+  </Carousel>
+    <div className="text-center col-5">
       <h4>Login</h4>
       {errorMsg ? 
       <p>
@@ -86,6 +124,10 @@ const Login = () => {
       </form>
       <h5>Not yet a user, click <Link
       to="/signUp">here </Link> to signup</h5>
+      </div>
+      </div>
+    </Container>
+      
     </div>
   );
 };

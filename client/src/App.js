@@ -52,7 +52,7 @@ const App = () => {
         </div>
       ) : (
         <div>
-          <Splash></Splash>
+          {/* <Splash></Splash> */}
           <Switch>
             <Route exact path='/' component={Login} />
             <Route exact path='/login' component={Login} />
