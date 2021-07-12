@@ -38,6 +38,7 @@ const Admin = (props) => {
             <li>Add/Edit Fundraiser Products</li>
             <li>View/Add/Edit orders</li>
             <li>Track payment status of orders</li>
+            {/* <li>Reset Salesperson Password</li> */}
           </ul>
         </p>
       </div>
