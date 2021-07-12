@@ -32,7 +32,7 @@ const AddProductModal = ({
       description,
       price,
       active,
-      FundraiserId: state.currentFundraiser,
+      FundraiserId: state.currentFundraiser.id,
     };
     setErrorMsg(null);
 
@@ -121,4 +121,4 @@ const AddProductModal = ({
   );
 };
 export default AddProductModal;
-//   render(<addPersonModal/>);
+

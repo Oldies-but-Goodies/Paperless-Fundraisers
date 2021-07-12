@@ -1,10 +1,10 @@
-import axios from "axios";
-import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useStoreContext } from "../store/store";
-import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
-import { LOADING, SET_USER, UNSET_USER } from "../store/actions";
-import { isNil } from "lodash";
+import axios from 'axios';
+import React, { useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useStoreContext } from '../store/store';
+import { Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
+import { LOADING, SET_USER, UNSET_USER } from '../store/actions';
+
 
 const Navigation = () => {
   const [state, dispatch] = useStoreContext();
@@ -16,23 +16,24 @@ const Navigation = () => {
     dispatch({ type: LOADING });
 
     axios
-      .get("/api/users/logout")
+      .get('/api/users/logout')
       .then((response) => {
         if (response.status === 200) {
           dispatch({ type: UNSET_USER });
-          history.replace("/login");
+          history.replace('/login');
         }
       })
       .catch((error) => {
-        console.log("Logout error");
+        console.log('Logout error');
       });
   };
 
   useEffect(() => {
     dispatch({ type: LOADING });
 
-    axios.get("/api/users").then((response) => {
+    axios.get('/api/users').then((response) => {
       if (response.data.user) {
+        console.log('navbar setUser');
         dispatch({ type: SET_USER, user: response.data.user });
       } else {
         dispatch({ type: UNSET_USER });
@@ -42,9 +43,11 @@ const Navigation = () => {
 
   return (
     <div>
-      <Navbar className="nav-style" expand='lg'>
+      <Navbar className='nav-style' expand='lg'>
         <Container className='mb-3'>
-          <Navbar.Brand href='/' style={{color:"white"}}>Paperless Fundraisers</Navbar.Brand>
+          <Navbar.Brand as={Link} to='/' style={{ color: 'white' }}>
+            Paperless Fundraisers
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav
@@ -52,15 +55,22 @@ const Navigation = () => {
               defaultActiveKey='/home'
               className='container-fluid'
             >
-              <Nav.Link href='/admin' style={{color:"white"}}>Admin</Nav.Link>
-              <Nav.Link href='/newOrder' style={{color:"white"}}>New Order</Nav.Link>
-              <NavDropdown style={{color:"white"}}
+              <Nav.Link as={Link} to='/admin' style={{ color: 'white' }}>
+                Admin
+              </Nav.Link>
+              <Nav.Link as={Link} to='/newOrder' style={{ color: 'white' }}>
+                New Order
+              </Nav.Link>
+              <NavDropdown
+                style={{ color: 'white' }}
                 className='ml-auto'
                 title={state.user.first_name}
                 id='basic-nav-dropdown'
               >
-                <NavDropdown.Item href='/profile'>Settings</NavDropdown.Item>
-                <NavDropdown.Item eventKey='disabled' disabled>
+                <NavDropdown.Item as={Link} to='/profile'>
+                  Settings
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to='/changeFundraiser'>
                   Change Fundraiser
                 </NavDropdown.Item>
                 <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>

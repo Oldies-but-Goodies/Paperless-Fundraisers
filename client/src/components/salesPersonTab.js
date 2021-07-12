@@ -1,28 +1,36 @@
-import React from "react";
-import { Table, Container, Button} from "react-bootstrap";
-import AddPersonModal from "./addPersonModal";
-import ViewOrdersModal from "./viewOrdersModal";
+import React, { useState, useEffect } from 'react';
+import { Table, Container } from 'react-bootstrap';
+import API from '../lib/API';
+import AddPersonModal from './addPersonModal';
+import InvitePersonModal from './invitePersonModal';
+import ViewOrdersModal from './viewOrdersModal';
+import { useStoreContext } from '../store/store';
 
 const SalesPersonTab = () => {
+  const [state, dispatch] = useStoreContext();
+  const [fundraiser, setFundraiser] = useState([]);
+  const [totalUserSales, setTotalUserSales] = useState('$xx.xx');
+  const [userSales, setUserSales] = useState(null);
+
+  const userSalesInfo = async () => {
+    const userSalesData = await API.Orders.userOrderTotalSales(
+      state.currentFundraiser.id,
+      state.user.id
+    );
+    console.log(userSalesData);
+    setUserSales(userSalesData.data);
+  };
+
+  useEffect(() => {
+    userSalesInfo();
+  }, []);
+
   return (
-    <Container>
-      <AddPersonModal>
+    <Container fluid className='new-form-div'>
+      <AddPersonModal></AddPersonModal>
+      <InvitePersonModal></InvitePersonModal>
 
-      </AddPersonModal>
-
-      {/* <Dropdown className="my-2 float-right">
-        <Dropdown.Toggle variant="primary" id="dropdown-basic">
-          Select Salesperson
-        </Dropdown.Toggle>
-
-        <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">Jim</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">Dwight</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Phyllis</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Stanley</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown> */}
-      <Table striped bordered hover>
+      <Table className='new-form-div' striped bordered hover>
         <thead>
           <tr>
             <th>Salesperson</th>
@@ -33,9 +41,9 @@ const SalesPersonTab = () => {
           <tr>
             <td>Jim</td>
             <td>$200</td>
-            <td><ViewOrdersModal>
-              </ViewOrdersModal></td>
-              
+            {/* <td>
+              <ViewOrdersModal></ViewOrdersModal>
+            </td> */}
           </tr>
           <tr>
             <td>Dwight</td>

@@ -4,6 +4,9 @@ const { Customer, Order } = require('../../models');
 
 // GET all customers
 router.get('/', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const customerData = await Customer.findAll();
     res.status(200).json(customerData);
@@ -14,13 +17,8 @@ router.get('/', async (req, res) => {
 
 // GET a single customer
 router.get('/:id', async (req, res) => {
-  passport.authenticate('local', async function (err, user, info) {
-    if (err) {
-      return next(err);
-    }
-
-    if (!user) {
-      return res.json({ status: 'error', message: info.message });
+      if (!req.user) {
+      return res.json({ status: 'error', message: 'not logged in' });
     }
   try {
     const customerData = await Customer.findByPk(req.params.id, {
@@ -37,13 +35,14 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-  })(req, res, next);
-  
 });
 
 // CREATE a customer
-// TODO add with auth
+
 router.post('/',  async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
     try {
       const customerData = await Customer.create(req.body);
       res.status(200).json(customerData);
@@ -53,8 +52,11 @@ router.post('/',  async (req, res) => {
   });
 
 //   UPDATE a customer
-// TODO add with auth
+
   router.put('/:id',  async (req, res) => {
+    if (!req.user) {
+      return res.json({ status: 'error', message: 'not logged in' });
+    }
     try {
       const updatedCustomer = await Customer.update(
         {
@@ -85,8 +87,11 @@ router.post('/',  async (req, res) => {
     }
   });
   // DELETE a customer
-  // TODO add with auth
+  
   router.delete('/:id',  async (req, res) => {
+    if (!req.user) {
+      return res.json({ status: 'error', message: 'not logged in' });
+    }
     try {
       const customerData = await Customer.destroy({
         where: {

@@ -18,10 +18,7 @@ class User extends Model {
 
 User.init(
   {
-    // id: {
-    //   type: DataTypes.INTEGER,
-    //   primaryKey: true,
-    // },
+    
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -40,12 +37,9 @@ User.init(
         userData.password = await bcrypt.hash(userData.password, 10);
         return userData;
       },
-      //
-      // we need BulkUpdate and we need to reach in to the attributes if
-      // we are gonna user.update = which we need to change the password
-      //
+      
       beforeBulkUpdate: async (userData) => {
-        // console.log(userData);
+       
         userData.attributes.password = await bcrypt.hash(
           userData.attributes.password,
           10

@@ -37,11 +37,18 @@ export default {
     getFundraisers: function () {
       return axios.get('/api/fundraiser/');
     },
+    getMyFundraisers: function () {
+      return axios.get('/api/fundraiser/my');
+    },
     getCurrentFundraiser: function (fundraiserId) {
       return axios.get('/api/fundraiser/' + fundraiserId);
     },
     addFundraiser: function (obj) {
       return axios.post('/api/fundraiser', obj);
+    },
+    updateFundraiser: function (obj) {
+      console.log(obj);
+      return axios.put('/api/fundraiser/' + obj.id, obj);
     },
   },
 
@@ -51,6 +58,47 @@ export default {
     },
     createOrder: function (obj) {
       return axios.post('/api/order/', obj);
+    },
+    loggedInOrders: function (userId) {
+      return axios.get('api/order/allOrdersforUser/' + userId);
+    },
+    userOrderTotalSales: function (fundraiserId, userId) {
+      console.log('in API.js', fundraiserId, userId);
+      return axios.get(
+        'api/userFundraiser/' + fundraiserId + '/users/' + userId
+      );
+    },
+    updateOrder: function (orderId, updateBodyObj) {
+      return axios.put('/api/order/' + orderId, updateBodyObj);
+    },
+  },
+
+  OrderDetails: {
+    orderDetails: function (orderId) {
+      return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId);
+    },
+    updateOrderDetails: function (orderId, updateBodyObj) {
+      return axios.put('/api/orderDetails/' + orderId, updateBodyObj);
+    },
+  },
+
+  InviteEmail: {
+    sendEmail: function (emailObj) {
+      console.log(emailObj);
+      return axios.post('api/emailRoutes/', emailObj);
+    },
+  },
+
+  UserFundraiser: {
+    // return all fundraisers for the currently logged in user
+    getPossibleFundraisers: function (obj) {
+      return axios.get('api/userFundraiser/myfundraisers/');
+    },
+    linkFundraiser: function (addUserToFundraiserObj) {
+      return axios.put(
+        'api/userFundraiser/addusertofundraiser/',
+        addUserToFundraiserObj
+      );
     },
   },
 };

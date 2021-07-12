@@ -20,7 +20,7 @@ const ProductsTab = () => {
 
   const getProductData = async () => {
     const productData = await API.Products.getAdminAllForFundraiser(
-      state.currentFundraiser
+      state.currentFundraiser.id
     );
     setProducts(productData.data);
   };
