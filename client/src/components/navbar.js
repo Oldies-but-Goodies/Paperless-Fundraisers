@@ -58,7 +58,9 @@ console.log(state.currentFundraiser)
               <Nav.Link className="navLinks" as={Link} to='/admin' style={{ color: 'white' }}>
                 Admin
               </Nav.Link>
-              
+              <Nav.Link className="navLinks" as={Link} to='/newOrder' style={{ color: 'white' }}>
+                New Order
+              </Nav.Link>
               <NavDropdown
                 style={{ color: 'white' }}
                 className='ml-auto'
