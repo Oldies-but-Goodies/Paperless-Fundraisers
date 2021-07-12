@@ -45,6 +45,27 @@ router.get('/allOrdersforUser/:id', async (req, res) => {
   }
 });
 
+router.get('/myOrders/', async (req, res) => {
+  // console.log(req);
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+  console.table(req.body);
+  try {
+    const orderData = await Order.findAll({
+      where: {
+        userId: req.body.userId,
+        FundraiserId: req.body.fundraiserId,
+      },
+      include: [{ model: Customer }],
+    });
+    console.log('XXX returning');
+    res.status(200).json(orderData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // GET a single order
 router.get('/:id', async (req, res) => {
   if (!req.user) {

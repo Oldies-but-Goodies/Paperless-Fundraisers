@@ -28,8 +28,8 @@ const Home = (props) => {
       editable: false,
     },
     {
-      dataField: "Customer.first_name",
-      text: "Customer First Name",
+      dataField: 'Customer.first_name',
+      text: 'Customer First Name',
       sort: true,
       editable: false,
     },
@@ -51,8 +51,8 @@ const Home = (props) => {
       sort: true,
     },
     {
-      dataField: "seller_remit",
-      text: "Admin Paid",
+      dataField: 'seller_remit',
+      text: 'Admin Paid',
       sort: true,
       editable: false,
     },
@@ -62,15 +62,26 @@ const Home = (props) => {
     const fundraiserData = await API.Fundraisers.getCurrentFundraiser(
       state.currentFundraiser.id
     );
+    console.log('XXXXX checking fundraiser id ' + state.currentFundraiser.id);
     console.log('fundraiserData XXXXX ', fundraiserData);
     setFundraiser(fundraiserData.data.fundraiserData);
     setTotalFundraiserSales(fundraiserData.data.totalFundraiserSales);
   };
 
   const myOrders = async () => {
-    const myOrderData = await API.Orders.loggedInOrders(state.user.id);
-    console.log(myOrderData);
-    setOrders(myOrderData.data);
+    // console.table(queryObj);
+    // const myOrderData = await API.Orders.loggedInOrders(
+    //   state.user.id,
+    //   state.currentFundraiser.id
+    // );
+    // const myOrderData = await API.Orders.myOrders(queryObj);
+    const myOrderData = await API.Orders.userOrderTotalSales(
+      state.currentFundraiser.id,
+      state.user.id
+    );
+
+    console.log(myOrderData.data);
+    setOrders(myOrderData.data.fundraiserData.Orders);
   };
 
   const handleCellEdit = async (oldValue, newValue, row, column) => {
@@ -100,13 +111,10 @@ const Home = (props) => {
     }
   };
 
-  
-
   useEffect(() => {
     getCurrentFundraiser();
     myOrders();
   }, []);
-
 
   const rowEvents = {
     onDoubleClick: (e, row, rowIndex) => {
@@ -157,7 +165,6 @@ const Home = (props) => {
         bootstrap4
         blurToSave
       />
-      
     </Container>
   );
 };

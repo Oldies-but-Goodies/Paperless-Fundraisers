@@ -6,6 +6,7 @@ const {
   Product,
   Order,
   Order_Details,
+  Customer,
 } = require('../../models');
 
 // GET all UFs
@@ -42,6 +43,9 @@ router.get('/:fundraiserId/users/:userId', async (req, res, next) => {
                   model: Product,
                 },
               ],
+            },
+            {
+              model: Customer,
             },
           ],
         },
