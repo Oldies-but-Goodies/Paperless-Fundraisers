@@ -40,15 +40,13 @@ router.get('/fundraiser/adminall/:fundraiserId', async (req, res) => {
   }
 });
 
-// GET a single order
+// GET a single product
 router.get('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
   try {
-    const productData = await Product.findByPk(req.params.id, {
-      //   include: [{ model: Product, through: ' }]
-    });
+    const productData = await Product.findByPk(req.params.id, {});
 
     if (!productData) {
       res.status(404).json({ message: 'No product found with this id!' });
