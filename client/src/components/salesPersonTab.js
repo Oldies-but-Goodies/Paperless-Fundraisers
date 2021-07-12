@@ -29,6 +29,7 @@ const SalesPersonTab = () => {
     <Container fluid className='new-form-div'>
       <AddPersonModal></AddPersonModal>
       <InvitePersonModal></InvitePersonModal>
+      {/* <AdminPasswordModal></AdminPasswordModal> */}
 
       <Table className='new-form-div' striped bordered hover>
         <thead>
