@@ -78,8 +78,8 @@ export default {
       return axios.get('api/orderDetails/allOrderDetailsForOrder/' + orderId);
     },
     updateOrderDetails: function (orderId, updateBodyObj) {
-      return axios.put('/api/orderDetails/' + orderId, updateBodyObj)
-    }
+      return axios.put('/api/orderDetails/' + orderId, updateBodyObj);
+    },
   },
 
   InviteEmail: {
@@ -93,6 +93,12 @@ export default {
     // return all fundraisers for the currently logged in user
     getPossibleFundraisers: function (obj) {
       return axios.get('api/userFundraiser/myfundraisers/');
+    },
+    linkFundraiser: function (addUserToFundraiserObj) {
+      return axios.put(
+        'api/userFundraiser/addusertofundraiser/',
+        addUserToFundraiserObj
+      );
     },
   },
 };

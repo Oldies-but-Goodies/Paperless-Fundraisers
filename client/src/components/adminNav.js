@@ -32,13 +32,6 @@ const AdminNav = ({ activeTab, setActiveTab }) => {
             </Nav.Link>
             <Nav.Link
               style={{ color: 'white' }}
-              data-name='PRODUCTS2'
-              onClick={(e) => handleOnClick(e)}
-            >
-              Products2
-            </Nav.Link>
-            <Nav.Link
-              style={{ color: 'white' }}
               data-name='ORDERS'
               onClick={(e) => handleOnClick(e)}
             >
