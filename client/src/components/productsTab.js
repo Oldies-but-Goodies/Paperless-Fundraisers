@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Container, Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import AddProductModal from './addProductModal';
 import API from '../lib/API';
 import EditProductModal from './editProductModal';
 import { useStoreContext } from '../store/store';
 import BootstrapTable from 'react-bootstrap-table-next';
+import cellEditFactory from 'react-bootstrap-table2-editor';
+
+import PropTypes from 'prop-types';
 
 const ProductsTab = () => {
   const [state, dispatch] = useStoreContext();
@@ -17,6 +20,62 @@ const ProductsTab = () => {
   const [toggleRender, setToggleRender] = useState(false);
 
   const [productIndex, setProductIndex] = useState(0);
+
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  const columns = [
+    {
+      dataField: 'id',
+      text: 'Product ID',
+      sort: true,
+      type: 'number',
+    },
+    {
+      dataField: 'name',
+      text: 'Product Name',
+      sort: true,
+      validator: (newValue, row, column) => {
+        if (newValue.length === 0) {
+          return {
+            valid: false,
+            message: 'Must have a Product Name',
+          };
+        }
+      },
+    },
+    {
+      dataField: 'description',
+      text: 'Description',
+      sort: true,
+    },
+    {
+      dataField: 'price',
+      text: 'Product Price',
+      sort: true,
+      type: 'number',
+      validator: (newValue, row, column) => {
+        if (isNaN(newValue)) {
+          return {
+            valid: false,
+            message: 'Price should be numeric',
+          };
+        }
+      },
+    },
+    {
+      dataField: 'active',
+      text: 'Active/Hidden',
+      sort: true,
+    },
+  ];
+
+  const defaultSorted = [
+    {
+      dataField: 'name',
+      order: 'desc',
+      type: 'number',
+    },
+  ];
 
   const getProductData = async () => {
     const productData = await API.Products.getAdminAllForFundraiser(
@@ -32,6 +91,29 @@ const ProductsTab = () => {
   const handleRowClick = async (i) => {
     setShowEdit(true);
     setProductIndex(i);
+  };
+
+  const handleCellEdit = async (oldValue, newValue, row, column) => {
+    const productObj = {
+      name: row.name,
+      description: row.description,
+      price: row.price,
+      active: row.active,
+      FundraiserId: state.currentFundraiser.id,
+    };
+    setErrorMsg(null);
+
+    try {
+      const productData = await API.Products.updateOne(productObj, row.id);
+      setErrorMsg('Product Updated');
+
+      setTimeout(() => {
+        setErrorMsg(null);
+      }, 3000);
+    } catch (err) {
+      console.log(err);
+      setErrorMsg(err.message);
+    }
   };
 
   return (
@@ -54,32 +136,35 @@ const ProductsTab = () => {
         showEdit={showEdit}
         setShowEdit={setShowEdit}
       />
-      <Table striped bordered hover className='mt-3'>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Price </th>
-            <th>Description</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product, i) => (
-            //
-            // product.id corresponds to the row that is clicked on in the onClick we shall open the
-            // edit product modal and prepopulate that with all the relevant data
-            //
-            <tr key={i} onClick={() => handleRowClick(i)}>
-              <td>{product.name}</td>
-              <td>${product.price}</td>
-              <td>{product.description}</td>
-              <td>{product.active ? 'ACTIVE' : 'HIDDEN'}</td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+
+      {errorMsg && <p>{errorMsg}</p>}
+
+      <BootstrapTable
+        keyField='id'
+        data={products}
+        columns={columns}
+        defaultSorted={defaultSorted}
+        noDataIndication='No products defined'
+        cellEdit={cellEditFactory({
+          mode: 'click',
+          afterSaveCell: (oldValue, newValue, row, column) => {
+            handleCellEdit(oldValue, newValue, row, column);
+          },
+        })}
+        striped
+        hover
+        condensed
+        bootstrap4
+        blurToSave
+      />
     </Container>
   );
+};
+
+ProductsTab.propTypes = {
+  name: PropTypes.string,
+  id: PropTypes.number,
+  price: PropTypes.number,
 };
 
 export default ProductsTab;
