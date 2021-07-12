@@ -172,35 +172,38 @@ router.put('/updatePassword', (req, res, next) => {
   })(req, res, next);
 });
 
-router.put("/adminUpdatePassword", async (req, res) => {
-      if (!req.user) {
-      return res.json({ status: "error", message: 'not logged in' });
-    }
+router.put('/adminUpdatePassword', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
 
-    if (!isValidPassword(req.body.newPassword)) {
-      return res.status(400).send("Password must be 8 or more characters.");
-    }
-// Need to add protection for admin only
-    const userData = await User.update(
-      {
-        password: req.body.newPassword,
+  if (!isValidPassword(req.body.newPassword)) {
+    return res.status(400).send('Password must be 8 or more characters.');
+  }
+  // Need to add protection for admin only
+  const userData = await User.update(
+    {
+      password: req.body.newPassword,
+    },
+    {
+      where: {
+        email: req.body.email,
       },
-      {
-        where: {
-          email: req.body.email,
-        },
-      }
-    );
+    }
+  );
 
-    console.log(userData);
+  console.log(userData);
 
-    res.json(userData);
-  });
-
+  res.json(userData);
+});
 
 //   UPDATE a user (salesperson)
 
 router.put('/:id', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+
   try {
     const updatedUser = await User.update(
       {
