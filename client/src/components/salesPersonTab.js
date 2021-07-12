@@ -40,22 +40,22 @@ const SalesPersonTab = () => {
         </thead>
         <tbody>
           <tr>
-            <td>Jim</td>
+            <td>Jason Jones</td>
             <td>$200</td>
             {/* <td>
               <ViewOrdersModal></ViewOrdersModal>
             </td> */}
           </tr>
           <tr>
-            <td>Dwight</td>
+            <td>Tammy Gegoski</td>
+            <td>$300</td>
+          </tr>
+          <tr>
+            <td>Stefan Podinski</td>
             <td>$150</td>
           </tr>
           <tr>
-            <td>Phyllis</td>
-            <td>$150</td>
-          </tr>
-          <tr>
-            <td>Stanley</td>
+            <td>Josh Walters</td>
             <td>$150</td>
           </tr>
         </tbody>
