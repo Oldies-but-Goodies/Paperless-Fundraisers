@@ -1,5 +1,21 @@
 # Paperless-Fundraisers
 
+# Motivation for the Project
+
+As a director of many fundraisers it is very frustrating and tedious trying to manually manage all of the order tracking and money reconciliation. It is very difficult to track all of the orders and decipher other peoples handwriting as well as keeping track of payments made. The purpose of this application is to provide one spot for a director of a fundraiser to be able to track their fundraising throughout the entire process. Paperless Fundraisers aims to provide one place for all of this information to be tracked and easily managed by the director of the fundraiser and also by the individual salespeople raising money for the fundraiser.
+
+# Overview of the Application
+Paperless Fundraisers gives the user the ability to login and easily keep track of their fundraisers and orders that they have taken.  It provides an overview of each fundraiser with the goal and how much money has been raised. There are a variety of options for the salespeople and an additional level of options for the Admin of the fundraiser.  Salespeople can enter a customers order and track the money that has been paid.  Admins can create the fundraiser, add products, reconcile payments from the customers and salespeople and add new salespeople. Admins can send email invites to anyone wanting to join the fundraiser, they can also update the fundraiser, update salespeople, orders and products.  Admins can also delete a user, update their information and also reset their password. This application is unique in that it provides the capability to track both the customers payment for the product as well as the salespersons payment of their collected orders.
+
+The workflow for the application is as follows:
+1. Admin creates the fundraiser and adds the products to be sold.
+2. Admins then send email invites to the sellers.
+3. Sellers sell the products and insert/update customer orders.
+4. Sellers reconcile the money collected and keep track of which customers have already paid.
+5. Admin keeps track of the orders and how much money is being raised.
+6. Admin keeps track of how much money each salesperson has raised.
+7. Admins also reconcile the money collected and keep track of which salespeople have already paid.
+
 ## How to deploy for local development
 
 1. clone this repo
