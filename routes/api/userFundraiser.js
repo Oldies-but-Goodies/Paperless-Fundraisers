@@ -102,7 +102,7 @@ router.get('/myfundraisers', async (req, res) => {
   }
 });
 
-// CREATE a product
+// CREATE a fundraiser
 
 router.post('/addusertofundraiser', async (req, res) => {
   if (!req.user) {

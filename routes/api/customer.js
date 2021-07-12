@@ -50,6 +50,9 @@ router.post('/', async (req, res) => {
 //   UPDATE a customer
 // TODO add with auth
 router.put('/:id', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const updatedCustomer = await Customer.update(
       {
@@ -82,6 +85,9 @@ router.put('/:id', async (req, res) => {
 // DELETE a customer
 // TODO add with auth
 router.delete('/:id', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
   try {
     const customerData = await Customer.destroy({
       where: {
