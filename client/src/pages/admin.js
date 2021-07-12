@@ -4,7 +4,6 @@ import { Container } from 'react-bootstrap';
 import SalesPersonTab from '../components/salesPersonTab';
 import OrdersTab from '../components/ordersTab';
 import ProductsTab from '../components/productsTab';
-import Products2Tab from '../components/products2Tab';
 import FundraisersTab from '../components/fundraisersTab';
 
 const Admin = (props) => {
@@ -21,9 +20,6 @@ const Admin = (props) => {
 
       case 'PRODUCTS':
         return <ProductsTab></ProductsTab>;
-
-      case 'PRODUCTS2':
-        return <Products2Tab></Products2Tab>;
 
       case 'FUNDRAISERS':
         return <FundraisersTab></FundraisersTab>;
