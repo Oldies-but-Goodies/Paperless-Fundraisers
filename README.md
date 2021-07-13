@@ -16,6 +16,14 @@ The workflow for the application is as follows:
 6. Admin keeps track of how much money each salesperson has raised.
 7. Admins also reconcile the money collected and keep track of which salespeople have already paid.
 
+Link to our Deployed Application:
+
+http://glacial-shore-79212.herokuapp.com/
+
+Link to our Github Repository:
+
+https://github.com/Oldies-but-Goodies/Paperless-Fundraisers.git
+
 ## How to deploy for local development
 
 1. clone this repo
