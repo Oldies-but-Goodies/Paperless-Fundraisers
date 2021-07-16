@@ -18,6 +18,14 @@ The workflow for the application is as follows:
 6. Admin keeps track of how much money each salesperson has raised.
 7. Admins also reconcile the money collected and keep track of which salespeople have already paid.
 
+Link to our Deployed Application:
+
+http://glacial-shore-79212.herokuapp.com/
+
+Link to our Github Repository:
+
+https://github.com/Oldies-but-Goodies/Paperless-Fundraisers.git
+
 ## How to deploy for local development
 
 1. clone this repo
@@ -60,22 +68,24 @@ DB_SECRET=keyboard_cat
 
 Developed in June 2021, this application was first written with the following server side dependencies:
 
-| module                | version |
-| --------------------- | ------- |
-| bcrypt                | ^5.0.1  |
-| bcryptjs              | ^2.4.3  |
-| bootstrap             | ^4.6.0  |
-| dotenv                | ^8.6.0  |
-| express               | ^4.17.1 |
-| express-mysql-session | ^2.1.4  |
-| express-session       | ^1.17.1 |
-| if-env                | ^1.0.4  |
-| mysql2                | ^2.2.5  |
-| passport              | ^0.4.1  |
-| passport-local        | ^1.0.0  |
-| react-bootstrap       | ^1.6.1  |
-| react-router          | ^5.2.0  |
-| sequelize             | ^6.3.5  |
+| module                        | version |
+| ----------------------------- | ------- |
+| bcrypt                        | ^5.0.1  |
+| bcryptjs                      | ^2.4.3  |
+| bootstrap                     | ^4.6.0  |
+| dotenv                        | ^8.6.0  |
+| express                       | ^4.17.1 |
+| express-mysql-session         | ^2.1.4  |
+| express-session               | ^1.17.1 |
+| if-env                        | ^1.0.4  |
+| mysql2                        | ^2.2.5  |
+| passport                      | ^0.4.1  |
+| passport-local                | ^1.0.0  |
+| react-bootstrap               | ^1.6.1  |
+| react-router                  | ^5.2.0  |
+| sequelize                     | ^6.3.5  |
+| nodemailer                    | ^6.6.2  |
+| nodemailer-sendgrid-transport | ^0.2.0  |
 
 # Client Dependencies
 
