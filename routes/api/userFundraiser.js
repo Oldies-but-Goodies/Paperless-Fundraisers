@@ -47,6 +47,9 @@ router.get('/:fundraiserId/users/:userId', async (req, res, next) => {
             {
               model: Customer,
             },
+            {
+            model: User,
+            },
           ],
         },
       ],
