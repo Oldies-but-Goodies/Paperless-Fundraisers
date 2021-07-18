@@ -22,6 +22,7 @@ const reducer = (state, action) => {
     case SET_USER:
       let currentFundraiserId = state.currentFundraiser.id;
       let currentFundraiserAdminLevel = state.currentFundraiser.adminLevel;
+      let currentFundraiserName = state.currentFundraiser.name;
       // check to see if the currentFundraiser is not set
       console.log(state.currentFundraiser);
       console.log(currentFundraiserId, currentFundraiserAdminLevel);
@@ -34,6 +35,7 @@ const reducer = (state, action) => {
           currentFundraiserId = action.user.Fundraisers[0].id;
           currentFundraiserAdminLevel =
             action.user.Fundraisers[0].userFundraiser.admin_level;
+          currentFundraiserName = action.user.Fundraisers[0].name
         }
       }
 
@@ -44,6 +46,7 @@ const reducer = (state, action) => {
         currentFundraiser: {
           id: currentFundraiserId,
           adminLevel: currentFundraiserAdminLevel,
+          name: currentFundraiserName,
         },
       };
 

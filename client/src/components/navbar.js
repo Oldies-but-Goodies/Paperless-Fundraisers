@@ -76,7 +76,7 @@ console.log(state.currentFundraiser)
                 <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>
               </NavDropdown>
               <Nav.Link as={Link} to='/newOrder' style={{ color: 'white' }}>
-               {"Fundraiser " + state.currentFundraiser.id}
+               {state.currentFundraiser.name + " Fundraiser" }
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

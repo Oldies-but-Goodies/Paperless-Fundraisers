@@ -10,7 +10,10 @@ import cellEditFactory, { Type } from "react-bootstrap-table2-editor";
 const OrderDetailModal = ({ orderId, show, onClose }) => {
   const [order, setOrder] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-
+  const [runningTotal, setRunningTotal] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [quanities, setQuantities] = useState({});
+  
   const columns = [
     {
       dataField: "id",
@@ -55,6 +58,30 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
     const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
     console.log(orderDetailsData.data)
     setOrder(orderDetailsData.data);
+  };
+
+  const handleQuantityChange = (productId) => (event) => {
+    const { name, value } = event.target;
+
+    const newQ = {
+      ...quanities,
+      [productId]: value,
+    };
+
+    setQuantities(newQ);
+
+    let newTotal = 0;
+
+    for (const productId in newQ) {
+      const filterProducts = products.filter((product) => {
+        return product.id === parseInt(productId);
+      });
+      const priceForProducts = filterProducts[0].price * newQ[productId];
+
+      newTotal += priceForProducts;
+    }
+
+    setRunningTotal(newTotal);
   };
 
   const handleCellEdit = async (oldValue, newValue, row, column) => {
@@ -157,7 +184,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
                 <Form.Control
                   plaintext
                   readOnly
-                  defaultValue={order && "$" + order.order_total}
+                  defaultValue={runningTotal}
                 />
               </Col>
             </Form.Group>
