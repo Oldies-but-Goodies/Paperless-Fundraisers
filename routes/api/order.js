@@ -1,8 +1,14 @@
-const router = require("express").Router();
-const { User, Order, Customer, Order_Details, Fundraiser } = require("../../models");
+const router = require('express').Router();
+const {
+  User,
+  Order,
+  Customer,
+  Order_Details,
+  Fundraiser,
+} = require('../../models');
 
 // GET all orders
-router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
+router.get('/fundraiser/all/:fundraiserId', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
@@ -10,9 +16,8 @@ router.get("/fundraiser/all/:fundraiserId", async (req, res) => {
     const orderData = await Order.findAll({
       where: {
         fundraiserId: req.params.fundraiserId,
-        
       },
-      include: [{ model: User }]
+      include: [{ model: User }],
     });
     res.status(200).json(orderData);
   } catch (err) {
@@ -30,7 +35,6 @@ router.get('/allOrdersforUser/:id', async (req, res) => {
   try {
     const orderData = await Order.findAll({
       where: {
-       
         userId: req.params.id,
       },
       include: [{ model: Customer }],
@@ -41,18 +45,37 @@ router.get('/allOrdersforUser/:id', async (req, res) => {
   }
 });
 
+router.get('/myOrders/', async (req, res) => {
+  // console.log(req);
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+  console.table(req.body);
+  try {
+    const orderData = await Order.findAll({
+      where: {
+        userId: req.body.userId,
+        FundraiserId: req.body.fundraiserId,
+      },
+      include: [{ model: Customer }],
+    });
+    console.log('XXX returning');
+    res.status(200).json(orderData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 // GET a single order
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
   try {
-    const orderData = await Order.findByPk(req.params.id, {
-     
-    });
+    const orderData = await Order.findByPk(req.params.id, {});
 
     if (!orderData) {
-      res.status(404).json({ message: "No order found with this id!" });
+      res.status(404).json({ message: 'No order found with this id!' });
       return;
     }
 
@@ -64,13 +87,12 @@ router.get("/:id", async (req, res) => {
 
 // CREATE an order
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
   try {
-   
-    const { orderObj, customer, productsObj } = req.body
+    const { orderObj, customer, productsObj } = req.body;
 
     // create a new customer
 
@@ -83,7 +105,7 @@ router.post("/", async (req, res) => {
       ...orderObj,
       UserId: req.user.id,
       CustomerId: customerData.dataValues.id,
-    }
+    };
 
     const orderData = await Order.create(orderObjNew);
 
@@ -94,18 +116,22 @@ router.post("/", async (req, res) => {
     for (const productId in productsObj) {
       let product = {
         ProductId: productId,
-        product_qty: productsObj[productId]
-      }
+        product_qty: productsObj[productId],
+      };
 
       productsArr.push(product);
     }
 
-    let orderDetailsData = await Promise.all(productsArr.map(val => Order_Details.create({
-        ...val,
-        OrderId: orderData.dataValues.id
-      })))
+    let orderDetailsData = await Promise.all(
+      productsArr.map((val) =>
+        Order_Details.create({
+          ...val,
+          OrderId: orderData.dataValues.id,
+        })
+      )
+    );
 
-      console.log(orderDetailsData);
+    console.log(orderDetailsData);
 
     res.status(200).json([customerData, orderData, orderDetailsData]);
   } catch (err) {
@@ -115,7 +141,7 @@ router.post("/", async (req, res) => {
 
 //   UPDATE an order
 
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
@@ -136,7 +162,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!updatedOrder) {
-      res.status(404).json({ message: "No Order found with this id" });
+      res.status(404).json({ message: 'No Order found with this id' });
       return;
     }
     res.json(updatedOrder);
@@ -147,7 +173,7 @@ router.put("/:id", async (req, res) => {
 
 // DELETE an order
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
@@ -159,33 +185,7 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!orderData) {
-      res.status(404).json({ message: "No Order found with this id!" });
-      return;
-    }
-
-    res.status(200).json(orderData);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-
-// DELETE an order by orderId
-
-router.delete("/:orderId", async (req, res) => {
-  if (!req.user) {
-    return res.json({ status: 'error', message: 'not logged in' });
-  }
-  console.log(req);
-  try {
-    const orderData = await Order.destroy({
-      where: {
-       
-        orderId: req.params.id,
-      },
-    });
-
-    if (!orderData) {
-      res.status(404).json({ message: "No order_id found with this id!" });
+      res.status(404).json({ message: 'No Order found with this id!' });
       return;
     }
 

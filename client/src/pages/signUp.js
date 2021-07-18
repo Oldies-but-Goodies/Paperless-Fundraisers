@@ -28,37 +28,19 @@ const SignUp = () => {
 
   const getFundraiserData = async () => {
     const fundraiserData = await API.Fundraisers.getFundraisers();
-    console.log(fundraiserData.data);
     setFundraisers(fundraiserData.data);
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setSignUpCreds({ ...signUpCreds, [name]: value });
-    console.table(signUpCreds);
   };
 
   // create a function that listens for a change to the DropdownButton and updates the selectedFundraiser
   const handleDropdownChange = (e) => {
-    console.log(e);
-    console.log({ e });
-    console.log(typeof e);
-
     const value = e;
     setSelectedFundraiser(value);
-    console.log(selectedFundraiser);
   };
-
-  // const onSelect = (event, eventKey) => {
-  //   event.preventDefault();
-  //   const { name, eventKey } = event.target;
-
-  //   setDropdownTitle({ [name]: eventKey });
-
-  //   const dropdownTitle = this.state.dropdownTitle;
-  //   dropdownTitle.dropdownTitle.value = eventKey;
-  // };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -74,24 +56,19 @@ const SignUp = () => {
         last_name: signUpCreds.last_name,
       })
       .then((res) => {
-        console.log('*111111', res);
-
         if (res.data.status === 'error') {
           setErrorMsg(res.data.message);
           return;
         }
         setErrorMsg(null);
         return res;
-        // history.replace('/login');
       })
       .then((res) => {
-        console.log('********', res);
         const userFundraiserObj = {
           FundraiserId: selectedFundraiser,
           UserId: res.data.userId,
           admin_level: 'user',
         };
-        console.table(userFundraiserObj);
         // api call to link user to fundraiser
         axios
           .post('/api/userFundraiser/addusertofundraiser/', userFundraiserObj)
@@ -101,7 +78,9 @@ const SignUp = () => {
               return;
             }
             setErrorMsg(null);
-            history.replace('/');
+            // redirect user to the home page
+            history.push('/');
+            // history.replace('/');
           })
           .catch((error) => {
             console.log('ERROR', error);

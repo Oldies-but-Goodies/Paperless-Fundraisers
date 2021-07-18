@@ -1,9 +1,10 @@
 :root {
-  background-color: rgb(207, 227, 250);
+  /* background-color: rgb(207, 227, 250); */
+  background-image: url(./images/background-image.png);
 }
 
 .appContainer {
-  background-color: rgb(207, 227, 250);
+  background-image: url(./images/background-image.png);
 }
 .jumbo {
   background-color: navy;
@@ -25,6 +26,10 @@
 
 .navBrand {
   font-size: 1.75rem
+}
+
+.data-table {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 body {
@@ -58,12 +63,14 @@ code {
   max-width: 70%;
   margin-top: 20px;
   background-color: lightsteelblue;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .loginContainer {
   max-width: 90%;
   margin-top: 20px;
   background-color: lightsteelblue;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .new-form-div {
@@ -74,5 +81,6 @@ code {
   padding: 20px;
   margin-top: 20px;
   margin-bottom: 25px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 

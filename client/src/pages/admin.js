@@ -28,7 +28,7 @@ const Admin = (props) => {
 
   return (
     <Container>
-      <div>
+      <div className='new-form-div'>
         <p>
           As an admin for your fundraiser, you have the ability to make updates
           to your fundraiser products, orders, etc. Here is a list of a few

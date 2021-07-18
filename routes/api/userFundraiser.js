@@ -6,6 +6,7 @@ const {
   Product,
   Order,
   Order_Details,
+  Customer,
 } = require('../../models');
 
 // GET all UFs
@@ -42,6 +43,9 @@ router.get('/:fundraiserId/users/:userId', async (req, res, next) => {
                   model: Product,
                 },
               ],
+            },
+            {
+              model: Customer,
             },
           ],
         },
@@ -102,7 +106,7 @@ router.get('/myfundraisers', async (req, res) => {
   }
 });
 
-// CREATE a product
+// CREATE a fundraiser
 
 router.post('/addusertofundraiser', async (req, res) => {
   if (!req.user) {

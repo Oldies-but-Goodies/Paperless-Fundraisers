@@ -15,12 +15,16 @@ const EditProductModal = ({
   const [state, dispatch] = useStoreContext();
   const history = useHistory();
 
-  const [name, setName] = useState(product.name);
-  const [description, setDescription] = useState(product.description);
-  const [price, setPrice] = useState(product.price);
-  const [active, setActive] = useState(product.active);
+  // set name, description, price and active only if product is not null
 
-  console.log(product.name, product.description, product.price, product.active);
+  const [name, setName] = useState(product ? product.name : '');
+  const [description, setDescription] = useState(
+    product ? product.description : ''
+  );
+  const [price, setPrice] = useState(product ? product.price : '');
+  const [active, setActive] = useState(product ? product.active : '');
+
+  // console.log(product.name, product.description, product.price, product.active);
 
   console.log(name, description, price, active);
 
@@ -79,7 +83,7 @@ const EditProductModal = ({
               id='inputProduct'
               className='form-control mt-1'
               name='product_name'
-              placeholder={product.name}
+              placeholder={product ? product.name : ''}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -92,7 +96,7 @@ const EditProductModal = ({
               className='form-control mt-1'
               name='Price'
               placeholder='Price'
-              value={product.price}
+              value={product ? product.price : ''}
               // onChange={handleChange}
             />
             <label htmlFor='inputDescription' className='sr-only'>
@@ -104,15 +108,15 @@ const EditProductModal = ({
               className='form-control mt-1'
               name='Description'
               placeholder='Description'
-              value={product.description}
+              value={product ? product.description : ''}
               // onChange={handleChange}
             />
             <Form.Check
               className='mt-2'
               type='checkbox'
               label='Product Active'
-              value={product.active}
-              checked={product.active}
+              value={product ? product.active : ''}
+              checked={product ? product.active : false}
             />
           </form>
         </Modal.Body>

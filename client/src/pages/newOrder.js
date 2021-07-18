@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Table, Button, Form } from 'react-bootstrap';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
+import NumberFormat from 'react-number-format';
 
 
 const NewOrder = (props) => {
@@ -190,7 +191,7 @@ const NewOrder = (props) => {
             ></input>
           </div>
           <div className='col-sm-3 mt-1 ml-2'>
-            <input
+            {/* <input
               type='string'
               className='form-control'
               name='phone_number'
@@ -198,7 +199,16 @@ const NewOrder = (props) => {
               required
               placeholder='Phone Number'
               onChange={handleChange}
-            ></input>
+            ></input> */}
+            <NumberFormat format="(###) ###-####" mask="_"
+            type='string'
+            className='form-control'
+            name='phone_number'
+            value={formData.phone_number}
+            required
+            placeholder='Phone Number'
+            onChange={handleChange}
+            />
           </div>
           <div className='col-sm-3 mt-1'>
             <input
