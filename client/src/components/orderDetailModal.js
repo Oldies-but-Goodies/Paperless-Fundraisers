@@ -13,7 +13,8 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
   const [runningTotal, setRunningTotal] = useState(0);
   const [products, setProducts] = useState([]);
   const [quanities, setQuantities] = useState({});
-  
+  const [toggleOrderDetailsAPI, setToggleOrderDetailsAPI] = useState(false);
+
   const columns = [
     {
       dataField: "id",
@@ -56,36 +57,13 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
 
   const getOrderDetails = async () => {
     const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
-    console.log(orderDetailsData.data)
     setOrder(orderDetailsData.data);
+    calcRunningTotal(orderDetailsData.data.Order_Details)
   };
-
-  const handleQuantityChange = (productId) => (event) => {
-    const { name, value } = event.target;
-
-    const newQ = {
-      ...quanities,
-      [productId]: value,
-    };
-
-    setQuantities(newQ);
-
-    let newTotal = 0;
-
-    for (const productId in newQ) {
-      const filterProducts = products.filter((product) => {
-        return product.id === parseInt(productId);
-      });
-      const priceForProducts = filterProducts[0].price * newQ[productId];
-
-      newTotal += priceForProducts;
-    }
-
-    setRunningTotal(newTotal);
-  };
+  
+  const calcRunningTotal = orderDetails => setRunningTotal(orderDetails.reduce((total, currentObj) => currentObj.product_qty * currentObj.Product.price + total, 0));
 
   const handleCellEdit = async (oldValue, newValue, row, column) => {
-    console.log(row)
     const updateBodyObj = {
       product_qty: row.product_qty
     };
@@ -96,6 +74,8 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
         row.id,
         updateBodyObj
       );
+
+      setToggleOrderDetailsAPI(!toggleOrderDetailsAPI);
 
       setErrorMsg("Order Updated");
 
@@ -109,7 +89,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
 
   useEffect(() => {
     if (orderId) getOrderDetails();
-  }, [orderId]);
+  }, [orderId, toggleOrderDetailsAPI]);
 
   return (
     <>
@@ -185,6 +165,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
                   plaintext
                   readOnly
                   defaultValue={runningTotal}
+                  value={runningTotal}
                 />
               </Col>
             </Form.Group>
