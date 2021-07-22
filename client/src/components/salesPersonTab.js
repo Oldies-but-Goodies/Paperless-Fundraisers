@@ -7,7 +7,7 @@ import ViewOrdersModal from './viewOrdersModal';
 import { useStoreContext } from '../store/store';
 import BootstrapTable from 'react-bootstrap-table-next';
 
-const SalesPersonTab = () => {
+const SalesPersonTab = (props) => {
   const [state, dispatch] = useStoreContext();
   const [fundraiser, setFundraiser] = useState([]);
   const [totalUserSales, setTotalUserSales] = useState('$xx.xx');
@@ -16,23 +16,23 @@ const SalesPersonTab = () => {
 
   const columns = [
     {
-      dataField: 'Orders.User.first_name',
+      dataField: 'User.first_name',
       text: 'Customer First Name',
       sort: true,
       editable: false,
     },
     {
-      dataField: 'Orders.User.last_name',
+      dataField: 'User.last_name',
       text: 'Customer Last Name',
       sort: true,
       editable: false,
     },
-    {
-      dataField: 'totalUserSales',
-      text: 'Total Sales',
-      sort: true,
-      editable: false,
-    },
+    // {
+    //   dataField: 'totalUserSales',
+    //   text: 'Total Sales',
+    //   sort: true,
+    //   editable: false,
+    // },
   ];
 
   const getCurrentFundraiser = async () => {
@@ -45,17 +45,18 @@ const SalesPersonTab = () => {
   };
 
   const userSalesInfo = async () => {
-    const userSalesData = await API.Orders.userOrderTotalSales(
+    const userSalesData = await API.Orders.salesPersonTotals(
       state.currentFundraiser.id,
-      state.user.id
+      // state.user.id
     );
+    console.log(userSalesData.data);
     console.log('XXXXX checking fundraiser id ' + state.currentFundraiser.id);
-    console.log(userSalesData);
-    setUserSales(userSalesData.data.fundraiserData.Orders);
-    setTotalUserSales(userSalesData.fundraiserData.data.totalUserSales)
+    setUserSales(userSalesData.data.fundraiserData.Users);
+    setTotalUserSales(userSalesData.data.fundraiserData.Orders)
   };
 
   useEffect(() => {
+    getCurrentFundraiser();
     userSalesInfo();
   }, []);
 
@@ -64,7 +65,7 @@ const SalesPersonTab = () => {
       <AddPersonModal></AddPersonModal>
       <InvitePersonModal></InvitePersonModal>
 
-      <BootstrapTable
+      {/* <BootstrapTable
         keyField='id'
         data={userSales}
         columns={columns}
@@ -84,10 +85,10 @@ const SalesPersonTab = () => {
         condensed
         bootstrap4
         blurToSave
-      />
+      /> */}
       {/* <AdminPasswordModal></AdminPasswordModal> */}
 
-      {/* <Table className='new-form-div' striped bordered hover>
+      <Table className='new-form-div' striped bordered hover>
         <thead>
           <tr>
             <th>Salesperson</th>
@@ -97,11 +98,11 @@ const SalesPersonTab = () => {
         <tbody>
           <tr>
             <td>Jason Jones</td>
-            <td>$200</td> */}
-            {/* <td>
+            <td>$200</td> 
+            <td>
               <ViewOrdersModal></ViewOrdersModal>
-            </td> */}
-          {/* </tr>
+            </td>
+           </tr>
           <tr>
             <td>Tammy Gegoski</td>
             <td>$300</td>
@@ -115,7 +116,7 @@ const SalesPersonTab = () => {
             <td>$150</td>
           </tr>
         </tbody>
-      </Table> */}
+      </Table>
     </Container>
   );
 };
