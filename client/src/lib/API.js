@@ -68,6 +68,9 @@ export default {
         'api/userFundraiser/' + fundraiserId + '/users/' + userId
       );
     },
+    salesPersonTotals: function (fundraiserId) {
+      return axios.get('api/userFundraiser' + fundraiserId + '/users')
+    },
     updateOrder: function (orderId, updateBodyObj) {
       return axios.put('/api/order/' + orderId, updateBodyObj);
     },

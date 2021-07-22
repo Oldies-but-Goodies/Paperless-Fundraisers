@@ -13,6 +13,7 @@ const Home = (props) => {
   const [fundraiser, setFundraiser] = useState([]);
   const [orders, setOrders] = useState([]);
   const [totalFundraiserSales, setTotalFundraiserSales] = useState('$xx.xx');
+  const [totalUserSales, setTotalUserSales] = useState('$xx.xx')
 
   const [order, setOrder] = useState(null);
 
@@ -56,7 +57,7 @@ const Home = (props) => {
       sort: true,
       editable: false,
     },
-  ];
+      ];
 
   const getCurrentFundraiser = async () => {
     const fundraiserData = await API.Fundraisers.getCurrentFundraiser(
@@ -82,6 +83,7 @@ const Home = (props) => {
 
     console.log(myOrderData.data);
     setOrders(myOrderData.data.fundraiserData.Orders);
+    setTotalUserSales(myOrderData.data.totalUserSales)
   };
 
   const handleCellEdit = async (oldValue, newValue, row, column) => {
@@ -124,6 +126,9 @@ const Home = (props) => {
     },
   };
 
+  const CaptionElement = () => <h5 style={{textAlign: 'left', color: 'black', padding: '0.5em' }}>My total sales ${totalUserSales}</h5>;
+
+
   return (
     <Container fluid className='homeContainer'>
       <OrderDetailModal
@@ -144,10 +149,14 @@ const Home = (props) => {
           {totalFundraiserSales}
         </h5>
       </div>
+      
       <BootstrapTable
+      
         keyField='id'
         data={orders}
         columns={columns}
+        // caption={"My total sales $" + totalUserSales}
+        caption={<CaptionElement />}
         rowEvents={rowEvents}
         // defaultSorted={defaultSorted}
         noDataIndication='No Orders Yet'
