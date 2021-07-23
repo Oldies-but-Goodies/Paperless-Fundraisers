@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Table, Button, Form } from 'react-bootstrap';
-import API from '../lib/API';
-import { useStoreContext } from '../store/store';
-import NumberFormat from 'react-number-format';
-
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Table, Button, Form } from "react-bootstrap";
+import API from "../lib/API";
+import { useStoreContext } from "../store/store";
+import NumberFormat from "react-number-format";
+import SelectUSState from "react-select-us-states";
 
 const NewOrder = (props) => {
   const [state, dispatch] = useStoreContext();
@@ -87,89 +87,145 @@ const NewOrder = (props) => {
       },
     })
       .then((response) => {
-        console.log('RESPONSE', response);
-        if (response.data.status === 'error') {
+        console.log("RESPONSE", response);
+        if (response.data.status === "error") {
           setErrorMsg(response.data.message);
           return;
         }
         setErrorMsg(null);
       })
       .catch((error) => {
-        console.log('ERROR', error);
+        console.log("ERROR", error);
         setErrorMsg(error);
       });
     window.location.reload();
   };
 
-  useEffect(() => {
+    useEffect(() => {
     getProductData();
   }, []);
 
   return (
     <Container fluid className='homeContainer'>
-    <div className='new-form-div text-center'>
-      <h1>New Order</h1>
-      <div className='border border-dark py-4'>
-        <div className='form-group row'>
-          <div className='col-sm-5 ml-2'>
-            <input
-              type='text'
-              className='form-control'
-              name='first_name'
-              value={formData.first_name}
-              required
-              placeholder='First Name'
-              onChange={handleChange}
-            ></input>
+      <div className='new-form-div text-center'>
+        <h1>New Order</h1>
+        <div className='border border-dark py-4'>
+          <div className='form-group row'>
+            <div className='col-sm-5 ml-2'>
+              <input
+                type='text'
+                className='form-control'
+                name='first_name'
+                value={formData.first_name}
+                required
+                placeholder='First Name'
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className='col-sm-5 mr-2'>
+              <input
+                type='text'
+                className='form-control'
+                name='last_name'
+                value={formData.last_name}
+                required
+                placeholder='Last Name'
+                onChange={handleChange}
+              ></input>
+            </div>
           </div>
-          <div className='col-sm-5 mr-2'>
-            <input
-              type='text'
-              className='form-control'
-              name='last_name'
-              value={formData.last_name}
-              required
-              placeholder='Last Name'
-              onChange={handleChange}
-            ></input>
-          </div>
-        </div>
-        <div className='form-group row'>
-          <div className='col-sm-10 mt-1 ml-2'>
-            <input
-              type='text'
-              className='form-control'
-              name='address_line1'
-              value={formData.address_line1}
-              required
-              placeholder='Address'
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className='col-sm-10 mt-1 ml-2'>
-            <input
-              type='text'
-              className='form-control'
-              name='address_line2'
-              value={formData.address_line2}
-              required
-              placeholder='Address 2'
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className='col-sm-5 mt-1 ml-2'>
-            <input
-              type='text'
-              className='form-control'
-              name='city'
-              value={formData.city}
-              required
-              placeholder='City'
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className='col-sm-2 mt-1'>
-            <input
+          <div className='form-group row'>
+            <div className='col-sm-10 mt-1 ml-2'>
+              <input
+                type='text'
+                className='form-control'
+                name='address_line1'
+                value={formData.address_line1}
+                required
+                placeholder='Address'
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className='col-sm-10 mt-1 ml-2'>
+              <input
+                type='text'
+                className='form-control'
+                name='address_line2'
+                value={formData.address_line2}
+                required
+                placeholder='Address 2'
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className='col-sm-4 mt-1 ml-2'>
+              <input
+                type='text'
+                className='form-control'
+                name='city'
+                value={formData.city}
+                required
+                placeholder='City'
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className='col-sm-3 mt-1'>
+              <select class='form-control' id='state' name='state' onChange={handleChange}>
+                <option value=''>State</option>
+                <option value='AK'>Alaska</option>
+                <option value='AL'>Alabama</option>
+                <option value='AR'>Arkansas</option>
+                <option value='AZ'>Arizona</option>
+                <option value='CA'>California</option>
+                <option value='CO'>Colorado</option>
+                <option value='CT'>Connecticut</option>
+                <option value='DC'>District of Columbia</option>
+                <option value='DE'>Delaware</option>
+                <option value='FL'>Florida</option>
+                <option value='GA'>Georgia</option>
+                <option value='HI'>Hawaii</option>
+                <option value='IA'>Iowa</option>
+                <option value='ID'>Idaho</option>
+                <option value='IL'>Illinois</option>
+                <option value='IN'>Indiana</option>
+                <option value='KS'>Kansas</option>
+                <option value='KY'>Kentucky</option>
+                <option value='LA'>Louisiana</option>
+                <option value='MA'>Massachusetts</option>
+                <option value='MD'>Maryland</option>
+                <option value='ME'>Maine</option>
+                <option value='MI'>Michigan</option>
+                <option value='MN'>Minnesota</option>
+                <option value='MO'>Missouri</option>
+                <option value='MS'>Mississippi</option>
+                <option value='MT'>Montana</option>
+                <option value='NC'>North Carolina</option>
+                <option value='ND'>North Dakota</option>
+                <option value='NE'>Nebraska</option>
+                <option value='NH'>New Hampshire</option>
+                <option value='NJ'>New Jersey</option>
+                <option value='NM'>New Mexico</option>
+                <option value='NV'>Nevada</option>
+                <option value='NY'>New York</option>
+                <option value='OH'>Ohio</option>
+                <option value='OK'>Oklahoma</option>
+                <option value='OR'>Oregon</option>
+                <option value='PA'>Pennsylvania</option>
+                <option value='PR'>Puerto Rico</option>
+                <option value='RI'>Rhode Island</option>
+                <option value='SC'>South Carolina</option>
+                <option value='SD'>South Dakota</option>
+                <option value='TN'>Tennessee</option>
+                <option value='TX'>Texas</option>
+                <option value='UT'>Utah</option>
+                <option value='VA'>Virginia</option>
+                <option value='VT'>Vermont</option>
+                <option value='WA'>Washington</option>
+                <option value='WI'>Wisconsin</option>
+                <option value='WV'>West Virginia</option>
+                <option value='WY'>Wyoming</option>
+              </select>
+              {/* <input
+              //  <SelectUSState id="myId" className="myClassName" /> 
               type='text'
               className='form-control'
               name='state'
@@ -177,21 +233,22 @@ const NewOrder = (props) => {
               required
               placeholder='State'
               onChange={handleChange}
-            ></input>
-          </div>
-          <div className='col-sm-3 mt-1'>
-            <input
-              type='integer'
-              className='form-control'
-              name='zip_code'
-              value={formData.zip_code}
-              required
-              placeholder='Zip Code'
-              onChange={handleChange}
-            ></input>
-          </div>
-          <div className='col-sm-3 mt-1 ml-2'>
-            {/* <input
+              
+            ></input> */}
+            </div>
+            <div className='col-sm-3 mt-1'>
+              <input
+                type='integer'
+                className='form-control'
+                name='zip_code'
+                value={formData.zip_code}
+                required
+                placeholder='Zip Code'
+                onChange={handleChange}
+              ></input>
+            </div>
+            <div className='col-sm-3 mt-1 ml-2'>
+              {/* <input
               type='string'
               className='form-control'
               name='phone_number'
@@ -200,95 +257,97 @@ const NewOrder = (props) => {
               placeholder='Phone Number'
               onChange={handleChange}
             ></input> */}
-            <NumberFormat format="(###) ###-####" mask="_"
-            type='string'
-            className='form-control'
-            name='phone_number'
-            value={formData.phone_number}
-            required
-            placeholder='Phone Number'
-            onChange={handleChange}
-            />
-          </div>
-          <div className='col-sm-3 mt-1'>
-            <input
-              type='email'
-              className='form-control'
-              name='email'
-              value={formData.email}
-              required
-              placeholder='Email'
-              onChange={handleChange}
-            ></input>
+              <NumberFormat
+                format='(###) ###-####'
+                mask='_'
+                type='string'
+                className='form-control'
+                name='phone_number'
+                value={formData.phone_number}
+                required
+                placeholder='Phone Number'
+                onChange={handleChange}
+              />
+            </div>
+            <div className='col-sm-3 mt-1'>
+              <input
+                type='email'
+                className='form-control'
+                name='email'
+                value={formData.email}
+                required
+                placeholder='Email'
+                onChange={handleChange}
+              ></input>
+            </div>
           </div>
         </div>
-      </div>
 
-      <Table striped bordered hover className='mt-3'>
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Price </th>
-            <th className="col-1">Quantity</th>
-            <th>Total Product Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((product) => (
+        <Table striped bordered hover className='mt-3'>
+          <thead>
             <tr>
-              <td id>{product.name}</td>
-              <td>${product.price}</td>
-              <td>
-                <label htmlFor='inputQuantity' className='sr-only'>
-                  Quantity
-                </label>
-                <input
-                  type='integer'
-                  id='inputQuantity'
-                  className='form-control'
-                  name='quantity'
-                  value={quanities[product.id] || null}
-                  onChange={handleQuantityChange(product.id)}
-                />
-              </td>
-              <td className='d-flex justify-content-center'>
-                {
-                  <div className='col-3 font-weight-bold'>
-                    {' '}
-                    {quanities[product.id]
-                      ? quanities[product.id] * product.price
-                      : 0}
-                  </div>
-                }
-              </td>
+              <th>Product</th>
+              <th>Price </th>
+              <th className='col-1'>Quantity</th>
+              <th>Total Product Price</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          <tbody>
+            {products.map((product) => (
+              <tr>
+                <td id>{product.name}</td>
+                <td>${product.price}</td>
+                <td>
+                  <label htmlFor='inputQuantity' className='sr-only'>
+                    Quantity
+                  </label>
+                  <input
+                    type='integer'
+                    id='inputQuantity'
+                    className='form-control'
+                    name='quantity'
+                    value={quanities[product.id] || null}
+                    onChange={handleQuantityChange(product.id)}
+                  />
+                </td>
+                <td className='d-flex justify-content-center'>
+                  {
+                    <div className='col-3 font-weight-bold'>
+                      {" "}
+                      {quanities[product.id]
+                        ? quanities[product.id] * product.price
+                        : 0}
+                    </div>
+                  }
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
 
-      <div className='row justify-content-end'>
-        <Form.Check
-          className='mt-2'
-          type='checkbox'
-          label='Customer Paid'
-          name='customer_remit'
-          value={formData.customer_remit}
-          onChange={(e) => setcustomer_remit(e.target.checked)}
-        />
-        <div className='col-3 font-weight-bold'>
-          {' '}
-          Grand Total: ${runningTotal}
+        <div className='row justify-content-end'>
+          <Form.Check
+            className='mt-2'
+            type='checkbox'
+            label='Customer Paid'
+            name='customer_remit'
+            value={formData.customer_remit}
+            onChange={(e) => setcustomer_remit(e.target.checked)}
+          />
+          <div className='col-3 font-weight-bold'>
+            {" "}
+            Grand Total: ${runningTotal}
+          </div>
         </div>
-      </div>
 
-      <Button
-        className='btn btn-primary my-3'
-        type='submit'
-        onClick={handleSubmit}
-      >
-        Place Order
-      </Button>
-    </div>
+        <Button
+          className='btn btn-primary my-3'
+          type='submit'
+          onClick={handleSubmit}
+        >
+          Place Order
+        </Button>
+      </div>
     </Container>
   );
 };
