@@ -164,8 +164,8 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
                 <Form.Control
                   plaintext
                   readOnly
-                  defaultValue={runningTotal}
-                  value={runningTotal}
+                  defaultValue={"$" + runningTotal}
+                  value={"$" + runningTotal}
                 />
               </Col>
             </Form.Group>

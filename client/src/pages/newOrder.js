@@ -4,7 +4,7 @@ import { Container, Table, Button, Form } from "react-bootstrap";
 import API from "../lib/API";
 import { useStoreContext } from "../store/store";
 import NumberFormat from "react-number-format";
-import SelectUSState from "react-select-us-states";
+
 
 const NewOrder = (props) => {
   const [state, dispatch] = useStoreContext();
@@ -224,17 +224,6 @@ const NewOrder = (props) => {
                 <option value='WV'>West Virginia</option>
                 <option value='WY'>Wyoming</option>
               </select>
-              {/* <input
-              //  <SelectUSState id="myId" className="myClassName" /> 
-              type='text'
-              className='form-control'
-              name='state'
-              value={formData.state}
-              required
-              placeholder='State'
-              onChange={handleChange}
-              
-            ></input> */}
             </div>
             <div className='col-sm-3 mt-1'>
               <input
@@ -248,15 +237,6 @@ const NewOrder = (props) => {
               ></input>
             </div>
             <div className='col-sm-3 mt-1 ml-2'>
-              {/* <input
-              type='string'
-              className='form-control'
-              name='phone_number'
-              value={formData.phone_number}
-              required
-              placeholder='Phone Number'
-              onChange={handleChange}
-            ></input> */}
               <NumberFormat
                 format='(###) ###-####'
                 mask='_'
