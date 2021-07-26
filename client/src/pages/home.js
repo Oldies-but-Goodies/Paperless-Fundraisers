@@ -3,9 +3,11 @@ import { Container } from 'react-bootstrap';
 import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 import OrderDetailModal from '../components/orderDetailModal';
-
 import BootstrapTable from 'react-bootstrap-table-next';
 import cellEditFactory from 'react-bootstrap-table2-editor';
+import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
+
+const { ExportCSVButton } = CSVExport;
 
 const Home = (props) => {
   const [state, dispatch] = useStoreContext();
@@ -56,6 +58,7 @@ const Home = (props) => {
       text: 'Admin Paid',
       sort: true,
       editable: false,
+      csvFormatter: (cell, row, rowIndex) => `${cell}`
     },
       ];
 
@@ -128,7 +131,6 @@ const Home = (props) => {
 
   const CaptionElement = () => <h5 style={{textAlign: 'left', color: 'black', padding: '0.5em' }}>My total sales ${totalUserSales}</h5>;
 
-
   return (
     <Container fluid className='homeContainer'>
       <OrderDetailModal
@@ -149,8 +151,41 @@ const Home = (props) => {
           {totalFundraiserSales}
         </h5>
       </div>
+  <ToolkitProvider
+  keyField="id"
+  data={ orders }
+  columns={ columns }
+  exportCSV
+>
+  {
+    props => (
+      <div>
+        <ExportCSVButton className="exportButton" { ...props.csvProps }>Export Orders</ExportCSVButton>
+        <hr />
+        <BootstrapTable { ...props.baseProps } 
+         rowEvents={rowEvents}
+         // defaultSorted={defaultSorted}
+         noDataIndication='No Orders Yet'
+         cellEdit={cellEditFactory({
+           mode: 'click',
+           afterSaveCell: (oldValue, newValue, row, column) => {
+             handleCellEdit(oldValue, newValue, row, column);
+           },
+         })}
+         // afterSaveCell={cellEdit.afterSaveCell()}
+         // filter={filterFactory()}
+         striped
+         hover
+         condensed
+         bootstrap4
+         blurToSave
+        />
+      </div>
+    )
+  }
+</ToolkitProvider>
       
-      <BootstrapTable
+      {/* <BootstrapTable
       
         keyField='id'
         data={orders}
@@ -173,7 +208,7 @@ const Home = (props) => {
         condensed
         bootstrap4
         blurToSave
-      />
+      /> */}
     </Container>
   );
 };
