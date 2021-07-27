@@ -61,7 +61,7 @@ const NewOrder = (props) => {
 
     setFormData({ ...formData, [name]: value });
 
-    setcustomer_remit();
+    // setcustomer_remit(event.target.checked);
   };
 
   const handleSubmit = async () => {
@@ -311,8 +311,8 @@ const NewOrder = (props) => {
             type='checkbox'
             label='Customer Paid'
             name='customer_remit'
-            value={formData.customer_remit}
-            onChange={(e) => setcustomer_remit(e.target.checked)}
+            value={customer_remit}
+            onChange={(event) => setcustomer_remit(event.target.checked)}
           />
           <div className='col-3 font-weight-bold'>
             {" "}
