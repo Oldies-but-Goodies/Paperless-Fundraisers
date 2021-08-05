@@ -18,7 +18,7 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
   const columns = [
     {
       dataField: "id",
-      text: "Order ID",
+      text: "ID",
       type: "number",
       editable: false,
     },
@@ -52,11 +52,57 @@ const OrderDetailModal = ({ orderId, show, onClose }) => {
       text: "Quantity",
       type: "number",
       editable: true,
+      editor: {
+        type: Type.SELECT,
+        getOptions: (setOptions, {row, column}) => {
+          return [{
+            value: 1,
+            label: '1'
+          },
+          {
+            value: 2,
+            label: '2'
+          },
+          {
+            value: 3,
+            label: '3'
+          },
+          {
+            value: 4,
+            label: '4'
+          },
+          {
+            value: 5,
+            label: '5'
+          },
+          {
+            value: 6,
+            label: '6'
+          },
+          {
+            value: 7,
+            label: '7'
+          },
+          {
+            value: 8,
+            label: '8'
+          },
+          {
+            value: 9,
+            label: '9'
+          },
+          {
+            value: 10,
+            label: '10'
+          },]
+        }
+      }
     },
   ];
 
   const getOrderDetails = async () => {
     const orderDetailsData = await API.OrderDetails.orderDetails(orderId);
+    console.log(orderDetailsData.data)
     setOrder(orderDetailsData.data);
     calcRunningTotal(orderDetailsData.data.Order_Details)
   };
