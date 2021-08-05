@@ -4,7 +4,7 @@ import API from '../lib/API';
 import { useStoreContext } from '../store/store';
 import OrderDetailModal from '../components/orderDetailModal';
 import BootstrapTable from 'react-bootstrap-table-next';
-import cellEditFactory from 'react-bootstrap-table2-editor';
+import cellEditFactory, { Type } from 'react-bootstrap-table2-editor';
 import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
 
 const { ExportCSVButton } = CSVExport;
@@ -16,6 +16,7 @@ const Home = (props) => {
   const [orders, setOrders] = useState([]);
   const [totalFundraiserSales, setTotalFundraiserSales] = useState('$xx.xx');
   const [totalUserSales, setTotalUserSales] = useState('$xx.xx')
+  
 
   const [order, setOrder] = useState(null);
 
@@ -47,11 +48,41 @@ const Home = (props) => {
       text: 'Order Status',
       sort: true,
       editable: true,
+      editor: {
+        type: Type.SELECT,
+        getOptions: (setOptions, {row, column}) => {
+          return [{
+            value: 'Ordered',
+            label: 'Ordered'
+          },
+          {
+            value: 'Delivered',
+            label: 'Delivered'
+          },
+          {
+            value: 'Canceled',
+            label: 'Canceled'
+          }]
+        }
+      }
     },
     {
       dataField: 'customer_remit',
       text: 'Customer Paid',
       sort: true,
+      editor: {
+        type: Type.SELECT,
+        getOptions: (setOptions, {row, column}) => {
+          return [{
+            value: 'true',
+            label: 'true'
+          },
+          {
+            value: 'false',
+            label: 'false'
+          }]
+        }
+      }
     },
     {
       dataField: 'seller_remit',
@@ -59,6 +90,51 @@ const Home = (props) => {
       sort: true,
       editable: false,
       csvFormatter: (cell, row, rowIndex) => `${cell}`
+    },
+    {  
+      dataField: 'Customer.address_line1',
+      text: 'Address',
+      hidden: true
+    },
+    {  
+      dataField: 'Customer.address_line2',
+      text: 'Address cont.',
+      hidden: true
+    },
+    {  
+      dataField: 'Customer.city',
+      text: 'City',
+      hidden: true
+    },
+    {  
+      dataField: 'Customer.state',
+      text: 'State',
+      hidden: true
+    },
+    {  
+      dataField: 'Customer.zip_code',
+      text: 'Zip Code',
+      hidden: true
+    },
+    {  
+      dataField: 'Customer.phone_number',
+      text: 'Phone #',
+      hidden: true
+    },
+    {  
+      dataField: 'Customer.email',
+      text: 'Email',
+      hidden: true
+    },
+    {  
+      dataField: 'Order_Details[0].Product.name',
+      text: 'Product',
+      hidden: true
+    },
+    {  
+      dataField: 'Order_Details[0].product_qty',
+      text: 'Quantity',
+      hidden: true
     },
       ];
 
@@ -95,7 +171,7 @@ const Home = (props) => {
       first_name: row.Customer.first_name,
       last_name: row.Customer.last_name,
       order_status: row.order_status,
-      customer_remit: row.customer_remit,
+      customer_remit: row.customer_remit.checked,
       seller_remit: row.seller_remit,
     };
     setErrorMsg(null);
@@ -151,7 +227,7 @@ const Home = (props) => {
           {totalFundraiserSales}
         </h5>
       </div>
-  <ToolkitProvider
+  {/* <ToolkitProvider
   keyField="id"
   data={ orders }
   columns={ columns }
@@ -183,9 +259,9 @@ const Home = (props) => {
       </div>
     )
   }
-</ToolkitProvider>
+</ToolkitProvider> */}
       
-      {/* <BootstrapTable
+      <BootstrapTable
       
         keyField='id'
         data={orders}
@@ -208,7 +284,7 @@ const Home = (props) => {
         condensed
         bootstrap4
         blurToSave
-      /> */}
+      />
     </Container>
   );
 };
