@@ -1,8 +1,15 @@
-const router = require("express").Router();
-const { User, Order, Customer, Order_Details, Fundraiser, Product } = require("../../models");
+const router = require('express').Router();
+const {
+  User,
+  Order,
+  Customer,
+  Order_Details,
+  Fundraiser,
+  Product,
+} = require('../../models');
 
 // GET all order details
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
@@ -19,18 +26,18 @@ router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
-  
+
   try {
     const orderDetails = await Order.findOne({
       where: {
-        id: req.params.id
+        id: req.params.id,
       },
       include: [
         { model: Customer },
-        { 
+        {
           model: Order_Details,
-          include: [ { model: Product }] 
-        }
+          include: [{ model: Product }],
+        },
       ],
     });
     res.status(200).json(orderDetails);
@@ -39,18 +46,40 @@ router.get('/allOrderDetailsForOrder/:id', async (req, res) => {
   }
 });
 
+router.get('/allOrderDetailsForUser/', async (req, res) => {
+  if (!req.user) {
+    return res.json({ status: 'error', message: 'not logged in' });
+  }
+
+  try {
+    const orderDetails = await Order.findAll({
+      where: {
+        UserID: req.user.id,
+      },
+      include: [
+        { model: Customer },
+        {
+          model: Order_Details,
+          include: [{ model: Product }],
+        },
+      ],
+    });
+    res.status(200).json(orderDetails);
+  } catch (err) {
+    res.status(500).json(err);
+    console.log(err);
+  }
+});
 // GET a single order detail
-router.get("/:id", async (req, res) => {
+router.get('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
   try {
-    const orderDetails = await Order_Details.findByPk(req.params.id, {
-      
-    });
+    const orderDetails = await Order_Details.findByPk(req.params.id, {});
 
     if (!orderDetails) {
-      res.status(404).json({ message: "No details found with this id!" });
+      res.status(404).json({ message: 'No details found with this id!' });
       return;
     }
 
@@ -62,7 +91,7 @@ router.get("/:id", async (req, res) => {
 
 // CREATE  order detail
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
@@ -73,7 +102,6 @@ router.post("/", async (req, res) => {
         product_id: req.body.product_id,
         product_qty: req.body.product_qty,
         line_total: req.body.line_total,
-        
       },
       {
         where: {
@@ -89,22 +117,19 @@ router.post("/", async (req, res) => {
 
 //   UPDATE an order detail
 
-router.put("/:id", async (req, res) => {
+router.put('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
   try {
-    const updatedOrderDetails = await Order_Details.update(
-      req.body,
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
+    const updatedOrderDetails = await Order_Details.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
 
     if (!updatedOrderDetails) {
-      res.status(404).json({ message: "No details found with this id" });
+      res.status(404).json({ message: 'No details found with this id' });
       return;
     }
     res.json(updatedOrderDetails);
@@ -115,7 +140,7 @@ router.put("/:id", async (req, res) => {
 
 // DELETE an order details
 
-router.delete("/:id", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   if (!req.user) {
     return res.json({ status: 'error', message: 'not logged in' });
   }
@@ -127,7 +152,7 @@ router.delete("/:id", async (req, res) => {
     });
 
     if (!orderDetails) {
-      res.status(404).json({ message: "No details found with this id!" });
+      res.status(404).json({ message: 'No details found with this id!' });
       return;
     }
 
